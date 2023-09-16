@@ -27,7 +27,22 @@ userController.addUser = (req, res, next) => {
 
 // delete a user
 userController.removeUser = (req, res, next) => {
-
+  const { name } = req.params;
+  User.deleteOne( {name: name} )
+    .then(data => {
+      if (!data) {
+        return next({
+          log: `userController.removeUser: ${name} was not found in the database`,
+          message: {
+            err: 'User not found'
+          },
+          status: 404,
+        });
+      } else {
+        res.locals.deletedUser = data;
+        return next();
+      }
+    })
 };
 
 

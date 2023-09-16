@@ -31,7 +31,7 @@ router.post('/createuser', userController.addUser, (req, res) => {
 });
 
 
-router.post('/removeuser', userController.removeUser, (req, res) => {
+router.post('/removeuser/:name', userController.removeUser, (req, res) => {
     
 });
 
@@ -39,11 +39,19 @@ router.post('/removeuser', userController.removeUser, (req, res) => {
 
 // TASK CONTROLLERS
 router.post('/createtask', taskController.addTask, (req, res) => {
-  req.session.task = res.locals.task;
-  console.log('finished creating task ', req.session.task);
-  res.status(200).redirect('/update');
+  console.log('finished creating task ', res.locals.task);
+  res.status(200).json(res.locals.task);
 });
 
+router.post('/removetask', taskController.removeTask, (req, res) => {
+  console.log('finished removing task', res.locals.task);
+  res.status(200).json(res.locals.task);
+});
+
+router.put('/edittask', taskController.editTask, (req, res) => {
+  console.log('finished updating task', res.locals.task);
+  res.status(200).json(res.locals.task);
+});
 
 
 
