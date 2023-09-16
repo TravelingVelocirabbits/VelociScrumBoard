@@ -17,7 +17,6 @@ const Category = () => {
 
   return(
   <div onDrop={dropHandler} onDragOver={handleDragOver}>
-    
   </div>
   
   )

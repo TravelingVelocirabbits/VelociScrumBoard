@@ -24,6 +24,16 @@ userController.addUser = (req, res, next) => {
     });
 };
 
+// update a user
+// userController.updateUser = (req, res, next) => {
+//   const {name} = req.params;
+//   const updateUser = req.body;
+
+//   User.findOneAndUpdate(
+//     {name: name},
+//     {name: updateUser}
+//   )
+// };
 
 // delete a user
 userController.removeUser = (req, res, next) => {
@@ -43,6 +53,15 @@ userController.removeUser = (req, res, next) => {
         return next();
       }
     })
+    .catch(err => {
+      return next({
+        log: `userController.addUser: Error ${err}`,
+        message: {
+          err: 'Error occurred in userController.addUser. Check server logs'
+        },
+        status: 400,
+      });
+    });
 };
 
 
