@@ -5,7 +5,6 @@ const PORT = 3000;
 
 // don't forget to import models
 
-
 // connect with mongoose database
 mongoose.connect("mongodb+srv://gmogi92:basketball123@cluster0.jtsrl7y.mongodb.net/?retryWrites=true&w=majority", {
   useNewUrlParser: true,
