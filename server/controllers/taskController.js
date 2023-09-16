@@ -28,6 +28,17 @@ taskController.addTask = async (req, res, next) => {
 
 
 taskController.removeTask = (req, res, next) => {
+  const { _id } = req.body;
+
+  Task.findOneAndDelete({_id: _id}, (err, deletedDoc) => {
+    if (err) {
+      console.log('Error finding categories',err);
+      return next();
+    }
+    console.log('Removed Task: ', deletedDoc);
+    res.locals.task = updatedCategory;
+  
+  });  
 
 };
 
