@@ -2,6 +2,10 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
+  mode: process.env.NODE_ENV === 'production' ? 'production' : 'development',
+  performance: {
+    hints: process.env.NODE_ENV === 'production' ? 'warning' : false,
+  },
   entry: './client/index.js',
   output: {
     path: path.join(__dirname, '/dist'),
