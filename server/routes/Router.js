@@ -9,7 +9,7 @@ const taskController = require('../controllers/taskController');
 console.log('IM IN THE ROUTE ROUTER RERROUOTUERE');
 
 //CATEGORY CONTROLLERS
-router.post('/createcategory', (req, res) => {
+router.post('/createcategory', categoryController.addCategory, (req, res) => {
   console.log('finished creating category', res.locals.category);
   res.status(200).json(res.locals.category);
 });
@@ -26,11 +26,15 @@ router.put('/editcategory', categoryController.editCategory, (req, res) => {
 
 
 // USER CONTROLLERS 
-router.post('/user', userController.addUser, (req, res) => {
+router.post('/createuser', userController.addUser, (req, res) => {
   console.log('added user', res.locals.newUser);
   res.status(200).json(res.locals.newUser);
 });
 
+router.patch('/updateuser/:name', userController.updateUser, (req, res) => {
+  console.log('updated user', res.locals.user);
+  res.status(200).json(res.locals.user);
+});
 
 router.delete('/removeuser/:name', userController.removeUser, (req, res) => {
   console.log('removed user', res.locals.deletedUser);
