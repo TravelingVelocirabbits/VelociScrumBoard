@@ -1,13 +1,10 @@
 import React from 'react';
 
-const Task = ({ id, content, handleDrop }) => {
-  const dragStartHandler = (event) => {
-    event.dataTransfer.setData("text/plain", id);
-  };
-
+const Task = ({ task, onDragStart, onDragEnter }) => {
   return (
-    <div className="task" draggable onDragStart={dragStartHandler}>
-      {content}
+    <div className='task' draggable onDragStart={onDragStart} onDragEnter={onDragEnter}>
+      <h4>{task.Task_Name}</h4>
+      <p>{task.Description}</p>
     </div>
   );
 };
