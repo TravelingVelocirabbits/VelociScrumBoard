@@ -18,7 +18,7 @@ const initialCategories = {
 const onDragEnd = (result, categories, setCategories) => {
   const { source, destination } = result;
 
-  // Dropped outside the list
+  // Checks if item was dropped outside of the droppable environment
   if (!destination) return;
 
   // Reordering tasks within the same category
