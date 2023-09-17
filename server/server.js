@@ -4,9 +4,7 @@ const path = require('path');
 const router = require('./routes/Router');
 const app = express();
 
-const PORT = 3000;
-
-// don't forget to import models
+const PORT = process.env.PORT || 5000;
 
 // connect with mongoose database
 mongoose
@@ -27,14 +25,17 @@ mongoose
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-//statically serve everything in dist folder on static call
+// statically serve everything in dist folder on static call
 app.use(express.static(path.join(__dirname, '../dist')));
-// app.use('/stylesheets', express.static(path.join(__dirname, '../client/stylesheets')));  <----------- DEPENDENT ON FRONT END STYLING DOCUMENTS
+// app.use('/stylesheets', express.static(path.join(__dirname, '../client/stylesheets')));
 
 app.use('/route', router);
 
-//Global error handler
-app.use((req, res) => res.status(404).send('Status Code 404: Page not found...'));
+// Define your error handling middleware after defining routes
+app.use((req, res, next) => {
+  res.status(404).send('Status Code 404: Page not found...');
+});
+
 app.use((err, req, res, next) => {
   const defaultErr = {
     log: 'Express error handler caught unknown middleware error',
