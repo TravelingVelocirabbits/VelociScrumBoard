@@ -5,6 +5,14 @@
   border: 1px solid black;
 }
 
+.unassigned-tasks {
+  width: 200px;
+  height: auto;
+  padding: 20px;
+  margin-right: 20px;
+  margin-bottom: 20px;
+}
+
 .category {
   background-color: lightgreen;
   width: 100px;

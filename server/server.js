@@ -9,7 +9,7 @@ const PORT = 3000;
 // don't forget to import models
 
 // connect with mongoose database
-mongoose.connect('mongodb+srv://gmogi92:basketball123@cluster0.jtsrl7y.mongodb.net/?retryWrites=true&w=majority', {
+mongoose.connect('mongodb://localhost/armScratcher', {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 })
@@ -23,14 +23,11 @@ mongoose.connect('mongodb+srv://gmogi92:basketball123@cluster0.jtsrl7y.mongodb.n
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-
 //statically serve everything in dist folder on static call
 app.use(express.static(path.join(__dirname, '../dist')));
 // app.use('/stylesheets', express.static(path.join(__dirname, '../client/stylesheets')));  <----------- DEPENDENT ON FRONT END STYLING DOCUMENTS
 
-
 app.use('/route', router);
-
 
 //Global error handler
 app.use((req, res) => res.status(404).send('Status Code 404: Page not found...'));
