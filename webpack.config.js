@@ -33,6 +33,6 @@ module.exports = {
     static: './dist',
     hot: true,
     compress: true,
-    port: 3000,
+    port: 8080,
   },
 };
