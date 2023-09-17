@@ -2,75 +2,77 @@ const Category = require('../models/categoryModel');
 
 const categoryController = {};
 
-categoryController.addCategory = (req, res, next) => {
-  const newCat = req.body;
-  console.log(req.body, 'IN ADDCATEGORY');
-
-  Category.findOne({ categories: '*' }, (err, category) => {
-    if (err) {
-      console.log('Error finding categories', err);
-      return next();
-    }
-
-    category.categories.push(newCat);
-
-    category.save((err, updatedCategory) => {
-      if (err) {
-        console.log('Error updating categories: ', err);
-        return next();
-      }
-      console.log('Updated Categories: ', updatedCategory);
-      res.locals.category = updatedCategory;
+categoryController.getCategory = async (req, res, next) => {
+  try{
+    const categories = await Category.find({});
+    res.locals.category = categories;
+    return next();
+  } catch (err) {
+    return next({
+      log: 'error occurred in creating category: ' + err,
+      message: { err: 'error occurred in creating category: ' + err },
     });
-  });
+  }
+  
 };
 
-categoryController.removeCategory = (req, res, next) => {
-  const removeCat = req.body;
-  console.log(req.body, 'IN REMOVECATEGORY');
+categoryController.addCategory = async (req, res, next) => {
+  const { addCat } = req.body;
 
-  Category.findOne({ categories: '*' }, (err, category) => {
-    if (err) {
-      console.log('Error finding categories', err);
-      return next();
+  try {
+    const existingCategory = await Category.findOne({ category: addCat });
+    if (existingCategory) {
+      return res.status(409).json({ message: 'Category already exists' });
     }
 
-    category.categories = category.categories.filter((val) => val !== removeCat);
-
-    category.save((err, updatedCategory) => {
-      if (err) {
-        console.log('Error removing categories: ', err);
-        return next();
-      }
-      console.log('Removed Categories: ', updatedCategory);
-      res.locals.category = updatedCategory;
+    const newCategory = await Category.create({ category: addCat });
+    res.locals.category = newCategory;
+    return next();
+  } catch (err) {
+    return next({
+      log: 'error occurred in creating category: ' + err,
+      message: { err: 'error occurred in creating category: ' + err },
     });
-  });
+  }
 };
 
-categoryController.editCategory = (req, res, next) => {
-  const oldCat = req.body.old;
-  const newCat = req.body.new;
-  console.log(req.body, 'IN EDIT CATEGORY');
+categoryController.removeCategory = async (req, res, next) => {
+  const {removeCat} = req.body;
 
-  Category.findOne({ categories: '*' }, (err, category) => {
-    if (err) {
-      console.log('Error finding categories', err);
+  try {
+    const deleted = await Category.findOneAndDelete({category: removeCat});
+    if (deleted === null) {
+      res.locals.category = 'Nothing was Deleted, could not find category to delete';
+      return next();
+    } else{
+      res.locals.category = deleted;
       return next();
     }
-
-    category.categories = category.categories.filter((val) => val !== oldCat);
-    category.categories.push(newCat);
-
-    category.save((err, updatedCategory) => {
-      if (err) {
-        console.log('Error removing categories: ', err);
-        return next();
-      }
-      console.log('Removed Categories: ', updatedCategory);
-      res.locals.category = updatedCategory;
+  } catch (err) {
+    return next({
+      log: 'error occured in delete',
+      message: {err: 'error occured in delete: ' + err}  
     });
-  });
+  }
+
+
+};
+
+categoryController.editCategory = async (req, res, next) => {
+  const {oldCat, newCat} = req.body;
+
+  try {
+    const update = await Category.findOneAndUpdate({category: oldCat}, {category: newCat}, {new:true});
+    console.log('updated Category: ', update);
+    res.locals.category = update;
+    return next();
+  } catch (err) {
+    return next({
+      log: 'error occured in update',
+      message: {err: 'error occured in update: ' + err}  
+    });
+  }
+
 };
 
 module.exports = categoryController;
