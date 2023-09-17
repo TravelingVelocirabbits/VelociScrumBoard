@@ -23,14 +23,11 @@ mongoose.connect('mongodb://localhost/armScratcher', {
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-
 //statically serve everything in dist folder on static call
 app.use(express.static(path.join(__dirname, '../dist')));
 // app.use('/stylesheets', express.static(path.join(__dirname, '../client/stylesheets')));  <----------- DEPENDENT ON FRONT END STYLING DOCUMENTS
 
-
 app.use('/route', router);
-
 
 //Global error handler
 app.use((req, res) => res.status(404).send('Status Code 404: Page not found...'));
