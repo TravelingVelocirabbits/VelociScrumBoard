@@ -7,10 +7,14 @@ const PORT = 3000;
 const app = express();
 
 // connect with mongoose database
-mongoose.connect('mongodb://localhost/armScratcher', {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-})
+mongoose
+  .connect(
+    'mongodb://localhost/armScratcher',
+    {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    }
+  )
   .then(() => {
     console.log('MongoDB connected successfully');
   })

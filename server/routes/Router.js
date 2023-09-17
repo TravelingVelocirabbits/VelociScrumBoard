@@ -34,7 +34,6 @@ router.post('/user', userController.addUser, (req, res) => {
   res.status(200).json(res.locals.newUser);
 });
 
-
 router.delete('/removeuser/:name', userController.removeUser, (req, res) => {
   console.log('removed user', res.locals.deletedUser);
   res.status(200).json(res.locals.deletedUser);
