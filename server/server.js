@@ -1,12 +1,10 @@
-const express = require('express');
-const mongoose = require('mongoose');
-const path = require('path');
 const router = require('./routes/Router');
-const app = express();
+const mongoose = require('mongoose');
+const express = require('express');
+const path = require('path');
 
 const PORT = 3000;
-
-// don't forget to import models
+const app = express();
 
 // connect with mongoose database
 mongoose.connect('mongodb://localhost/armScratcher', {
@@ -20,13 +18,15 @@ mongoose.connect('mongodb://localhost/armScratcher', {
     console.error('MongoDB connection error:', err);
   });
 
+//handles parsing data & allows form data requests
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 //statically serve everything in dist folder on static call
 app.use(express.static(path.join(__dirname, '../dist')));
-// app.use('/stylesheets', express.static(path.join(__dirname, '../client/stylesheets')));  <----------- DEPENDENT ON FRONT END STYLING DOCUMENTS
+app.use('/stylesheets', express.static(path.join(__dirname, '../client/stylesheets'))); 
 
+//Router to serve middleware & response
 app.use('/route', router);
 
 //Global error handler
