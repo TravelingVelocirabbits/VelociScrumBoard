@@ -1,86 +1,69 @@
-import React, { useState, useRef, useEffect } from 'react';
-import Category from './components/Category.js';
-import Task from './components/Task.js';
+import React, { useState } from 'react';
+import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
+import { v4 as uuidv4 } from 'uuid';
+import Category from './components/Category';
+import Task from './components/Task';
+
+const testTasks = [
+  { id: uuidv4(), content: '1st Task' },
+  { id: uuidv4(), content: '2nd Task' },
+];
+
+const initialCategories = {
+  [uuidv4()]: {
+    name: 'Todo',
+    items: testTasks,
+  },
+};
+
+const onDragEnd = (result, categories, setCategories) => {
+  if (!result.destination) return;
+  const { source, destination } = result;
+  const category = categories[source.droppableId];
+  const copiedItems = [...category.items];
+  const [removed] = copiedItems.splice(source.index, 1);
+  copiedItems.splice(destination.index, 0, removed);
+  setCategories({
+    ...categories,
+    [source.droppableId]: {
+      ...category,
+      items: copiedItems,
+    },
+  });
+};
 
 export default function App() {
-  const dragItem = useRef();
-  const dragOverItem = useRef();
+  const [categories, setCategories] = useState(initialCategories);
 
-  const testCategory = [
-    {
-      key: 'Category 1',
-      name: 'Category 1',
-      tasks: [],
-    },
-  ];
-  const testTasks = [
-    {
-      id: 1,
-      Task_Name: 'Task 1',
-      Description: 'This is Task 1',
-    },
-    {
-      id: 2,
-      Task_Name: 'Task 2',
-      Description: 'This is Task 2',
-    },
-  ];
-
-  const [categories, setCategories] = useState(testCategory);
-  const [tasks, setTasks] = useState(testTasks);
-
-  //add useEffect to handle fetching tasks from server
-  useEffect(() => {}, []);
-
-  const dragStart = (e, position, category) => {
-    dragItem.current = { position, category };
+  const addNewCategory = () => {
+    const newId = uuidv4();
+    setCategories({
+      ...categories,
+      [newId]: {
+        name: 'New Category',
+        items: [],
+      },
+    });
   };
 
-  const dragEnter = (e, position, category) => {
-    dragItem.current = { position, category };
+  const addNewTask = (categoryId) => {
+    const newTask = { id: uuidv4(), content: 'New Task' };
+    const category = categories[categoryId];
+    category.items.push(newTask);
+    setCategories({
+      ...categories,
+      [categoryId]: category,
+    });
   };
 
-  const drop = (e) => {
-    const copyTasks = [...tasks];
-    const draggedTask = copyTasks[dragItem.current];
-    copyTasks.splice(dragItem.current, 1);
-    copyTasks.splice(dragOverItem.current, 0, draggedTask);
-    dragItem.current = null;
-    dragOverItem.current = null;
-    setTasks(copyTasks);
-  };
-
-  const handleAddTask = (category = 'Unassigned') => {
-    const newTask = {
-      Task_Name: '',
-      Assignee: [],
-      Due_Date: null,
-      Priority: '',
-      Status: '',
-      Description: '',
-      Category: category,
-    };
-    const updatedTasks = { ...tasks };
-    if (!updatedTasks[category]) {
-      updatedTasks[category] = [];
-    }
-    updatedTasks[category].push(newTask);
-    setTasks(updatedTasks);
-  };
   return (
     <div className='app'>
-      <button onClick={handleAddTask}>Add Task</button>
-      {categories.map((category) => (
-        <Category
-          key={category}
-          name={category}
-          tasks={tasks[category]}
-          dragStart={dragStart}
-          dragEnter={dragEnter}
-          drop={drop}
-          handleAddTask={handleAddTask}
-        />
-      ))}
+      <button onClick={addNewCategory}>Add New Category</button>
+      <DragDropContext onDragEnd={(result) => onDragEnd(result, categories, setCategories)}>
+        {Object.entries(categories).map(([id, category]) => (
+          <Category key={id} categoryId={id} category={category} addNewTask={addNewTask} />
+        ))}
+      </DragDropContext>
     </div>
   );
 }
