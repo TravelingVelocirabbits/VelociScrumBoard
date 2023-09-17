@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Draggable } from 'react-beautiful-dnd';
+import Category from './Category';
 
-function Task({ task, index }) {
+export default function Task({ task, index, onTaskClick }) {
   return (
-    <Draggable key={task.id} draggableId={task.id} index={index}>
+    <Draggable draggableId={String(task._id)} index={index}>
       {(provided, snapshot) => (
         <div
           ref={provided.innerRef}
@@ -18,12 +19,11 @@ function Task({ task, index }) {
             color: 'white',
             ...provided.draggableProps.style,
           }}
+          onClick={() => onTaskClick(task)}
         >
-          {task.content}
+          {task.Task_Name}
         </div>
       )}
     </Draggable>
   );
 }
-
-export default Task;

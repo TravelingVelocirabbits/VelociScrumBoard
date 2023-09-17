@@ -1,11 +1,46 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Droppable } from 'react-beautiful-dnd';
 import Task from './Task';
+import TaskModal from './taskModal';
+import TaskDetailsModal from './taskDetailsModal';
+import { api } from '../utils/api';
 
 export default function Category({ category, categoryId, addNewTask }) {
+  const [isModalOpen, setModalOpen] = useState(false);
+  const [selectedTask, setSelectedTask] = useState(null);
+
+  const handleOpenModal = () => {
+    setModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setModalOpen(false);
+  };
+
+  const handleTaskClick = (task) => {
+    setSelectedTask(task);
+  };
+
+  const handleFormSubmit = async (event) => {
+    event.preventDefault();
+    const formData = new FormData(event.target);
+    const taskData = {};
+    formData.forEach((value, key) => {
+      taskData[key] = value;
+    });
+
+    // Send the taskData to the backend:
+    const newTask = await api.createTask(taskData);
+
+    if (newTask) {
+      addNewTask(categoryId, newTask);
+      handleCloseModal();
+    }
+  };
+
   return (
     <div>
-      <Droppable droppableId={categoryId}>
+      <Droppable droppableId={String(categoryId)} key={categoryId}>
         {(provided, snapshot) => (
           <div
             {...provided.droppableProps}
@@ -18,13 +53,19 @@ export default function Category({ category, categoryId, addNewTask }) {
             }}
           >
             {category.items.map((task, index) => (
-              <Task key={task.id} task={task} index={index} />
+              <Task key={task._id} task={task} index={index} onTaskClick={handleTaskClick} />
             ))}
             {provided.placeholder}
+            <TaskDetailsModal
+              isOpen={!!selectedTask}
+              onClose={() => setSelectedTask(null)}
+              task={selectedTask}
+            />
           </div>
         )}
       </Droppable>
-      <button onClick={() => addNewTask(categoryId)}>Add New Task</button>
+      <button onClick={handleOpenModal}>Add New Task</button>
+      <TaskModal isOpen={isModalOpen} onClose={handleCloseModal} onSubmit={handleFormSubmit} />
     </div>
   );
 }

@@ -1,11 +1,15 @@
 const express = require('express');
+const path = require('path');
 const router = express.Router();
+
 const categoryController = require('../controllers/categoryController');
 const userController = require('../controllers/userController');
 const taskController = require('../controllers/taskController');
 
+console.log('IM IN THE ROUTE ROUTER RERROUOTUERE');
+
 //CATEGORY CONTROLLERS
-router.post('/createcategory', categoryController.addCategory, (req, res) => {
+router.post('/createcategory', (req, res) => {
   console.log('finished creating category', res.locals.category);
   res.status(200).json(res.locals.category);
 });

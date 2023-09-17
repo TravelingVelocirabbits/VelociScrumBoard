@@ -1,8 +1,8 @@
-const BASE_URL = 'http://localhost:3000';
+const BASE_URL = 'http://localhost:3001';
 
 export const api = {
   createCategory: async (categoryData) => {
-    const response = await fetch(`${BASE_URL}/createcategory`, {
+    const response = await fetch(`${BASE_URL}/route/createcategory`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -13,7 +13,7 @@ export const api = {
   },
 
   removeCategory: async (categoryData) => {
-    const response = await fetch(`${BASE_URL}/removecategory`, {
+    const response = await fetch(`${BASE_URL}/route/removecategory`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -24,7 +24,7 @@ export const api = {
   },
 
   editCategory: async (categoryData) => {
-    const response = await fetch(`${BASE_URL}/editcategory`, {
+    const response = await fetch(`${BASE_URL}/route/editcategory`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -35,7 +35,7 @@ export const api = {
   },
 
   createUser: async (userData) => {
-    const response = await fetch(`${BASE_URL}/createuser`, {
+    const response = await fetch(`${BASE_URL}/route/createuser`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -46,7 +46,7 @@ export const api = {
   },
 
   removeUser: async (userData) => {
-    const response = await fetch(`${BASE_URL}/removeuser`, {
+    const response = await fetch(`${BASE_URL}/route/removeuser`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -57,7 +57,7 @@ export const api = {
   },
 
   createTask: async (taskData) => {
-    const response = await fetch(`${BASE_URL}/createtask`, {
+    const response = await fetch(`${BASE_URL}/route/createtask`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const path = require('path');
 const router = require('./routes/Router');
 const app = express();
+const cors = require('cors');
 
 const PORT = process.env.PORT || 3001;
 
@@ -11,7 +12,7 @@ const PORT = process.env.PORT || 3001;
 // connect with mongoose database
 mongoose
   .connect(
-    'mongodb+srv://gmogi92:basketball123@cluster0.jtsrl7y.mongodb.net/?retryWrites=true&w=majority',
+    'mongodb+srv://keniwane:2g1o3BtjXfCgt2Q6@cluster0.zdnol4p.mongodb.net/?retryWrites=true&w=majority',
     {
       useNewUrlParser: true,
       useUnifiedTopology: true,
@@ -24,6 +25,7 @@ mongoose
     console.error('MongoDB connection error:', err);
   });
 
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 

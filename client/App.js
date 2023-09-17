@@ -1,35 +1,61 @@
 import React, { useState } from 'react';
-import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
+import { DragDropContext } from 'react-beautiful-dnd';
 import { v4 as uuidv4 } from 'uuid';
 import Category from './components/Category';
-import Task from './components/Task';
 
-const testTasks = [
-  { id: uuidv4(), content: '1st Task' },
-  { id: uuidv4(), content: '2nd Task' },
-];
+// const testTasks = [
+//   { id: uuidv4(), content: '1st Task' },
+//   { id: uuidv4(), content: '2nd Task' },
+// ];
 
 const initialCategories = {
   [uuidv4()]: {
     name: 'Todo',
-    items: testTasks,
+    items: [],
   },
 };
 
 const onDragEnd = (result, categories, setCategories) => {
-  if (!result.destination) return;
   const { source, destination } = result;
-  const category = categories[source.droppableId];
-  const copiedItems = [...category.items];
-  const [removed] = copiedItems.splice(source.index, 1);
-  copiedItems.splice(destination.index, 0, removed);
-  setCategories({
-    ...categories,
-    [source.droppableId]: {
-      ...category,
-      items: copiedItems,
-    },
-  });
+
+  // Dropped outside the list
+  if (!destination) return;
+
+  // Reordering tasks within the same category
+  if (source.droppableId === destination.droppableId) {
+    const category = categories[source.droppableId];
+    const copiedItems = [...category.items];
+    const [removed] = copiedItems.splice(source.index, 1);
+    copiedItems.splice(destination.index, 0, removed);
+
+    setCategories({
+      ...categories,
+      [source.droppableId]: {
+        ...category,
+        items: copiedItems,
+      },
+    });
+  } else {
+    // Moving tasks between different categories
+    const sourceCategory = categories[source.droppableId];
+    const destCategory = categories[destination.droppableId];
+    const sourceItems = [...sourceCategory.items];
+    const destItems = [...destCategory.items];
+    const [removed] = sourceItems.splice(source.index, 1);
+    destItems.splice(destination.index, 0, removed);
+
+    setCategories({
+      ...categories,
+      [source.droppableId]: {
+        ...sourceCategory,
+        items: sourceItems,
+      },
+      [destination.droppableId]: {
+        ...destCategory,
+        items: destItems,
+      },
+    });
+  }
 };
 
 export default function App() {
@@ -46,13 +72,15 @@ export default function App() {
     });
   };
 
-  const addNewTask = (categoryId) => {
-    const newTask = { id: uuidv4(), content: 'New Task' };
+  const addNewTask = (categoryId, task) => {
     const category = categories[categoryId];
-    category.items.push(newTask);
+    const newItems = [...category.items, task];
     setCategories({
       ...categories,
-      [categoryId]: category,
+      [categoryId]: {
+        ...category,
+        items: newItems,
+      },
     });
   };
 
@@ -60,9 +88,11 @@ export default function App() {
     <div className='app'>
       <button onClick={addNewCategory}>Add New Category</button>
       <DragDropContext onDragEnd={(result) => onDragEnd(result, categories, setCategories)}>
-        {Object.entries(categories).map(([id, category]) => (
-          <Category key={id} categoryId={id} category={category} addNewTask={addNewTask} />
-        ))}
+        <div className='categories-container'>
+          {Object.entries(categories).map(([id, category]) => (
+            <Category key={id} categoryId={id} category={category} addNewTask={addNewTask} />
+          ))}
+        </div>
       </DragDropContext>
     </div>
   );
