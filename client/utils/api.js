@@ -2,7 +2,7 @@ const BASE_URL = 'http://localhost:3001';
 
 export const api = {
   createCategory: async (categoryData) => {
-    const response = await fetch(`${BASE_URL}/route/createcategory`, {
+    const response = await fetch(`${BASE_URL}/route/category`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -13,7 +13,7 @@ export const api = {
   },
 
   removeCategory: async (categoryData) => {
-    const response = await fetch(`${BASE_URL}/route/removecategory`, {
+    const response = await fetch(`${BASE_URL}/route/category`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -24,7 +24,7 @@ export const api = {
   },
 
   editCategory: async (categoryData) => {
-    const response = await fetch(`${BASE_URL}/route/editcategory`, {
+    const response = await fetch(`${BASE_URL}/route/category`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -57,7 +57,7 @@ export const api = {
   },
 
   createTask: async (taskData) => {
-    const response = await fetch(`${BASE_URL}/route/createtask`, {
+    const response = await fetch(`${BASE_URL}/route/task`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
