@@ -51,22 +51,38 @@ body{
 }
 
 
-.taskDisplay{
-  display:flex;
+.taskDisplay {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
   align-items: center;
-  margin: 0 0;
+  margin: 0 0 8px 0;
+  height: 82px;
+  color: white;
 }
 
 .taskButton{
   padding: 16;
-  margin: 0 0 8px 0;
   height: 82px;
-  background-color: #456C86;
   border: none;
-  color: #456C86;
   cursor: pointer;
   Font: 16px;
-  transition: color 0.7s;
+  background-color:#456C86;
+  color:#456C86;
+  transition: 0.7s;
+
+}
+.taskContent{
+  display: flex;
+  align-items: center;
+  margin-left: 20px;
+  height: 70px;
+  width: 200px;
+}
+.taskButton.dragged {
+  background-color: #263B4A;
+  color: #263B4A;
+  transition: 0s;
 }
 
 .taskButton:hover{
