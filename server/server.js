@@ -10,12 +10,7 @@ const app = express();
 // connect with mongoose database
 mongoose
   .connect(
-<<<<<<< HEAD
     'mongodb://localhost/armScratcher',
-=======
-    // 'mongodb://localhost/armScratcher',
-    'mongodb+srv://nathanpagbayani:ARMSCRATCHER@cluster0.j9ysnvo.mongodb.net/?retryWrites=true&w=majority',
->>>>>>> 3d2564f26d859649ded57784861c8bb0bfc51036
     {
       useNewUrlParser: true,
       useUnifiedTopology: true,

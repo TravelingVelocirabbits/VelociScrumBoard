@@ -4,11 +4,34 @@ body{
   background-color:#f1e3d3
     /* background-color:#463f3a */
 }
-
+textarea {
+  width: 97%; 
+  height: 41%;
+}
+input[type="date"] {
+  width: 110px; 
+}
 .categories-container {
   display: flex;
   overflow-x: auto;
   gap: 16px;
+}
+.content{
+  font-weight: 100;
+  color:rgb(255, 234, 73);
+}
+.createForm {
+  display: flex;
+  justify-content: space-between;
+}
+.column {
+  flex: 1;
+  margin-right: 25px; /* Adjust the margin between columns as needed */
+  margin-bottom: 20px;
+}
+.column input,
+.column textarea {
+  margin-bottom: 4px; /* Adjust the margin as desired */
 }
 
 .modal {
