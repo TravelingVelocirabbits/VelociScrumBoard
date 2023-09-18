@@ -12,7 +12,6 @@ const taskSchema = new Schema({
   Category: String,
 });
 
-taskSchema.virtual
 
 const Task = mongoose.model('Task', taskSchema);
 
