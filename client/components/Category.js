@@ -52,7 +52,7 @@ export default function Category({ category, categoryId, addNewTask, removeTask,
     if (edittedTask){
       editTask(categoryId, edittedTask);
     }
-    
+
   };
 
   return (
@@ -63,10 +63,13 @@ export default function Category({ category, categoryId, addNewTask, removeTask,
             {...provided.droppableProps}
             ref={provided.innerRef}
             style={{
-              background: snapshot.isDraggingOver ? 'lightblue' : 'lightgrey',
+              background: snapshot.isDraggingOver ? '#cdb4db' : '#ffffff',
               padding: 4,
               width: 250,
               minHeight: 500,
+              backgroundColor: '#FFFFF',
+              borderRadius: '10px',
+              border: '1px solid #ccc', 
             }}
           >
             {category.items.map((task, index) => (
@@ -82,7 +85,7 @@ export default function Category({ category, categoryId, addNewTask, removeTask,
           </div>
         )}
       </Droppable>
-      <button onClick={handleOpenModal}>Add New Task</button>
+      <button onClick={handleOpenModal} className="add-task-button">+ Task</button>
       <TaskModal isOpen={isModalOpen} onClose={handleCloseModal} onSubmit={handleFormSubmit} />
     </div>
   );

@@ -1,29 +1,14 @@
+@import url('https://fonts.googleapis.com/css2?family=Bayon&family=Comfortaa&display=swap');
+
 body{
-  background-color:rgba(182, 121, 121, 0.838);
-}
-
-.task {
-  width: 100px;
-  height: 50px;
-  background-color: lightblue;
-  border: 1px solid black;
-}
-
-.category {
-  background-color: lightgreen;
-  width: 100px;
-  height: 500px;
-  border: 1px solid black;
+  background-color:#f1e3d3
+    /* background-color:#463f3a */
 }
 
 .categories-container {
   display: flex;
   overflow-x: auto;
   gap: 16px;
-}
-
-.createForm{
-
 }
 
 .modal {
@@ -45,6 +30,7 @@ body{
   width: 80%;
   max-width: 500px;
 }
+
 
 .unassigned-tasks {
   width: 200px;
@@ -127,4 +113,78 @@ button:hover {
 
 .popCloseButton{
   margin-top: 10px;
+}
+
+
+/*
+  ADD CATEGORY BUTTON STYLING
+*/
+
+.add-category-container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+.add-category-input {
+  flex: 1;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-right: 8px;
+}
+
+.add-category-button {
+  background-color: #4c956c;
+  color: whitesmoke;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-bottom: 15px;
+  font-family: 'Bayon', sans-serif;
+  font-family: 'Comfortaa', cursive;
+}
+
+.add-category-button:hover {
+  background-color: #0056b3; 
+}
+
+
+.add-category-button:hover {
+  background-color: #0056b3; 
+}
+
+
+/*
+  ADD NEW TASK STYLING
+*/
+
+
+.add-task-input {
+  flex: 1;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-right: 8px;
+}
+
+.add-task-button {
+  background-color: #4c956c;
+  color: whitesmoke;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 10px;
+  font-family: 'Bayon', sans-serif;
+  font-family: 'Comfortaa', cursive;
+  font-weight: bold;
+}
+
+.add-task-button:hover {
+  background-color: #0056b3; 
+}
+
+.add-task-button:hover {
+  background-color: #0056b3; 
 }
