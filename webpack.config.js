@@ -2,8 +2,13 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-  mode: 'development',
-  entry: './client/index.js',
+  mode: process.env.NODE_ENV === 'production' ? 'production' : 'development',
+  performance: {
+    hints: process.env.NODE_ENV === 'production' ? 'warning' : false,
+  },
+  entry: {
+    main: path.resolve(__dirname, 'client', 'index.js'),
+  },
   output: {
     path: path.join(__dirname, '/dist'),
     filename: 'bundle.js',

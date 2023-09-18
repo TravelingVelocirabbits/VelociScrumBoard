@@ -1,15 +1,12 @@
 import React from 'react';
-
+//POPUP OF TASK ON CLICK OF TASK
 export default function TaskDetailsModal({ isOpen, onClose, task }) {
   if (!isOpen) return null;
 
   return (
     <div className='modal'>
       <div className='modal-content'>
-        <h2>Task Details</h2>
-        <div>
-          <strong>Task Name:</strong> {task.Task_Name}
-        </div>
+        <h2>{task.Task_Name}</h2>
         <div>
           <strong>Assignee:</strong> {task.Assignee.join(', ')}
         </div>

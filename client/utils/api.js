@@ -9,7 +9,7 @@ export const api = {
       },
       body: JSON.stringify(categoryData),
     });
-    return await response;
+    return await response.json();
   },
 
   removeCategory: async (categoryData) => {
@@ -20,7 +20,7 @@ export const api = {
       },
       body: JSON.stringify(categoryData),
     });
-    return await response;
+    return await response.json();
   },
 
   editCategory: async (categoryData) => {
@@ -31,7 +31,7 @@ export const api = {
       },
       body: JSON.stringify(categoryData),
     });
-    return await response;
+    return await response.json();
   },
 
   createUser: async (userData) => {
@@ -42,7 +42,7 @@ export const api = {
       },
       body: JSON.stringify(userData),
     });
-    return await response;
+    return await response.json();
   },
 
   removeUser: async (userData) => {
@@ -53,11 +53,10 @@ export const api = {
       },
       body: JSON.stringify(userData),
     });
-    return await response;
+    return await response.json();
   },
 
   createTask: async (taskData) => {
-    console.log('HIMILFKJAOWIERJOIAJER');
     const response = await fetch(`${BASE_URL}/route/task`, {
       method: 'POST',
       headers: {
@@ -65,6 +64,28 @@ export const api = {
       },
       body: JSON.stringify(taskData),
     });
-    return await response;
+    return await response.json();
+  },
+
+  removeTask: async (taskData) => {
+    const response = await fetch(`${BASE_URL}/route/task`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(taskData),
+    });
+    return await response.json();
+  },
+
+  editTask: async (taskData) => {
+    const response = await fetch(`${BASE_URL}/route/task`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(taskData),
+    });
+    return await response.json();
   },
 };

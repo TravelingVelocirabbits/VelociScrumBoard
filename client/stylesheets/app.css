@@ -45,3 +45,34 @@
   width: 80%;
   max-width: 500px;
 }
+
+.taskDisplay{
+  display:flex;
+  align-items: center;
+  margin: 0 0;
+}
+
+.taskButton{
+  padding: 16;
+  margin: 0 0 8px 0;
+  height: 82px;
+  background-color: #456C86;
+  border: none;
+  color: #456C86;
+  cursor: pointer;
+  Font: 16px;
+  transition: color 0.7s;
+}
+
+.taskButton:hover{
+  color: white;
+  background-color: rgb(225, 109, 109);
+}
+
+button:hover {
+  background-color: rgb(122, 214, 179);
+}
+
+body{
+  background-color:rgba(182, 121, 121, 0.838);
+}

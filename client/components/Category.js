@@ -5,7 +5,7 @@ import TaskModal from './taskModal';
 import TaskDetailsModal from './taskDetailsModal';
 import { api } from '../utils/api';
 
-export default function Category({ category, categoryId, addNewTask }) {
+export default function Category({ category, categoryId, addNewTask, removeTask }) {
   const [isModalOpen, setModalOpen] = useState(false);
   const [selectedTask, setSelectedTask] = useState(null);
 
@@ -38,6 +38,15 @@ export default function Category({ category, categoryId, addNewTask }) {
     }
   };
 
+  const handleTaskRemove = async (taskData) => {
+    const removedTask = await api.removeTask({_id: taskData});
+    if (removedTask){
+      removeTask(categoryId, removedTask);
+      handleCloseModal();
+    }
+
+  };
+
   return (
     <div>
       <Droppable droppableId={String(categoryId)} key={categoryId}>
@@ -53,7 +62,7 @@ export default function Category({ category, categoryId, addNewTask }) {
             }}
           >
             {category.items.map((task, index) => (
-              <Task key={task._id} task={task} index={index} onTaskClick={handleTaskClick} />
+              <Task key={task._id} task={task} index={index} onTaskClick={handleTaskClick} onTaskRemove={handleTaskRemove}/>
             ))}
             {provided.placeholder}
             <TaskDetailsModal
