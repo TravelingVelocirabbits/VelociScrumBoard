@@ -8,7 +8,7 @@ export default function Task({ task, index, onTaskClick, onTaskRemove }) {
   return (
     <Draggable draggableId={String(task._id)} index={index}>
       {(provided, snapshot) => (
-        <div className='taskDisplay'
+        <box className='taskDisplay'
           ref={provided.innerRef}
           {...provided.draggableProps}
           {...provided.dragHandleProps}
@@ -27,7 +27,7 @@ export default function Task({ task, index, onTaskClick, onTaskRemove }) {
           >Delete
           </button>
 
-        </div>
+        </box>
       )}
     </Draggable>
   );
