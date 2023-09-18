@@ -9,6 +9,32 @@ import { api } from '../utils/api';
 export default function Category({ category, categoryId, addNewTask, removeTask, editTask }) {
   const [isModalOpen, setModalOpen] = useState(false);
   const [selectedTask, setSelectedTask] = useState(null);
+
+  // TITLE EDITS =========================================
+  const [isEditing, setIsEditing] = useState(false);
+  const [editedTitle, setEditedTitle] = useState(category.title); // Initialize with the existing title
+
+ 
+  const handleTitleClick = () => {
+    setIsEditing(true);
+  };
+
+  const handleTitleChange = (e) => {
+    setEditedTitle(e.target.value);
+  };
+
+  const handleTitleKeyPress = async (e) => {
+    if (e.key === 'Enter') {
+      // Update the category title on Enter key press
+      // You may want to add logic to save the edited title to the backend here
+      // For now, we'll update it locally in the state
+      setIsEditing(false);
+      category.name = editedTitle;
+    }
+  };
+  // TITLE EDITS =========================================
+
+
   const handleOpenModal = () => {
     setModalOpen(true);
   };
@@ -72,6 +98,19 @@ export default function Category({ category, categoryId, addNewTask, removeTask,
               border: '1px solid #ccc', 
             }}
           >
+            {/* UPDATE TITLE HERE */}
+          {isEditing ? (
+              <input
+                type="text"
+                value={editedTitle}
+                onChange={handleTitleChange}
+                onKeyPress={handleTitleKeyPress}
+                onBlur={() => setIsEditing(false)}
+              />
+            ) : (
+              <h2 onClick={handleTitleClick}>{category.name}</h2>
+            )}
+
             {category.items.map((task, index) => (
               <Task key={task._id} task={task} index={index} onTaskClick={handleTaskClick} onTaskRemove={handleTaskRemove}/>
             ))}
