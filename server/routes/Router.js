@@ -6,7 +6,6 @@ const categoryController = require('../controllers/categoryController');
 const userController = require('../controllers/userController');
 const taskController = require('../controllers/taskController');
 
-
 //CATEGORY CONTROLLERS
 router.get('/category', categoryController.getCategory, (req, res) => {
   console.log('finished getting categoriies', res.locals.category);
@@ -28,20 +27,16 @@ router.put('/category', categoryController.editCategory, (req, res) => {
   res.status(200).json(res.locals.category);
 });
 
-
-// USER CONTROLLERS 
+// USER CONTROLLERS
 router.post('/user', userController.addUser, (req, res) => {
   console.log('added user', res.locals.newUser);
   res.status(200).json(res.locals.newUser);
 });
 
-
-router.delete('/removeuser/:name', userController.removeUser, (req, res) => {
+router.delete('/user', userController.removeUser, (req, res) => {
   console.log('removed user', res.locals.deletedUser);
   res.status(200).json(res.locals.deletedUser);
 });
-
-
 
 // TASK CONTROLLERS
 router.get('/task', taskController.getTask, (req, res) => {
@@ -64,7 +59,9 @@ router.put('/task', taskController.editTask, (req, res) => {
   res.status(200).json(res.locals.task);
 });
 
+router.delete('/removetask', taskController.removeTask, (req, res) => {
+  console.log('finished removing task', res.locals.task);
+  res.status(200).json(res.locals.task);
+});
 
 module.exports = router;
-
-

@@ -1,86 +1,122 @@
-import React, { useState, useRef, useEffect } from 'react';
-import Category from './components/Category.js';
-import Task from './components/Task.js';
+import React, { useState } from 'react';
+import { DragDropContext } from 'react-beautiful-dnd';
+import { v4 as uuidv4 } from 'uuid';
+import Category from './components/Category';
+import Users from './components/Users';
+
+const initialCategories = {
+  [uuidv4()]: {
+    name: 'Todo',
+    items: [],
+  },
+};
+
+const onDragEnd = (result, categories, setCategories, users, setUsers) => {
+  const { source, destination } = result;
+
+  // Checks if item was dropped outside of the droppable environment
+  if (!destination) return;
+
+  if (source.droppableId === 'usersCategory') {
+    console.log('all users: ', users);
+    const copiedUsers = [...users];
+    console.log(copiedUsers);
+    const [removed] = copiedUsers.splice(source.index, 1);
+    copiedUsers.splice(destination.index, 0, removed);
+
+    setUsers(copiedUsers);
+  } else if (source.droppableId === destination.droppableId) {
+    // Reordering tasks within the same category
+    const category = categories[source.droppableId];
+    console.log(categories);
+    console.log(categories[source.droppableId]);
+    const copiedItems = [...category.items];
+    console.log([...category.items]);
+    const [removed] = copiedItems.splice(source.index, 1);
+    copiedItems.splice(destination.index, 0, removed);
+
+    setCategories({
+      ...categories,
+      [source.droppableId]: {
+        ...category,
+        items: copiedItems,
+      },
+    });
+  } else {
+    // Moving tasks between different categories
+    console.log(source);
+    console.log(destination);
+    const sourceCategory = categories[source.droppableId];
+    const destCategory = categories[destination.droppableId];
+    const sourceItems = [...sourceCategory.items];
+    const destItems = [...destCategory.items];
+    const [removed] = sourceItems.splice(source.index, 1);
+    destItems.splice(destination.index, 0, removed);
+
+    setCategories({
+      ...categories,
+      [source.droppableId]: {
+        ...sourceCategory,
+        items: sourceItems,
+      },
+      [destination.droppableId]: {
+        ...destCategory,
+        items: destItems,
+      },
+    });
+  }
+};
 
 export default function App() {
-  const dragItem = useRef();
-  const dragOverItem = useRef();
+  const [categories, setCategories] = useState(initialCategories);
+  const [users, setUsers] = useState([]);
 
-  const testCategory = [
-    {
-      key: 'Category 1',
-      name: 'Category 1',
-      tasks: [],
-    },
-  ];
-  const testTasks = [
-    {
-      id: 1,
-      Task_Name: 'Task 1',
-      Description: 'This is Task 1',
-    },
-    {
-      id: 2,
-      Task_Name: 'Task 2',
-      Description: 'This is Task 2',
-    },
-  ];
-
-  const [categories, setCategories] = useState(testCategory);
-  const [tasks, setTasks] = useState(testTasks);
-
-  //add useEffect to handle fetching tasks from server
-  useEffect(() => {}, []);
-
-  const dragStart = (e, position, category) => {
-    dragItem.current = { position, category };
+  const addNewCategory = () => {
+    const newId = uuidv4();
+    setCategories({
+      ...categories,
+      [newId]: {
+        name: 'New Category',
+        items: [],
+      },
+    });
   };
 
-  const dragEnter = (e, position, category) => {
-    dragItem.current = { position, category };
+  const addNewTask = (categoryId, task) => {
+    const category = categories[categoryId];
+    const newItems = [...category.items, task];
+    setCategories({
+      ...categories,
+      [categoryId]: {
+        ...category,
+        items: newItems,
+      },
+    });
   };
 
-  const drop = (e) => {
-    const copyTasks = [...tasks];
-    const draggedTask = copyTasks[dragItem.current];
-    copyTasks.splice(dragItem.current, 1);
-    copyTasks.splice(dragOverItem.current, 0, draggedTask);
-    dragItem.current = null;
-    dragOverItem.current = null;
-    setTasks(copyTasks);
+  const addNewUser = (user) => {
+    // console.log('New user:', user);
+    // console.log('Adding to: ', users);
+    setUsers((users) => {
+      const updatedUsers = [...users, user];
+      // console.log('New user list:', updatedUsers);
+      return updatedUsers;
+    });
   };
 
-  const handleAddTask = (category = 'Unassigned') => {
-    const newTask = {
-      Task_Name: '',
-      Assignee: [],
-      Due_Date: null,
-      Priority: '',
-      Status: '',
-      Description: '',
-      Category: category,
-    };
-    const updatedTasks = { ...tasks };
-    if (!updatedTasks[category]) {
-      updatedTasks[category] = [];
-    }
-    updatedTasks[category].push(newTask);
-    setTasks(updatedTasks);
-  };
   return (
     <div className='app'>
-      <button onClick={handleAddTask}>Add Task</button>
-      {categories.map((category) => (
-        <Category
-          key={category}
-          name={category}
-          tasks={tasks[category]}
-          dragStart={dragStart}
-          dragEnter={dragEnter}
-          drop={drop}
-          handleAddTask={handleAddTask}
-        />
-      ))}
+      <button onClick={addNewCategory}>Add New Category</button>
+      <DragDropContext
+        onDragEnd={(result) => onDragEnd(result, categories, setCategories, users, setUsers)}
+      >
+        <div className='categories-container'>
+          <Users userId={'usersCategory'} users={users} addNewUser={addNewUser} />
+          {Object.entries(categories).map(([id, category]) => (
+            <Category key={id} categoryId={id} category={category} addNewTask={addNewTask} />
+          ))}
+        </div>
+      </DragDropContext>
     </div>
   );
 }
