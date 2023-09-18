@@ -28,7 +28,6 @@ router.put('/category', categoryController.editCategory, (req, res) => {
   res.status(200).json(res.locals.category);
 });
 
-
 // USER CONTROLLERS 
 router.post('/createuser', userController.addUser, (req, res) => {
   console.log('added user', res.locals.newUser);
@@ -68,6 +67,10 @@ router.put('/task', taskController.editTask, (req, res) => {
   res.status(200).json(res.locals.task);
 });
 
+router.delete('/removetask', taskController.removeTask, (req, res) => {
+  console.log('finished removing task', res.locals.task);
+  res.status(200).json(res.locals.task);
+});
 
 module.exports = router;
 

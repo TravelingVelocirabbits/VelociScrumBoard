@@ -6,7 +6,9 @@ module.exports = {
   performance: {
     hints: process.env.NODE_ENV === 'production' ? 'warning' : false,
   },
-  entry: './client/index.js',
+  entry: {
+    main: path.resolve(__dirname, 'client', 'index.js'),
+  },
   output: {
     path: path.join(__dirname, '/dist'),
     filename: 'bundle.js',

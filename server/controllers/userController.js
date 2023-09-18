@@ -5,7 +5,7 @@ const userController = {};
 // add a user
 userController.addUser = (req, res, next) => {
   const { name } = req.body;
-  
+
   User.create({
     name,
   })
@@ -13,11 +13,11 @@ userController.addUser = (req, res, next) => {
       res.locals.newUser = data;
       return next();
     })
-    .catch(err => {
+    .catch((err) => {
       return next({
         log: `userController.addUser: Error ${err}`,
         message: {
-          err: 'Error occurred in userController.addUser. Check server logs'
+          err: 'Error occurred in userController.addUser. Check server logs',
         },
         status: 400,
       });
