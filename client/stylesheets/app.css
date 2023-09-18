@@ -52,6 +52,7 @@ input[type="date"] {
   border-radius: 8px;
   width: 80%;
   max-width: 500px;
+
 }
 
 
@@ -97,6 +98,9 @@ input[type="date"] {
   margin-left: 20px;
   height: 70px;
   width: 200px;
+  font-family: 'Bayon', sans-serif;
+  font-family: 'Comfortaa', cursive;
+  font-weight: bold;
 }
 .taskButton.dragged {
   background-color: #263B4A;
