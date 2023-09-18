@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { api } from '../utils/api';
+import './AddCategory.css'; 
 
 export default function AddCategory() {
   const [categoryName, setCategoryName] = useState('');
@@ -14,11 +15,12 @@ export default function AddCategory() {
   };
 
   return (
-    <div>
+    <div className="add-category-container">
       <input
         value={categoryName}
         onChange={(e) => setCategoryName(e.target.value)}
-        placeholder='Category Name'
+        // placeholder='Category Name'
+        // className="add-category-input"
       />
       <button onClick={handleSubmit}>Add Category</button>
     </div>
