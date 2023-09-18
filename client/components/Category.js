@@ -1,81 +1,80 @@
-// import React, {Component} from 'react';
 import React, { useState } from 'react';
-import Task from './Task.js';
+import { Droppable } from 'react-beautiful-dnd';
+import Task from './Task';
+import TaskModal from './taskModal';
+import TaskDetailsModal from './taskDetailsModal';
+import { api } from '../utils/api';
 
-const Category = ({ name, tasks, dragStart, dragEnter, drop, handleAddTask }) => {
-  const [taskOrder, setTaskOrder] = useState(tasks.map((task) => task.id));
+export default function Category({ category, categoryId, addNewTask, removeTask }) {
+  const [isModalOpen, setModalOpen] = useState(false);
+  const [selectedTask, setSelectedTask] = useState(null);
 
-  // Permission to drop into category
-  const handleDragOver = (event) => {
+  const handleOpenModal = () => {
+    setModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setModalOpen(false);
+  };
+
+  const handleTaskClick = (task) => {
+    setSelectedTask(task);
+  };
+
+  const handleFormSubmit = async (event) => {
     event.preventDefault();
-    console.log('Dragging over category');
-  };
+    const formData = new FormData(event.target);
+    const taskData = {};
+    formData.forEach((value, key) => {
+      taskData[key] = value;
+    });
 
-  const handleDragStart = (e, taskId) => {
-    e.dataTransfer.setData('text/plain', taskId.toString());
-  };
+    // Send the taskData to the backend:
+    const newTask = await api.createTask(taskData);
 
-  const handleDragEnter = (e, targetTaskId) => {
-    e.preventDefault();
-    const sourceTaskId = parseInt(e.dataTransfer.getData('text/plain'));
-    if (sourceTaskId !== targetTaskId) {
-      const newTaskOrder = [...taskOrder];
-      const sourceIndex = taskOrder.indexOf(sourceTaskId);
-      const targetIndex = taskOrder.indexOf(targetTaskId);
-      newTaskOrder.splice(sourceIndex, 1);
-      newTaskOrder.splice(targetIndex, 0, sourceTaskId);
-      setTaskOrder(newTaskOrder);
+    if (newTask) {
+      addNewTask(categoryId, newTask);
+      handleCloseModal();
     }
   };
-  /*
-    Internal Drag Event Handlers
-  */
-  // dragStart
-  // dragEnter
-  // dragDrop
 
-  const handleDrop = (e) => {
-    e.preventDefault();
-    const taskId = parseInt(e.dataTransfer.getData('text/plain'));
-    // onDrop(taskId, taskOrder);
+  const handleTaskRemove = async (taskData) => {
+    const removedTask = await api.removeTask({_id: taskData});
+    if (removedTask){
+      removeTask(categoryId, removedTask);
+      handleCloseModal();
+    }
+
   };
 
   return (
     <div>
-      <div className='category' onDrop={handleDragOver} onDragOver={handleDragOver}>
-        {tasks.map((task) => {
-          console.log(task);
-          return (
-            <Task
-              key={task.id}
-              content={task.description}
-              onDragStart={(e) => handleDragStart(e, task.id)}
-              onDragEnter={(e) => handleDragEnter(e, task.id)}
+      <Droppable droppableId={String(categoryId)} key={categoryId}>
+        {(provided, snapshot) => (
+          <div
+            {...provided.droppableProps}
+            ref={provided.innerRef}
+            style={{
+              background: snapshot.isDraggingOver ? 'lightblue' : 'lightgrey',
+              padding: 4,
+              width: 250,
+              minHeight: 500,
+            }}
+          >
+            {category.items.map((task, index) => (
+              <Task key={task._id} task={task} index={index} onTaskClick={handleTaskClick} onTaskRemove={handleTaskRemove}/>
+            ))}
+            {provided.placeholder}
+            <TaskDetailsModal
+              isOpen={!!selectedTask}
+              onClose={() => setSelectedTask(null)}
+              task={selectedTask}
             />
-          );
-        })}
-      </div>
+          </div>
+        )}
+      </Droppable>
+      <button onClick={handleOpenModal}>Add New Task</button>
+      <TaskModal isOpen={isModalOpen} onClose={handleCloseModal} onSubmit={handleFormSubmit} />
     </div>
   );
-};
-
-export default Category;
-
-/*
-  Ken's idea
-
-
-*/
-
-/*
-  1. Create a task (Node)
-  2. Assign task an ID, and content
-
-  Make Category a Drag Zone
-  useRef 
-  
-
-  
-  
-
-*/
+}

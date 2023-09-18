@@ -42,10 +42,10 @@ taskController.addTask = async (req, res, next) => {
 
 
 taskController.removeTask = async (req, res, next) => {
-  const { Task_Name } = req.body;
-
+  const { _id } = req.body;
+  
   try {
-    const deleted = await Task.findOneAndDelete({Task_Name: Task_Name});
+    const deleted = await Task.findOneAndDelete({_id: _id});
     res.locals.task = deleted;
     return next();
   } catch (err) {
@@ -59,7 +59,7 @@ taskController.removeTask = async (req, res, next) => {
 
 taskController.editTask = async (req, res, next) => {
   const { _id } = req.body;
-
+  
   try {
     const update = await Task.findOneAndUpdate({_id: _id}, req.body, {new:true});
     res.locals.task = update;
