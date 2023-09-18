@@ -47,6 +47,18 @@ export default function Category({ category, categoryId, addNewTask, removeTask,
     setSelectedTask(task);
   };
 
+  const formatDueDate = (date) => {
+    if (!date) return '';
+
+    const dueDate = new Date(date);
+    const month = dueDate.getMonth() + 1;
+    const day = dueDate.getDate();
+    const year = dueDate.getFullYear();
+
+    return `${month}-${day}-${year}`;
+
+  };
+
   const handleFormSubmit = async (event) => {
     event.preventDefault();
     const formData = new FormData(event.target);
@@ -114,7 +126,7 @@ export default function Category({ category, categoryId, addNewTask, removeTask,
             )}
 
             {category.items.map((task, index) => (
-              <Task key={task._id} task={task} index={index} onTaskClick={handleTaskClick} onTaskRemove={handleTaskRemove}/>
+              <Task key={task._id} task={{...task, Due_Date: formatDueDate(task.Due_Date),}} index={index} onTaskClick={handleTaskClick} onTaskRemove={handleTaskRemove}/>
             ))}
             {provided.placeholder}
             <TaskDetailsModal

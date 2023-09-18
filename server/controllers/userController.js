@@ -25,20 +25,42 @@ userController.addUser = (req, res, next) => {
 };
 
 // update a user
-// userController.updateUser = (req, res, next) => {
-//   const {name} = req.params;
-//   const updateUser = req.body;
+userController.updateUser = (req, res, next) => {
+  const {name} = req.params;
+  const updateUser = req.body;
 
-//   User.findOneAndUpdate(
-//     {name: name},
-//     {name: updateUser}
-//   )
-// };
+  User.findOneAndUpdate(
+    {name: name},
+    {name: updateUser}
+  ).exec()
+    .then(data => {
+      if (!data) {
+        return next({
+          log: `userController.updateUser: ${name} was not found in the database`,
+          message: {
+            err: 'Student not found'
+          },
+          status: 404,
+        });
+      }
+      res.locals.user = data;
+      return next()
+    })
+    .catch(err => {
+      return next({
+        log: `userController.updateUser: ERROR: ${err}`,
+        messages: {
+          err: 'Error occurred in userController.updateUser. Check server logs'
+        },
+        status: 400,
+      });
+    });
+};
 
 // delete a user
 userController.removeUser = (req, res, next) => {
   const { name } = req.params;
-  User.deleteOne( {name: name} )
+  User.deleteOne( {name: name} ).exec()
     .then(data => {
       if (!data) {
         return next({
@@ -55,9 +77,9 @@ userController.removeUser = (req, res, next) => {
     })
     .catch(err => {
       return next({
-        log: `userController.addUser: Error ${err}`,
+        log: `userController.removeUser: Error ${err}`,
         message: {
-          err: 'Error occurred in userController.addUser. Check server logs'
+          err: 'Error occurred in userController.removeUser. Check server logs'
         },
         status: 400,
       });
