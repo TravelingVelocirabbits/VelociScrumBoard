@@ -5,10 +5,10 @@ import TaskModal from './taskModal';
 import TaskDetailsModal from './taskDetailsModal';
 import { api } from '../utils/api';
 
+
 export default function Category({ category, categoryId, addNewTask, removeTask, editTask }) {
   const [isModalOpen, setModalOpen] = useState(false);
   const [selectedTask, setSelectedTask] = useState(null);
-
   const handleOpenModal = () => {
     setModalOpen(true);
   };
@@ -44,16 +44,16 @@ export default function Category({ category, categoryId, addNewTask, removeTask,
       removeTask(categoryId, removedTask);
       handleCloseModal();
     }
-
   };
-
+  
   const handleTaskEdit = async (taskData) => {
     const edittedTask = await api.editTask({Task_Name: taskData});
     if (edittedTask){
       editTask(categoryId, edittedTask);
-    }
-    
+    } 
   };
+
+
 
   return (
     <div>

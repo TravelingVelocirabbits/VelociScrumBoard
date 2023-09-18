@@ -72,7 +72,6 @@ categoryController.editCategory = async (req, res, next) => {
       message: {err: 'error occured in update: ' + err}  
     });
   }
-
 };
 
 module.exports = categoryController;

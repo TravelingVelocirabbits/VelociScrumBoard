@@ -120,12 +120,19 @@ button:hover {
 /*
   ADD CATEGORY BUTTON STYLING
 */
-
 .add-category-container {
   display: flex;
-  align-items: center;
+  align-items: flex-start; 
   margin-bottom: 10px;
+  padding: 4px; 
+  width: 250px; 
+  height: 500px; 
+  background-color: #f1e3d3; /* Use the color #f1e3d3 */
+  border-radius: 10px; 
+  border: 1px solid #ccc; 
 }
+
+
 .add-category-input {
   flex: 1;
   padding: 8px;
@@ -144,6 +151,7 @@ button:hover {
   margin-bottom: 15px;
   font-family: 'Bayon', sans-serif;
   font-family: 'Comfortaa', cursive;
+  width: 250px;
 }
 
 .add-category-button:hover {
