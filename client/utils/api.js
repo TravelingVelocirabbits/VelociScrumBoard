@@ -35,7 +35,7 @@ export const api = {
   },
 
   createUser: async (userData) => {
-    const response = await fetch(`${BASE_URL}/route/createuser`, {
+    const response = await fetch(`${BASE_URL}/route/user`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -46,8 +46,8 @@ export const api = {
   },
 
   removeUser: async (userData) => {
-    const response = await fetch(`${BASE_URL}/route/removeuser`, {
-      method: 'POST',
+    const response = await fetch(`${BASE_URL}/route/user`, {
+      method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
       },
