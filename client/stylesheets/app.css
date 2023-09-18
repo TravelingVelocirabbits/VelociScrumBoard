@@ -4,11 +4,34 @@ body{
   background-color:#f1e3d3
     /* background-color:#463f3a */
 }
-
+textarea {
+  width: 97%; 
+  height: 41%;
+}
+input[type="date"] {
+  width: 110px; 
+}
 .categories-container {
   display: flex;
   overflow-x: auto;
   gap: 16px;
+}
+.content{
+  font-weight: 100;
+  color:rgb(255, 234, 73);
+}
+.createForm {
+  display: flex;
+  justify-content: space-between;
+}
+.column {
+  flex: 1;
+  margin-right: 25px; /* Adjust the margin between columns as needed */
+  margin-bottom: 20px;
+}
+.column input,
+.column textarea {
+  margin-bottom: 4px; /* Adjust the margin as desired */
 }
 
 .modal {
@@ -29,6 +52,7 @@ body{
   border-radius: 8px;
   width: 80%;
   max-width: 500px;
+
 }
 
 
@@ -74,8 +98,10 @@ body{
   margin-left: 20px;
   height: 70px;
   width: 200px;
+  font-family: 'Bayon', sans-serif;
+  font-family: 'Comfortaa', cursive;
+  font-weight: bold;
 }
-
 .taskButton.dragged {
   background-color: #263B4A;
   color: #263B4A;
@@ -120,19 +146,12 @@ button:hover {
 /*
   ADD CATEGORY BUTTON STYLING
 */
+
 .add-category-container {
   display: flex;
-  align-items: flex-start; 
+  align-items: center;
   margin-bottom: 10px;
-  padding: 4px; 
-  width: 250px; 
-  height: 500px; 
-  background-color: #f1e3d3; /* Use the color #f1e3d3 */
-  border-radius: 10px; 
-  border: 1px solid #ccc; 
 }
-
-
 .add-category-input {
   flex: 1;
   padding: 8px;
@@ -151,7 +170,6 @@ button:hover {
   margin-bottom: 15px;
   font-family: 'Bayon', sans-serif;
   font-family: 'Comfortaa', cursive;
-  width: 250px;
 }
 
 .add-category-button:hover {

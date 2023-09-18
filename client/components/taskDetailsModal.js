@@ -12,12 +12,12 @@ export default function TaskDetailsModal({ isOpen, onClose, task, editTask }) {
         </div>
         
         <div className='popContent'>
-          <strong>Assignee:</strong> {task.Assignee.join(', ')}
-          <strong>Due Date:</strong> {task.Due_Date}
-          <strong>Priority:</strong> {task.Priority}
-          <strong>Status:</strong> {task.Status}
-          <strong>Description:</strong> {task.Description}
-          <strong>Category:</strong> {task.Category}
+          <strong>Assignee: <span className='content'>{task.Assignee.join(', ')}</span></strong>
+          <strong>Due Date: <span className='content'>{task.Due_Date}</span></strong>
+          <strong>Priority: <span className='content'>{task.Priority}</span></strong> 
+          <strong>Status: <span className='content'>{task.Status}</span></strong>
+          <strong>Description: <span className='content'>{task.Description}</span></strong>
+          <strong>Category: <span className='content'>{task.Category}</span></strong> 
         </div>
         <button className='popCloseButton' onClick={onClose}>Close</button>
       </div>
