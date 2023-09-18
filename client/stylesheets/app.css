@@ -1,29 +1,37 @@
-.task {
-  width: 100px;
-  height: 50px;
-  background-color: lightblue;
-  border: 1px solid black;
-}
+@import url('https://fonts.googleapis.com/css2?family=Bayon&family=Comfortaa&display=swap');
 
-.unassigned-tasks {
-  width: 200px;
-  height: auto;
-  padding: 20px;
-  margin-right: 20px;
-  margin-bottom: 20px;
+body{
+  background-color:#f1e3d3
+    /* background-color:#463f3a */
 }
-
-.category {
-  background-color: lightgreen;
-  width: 100px;
-  height: 500px;
-  border: 1px solid black;
+textarea {
+  width: 97%; 
+  height: 41%;
 }
-
+input[type="date"] {
+  width: 110px; 
+}
 .categories-container {
   display: flex;
   overflow-x: auto;
   gap: 16px;
+}
+.content{
+  font-weight: 100;
+  color:rgb(255, 234, 73);
+}
+.createForm {
+  display: flex;
+  justify-content: space-between;
+}
+.column {
+  flex: 1;
+  margin-right: 25px; /* Adjust the margin between columns as needed */
+  margin-bottom: 20px;
+}
+.column input,
+.column textarea {
+  margin-bottom: 4px; /* Adjust the margin as desired */
 }
 
 .modal {
@@ -39,9 +47,171 @@
 }
 
 .modal-content {
-  background-color: #fff;
+  background-color: #70a4c7;;
   padding: 20px;
   border-radius: 8px;
   width: 80%;
   max-width: 500px;
+
+}
+
+
+.unassigned-tasks {
+  width: 200px;
+  height: auto;
+  padding: 20px;
+  margin-right: 20px;
+  margin-bottom: 20px;
+}
+
+
+.taskDisplay {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0 0 8px 0;
+  height: 82px;
+  color: white;
+  border: 1px solid #333;
+  box-shadow: 8px 8px 15px rgba(0, 0, 0, 0.2);
+  margin-left: 5px;
+  margin-right: 5px;
+  border-radius:10px;
+}
+
+.taskButton{
+  padding: 16;
+  height: 82px;
+  border: none;
+  cursor: pointer;
+  Font: 16px;
+  background-color:#456C86;
+  color:#456C86;
+  transition: 0.7s;
+  border-radius:10px;
+}
+
+.taskContent{
+  display: flex;
+  align-items: center;
+  margin-left: 20px;
+  height: 70px;
+  width: 200px;
+  font-family: 'Bayon', sans-serif;
+  font-family: 'Comfortaa', cursive;
+  font-weight: bold;
+}
+.taskButton.dragged {
+  background-color: #263B4A;
+  color: #263B4A;
+  transition: 0s;
+}
+
+.taskButton:hover{
+  color: white;
+  background-color: rgb(225, 109, 109);
+}
+
+button:hover {
+  background-color: rgb(122, 214, 179);
+}
+
+.taskPopup{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin: 0 0;
+  height: 55px;
+}
+
+.taskPopupButton{
+  height:30px;
+  width: 50px;
+  text-align: center;
+}
+
+.popContent{
+  display: flex;
+  flex-direction: column;
+  margin: 6px;
+  line-height: 24px;
+}
+
+.popCloseButton{
+  margin-top: 10px;
+}
+
+
+/*
+  ADD CATEGORY BUTTON STYLING
+*/
+
+.add-category-container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+.add-category-input {
+  flex: 1;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-right: 8px;
+}
+
+.add-category-button {
+  background-color: #4c956c;
+  color: whitesmoke;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-bottom: 15px;
+  font-family: 'Bayon', sans-serif;
+  font-family: 'Comfortaa', cursive;
+}
+
+.add-category-button:hover {
+  background-color: #0056b3; 
+}
+
+
+.add-category-button:hover {
+  background-color: #0056b3; 
+}
+
+
+/*
+  ADD NEW TASK STYLING
+*/
+
+
+.add-task-input {
+  flex: 1;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-right: 8px;
+}
+
+.add-task-button {
+  background-color: #4c956c;
+  color: whitesmoke;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 10px;
+  font-family: 'Bayon', sans-serif;
+  font-family: 'Comfortaa', cursive;
+  font-weight: bold;
+}
+
+.add-task-button:hover {
+  background-color: #0056b3; 
+}
+
+.add-task-button:hover {
+  background-color: #0056b3; 
 }

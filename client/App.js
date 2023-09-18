@@ -103,6 +103,32 @@ export default function App() {
       return updatedUsers;
     });
   };
+  
+  const removeTask = (categoryId, removeTask) => {
+    const category = categories[categoryId];
+    const newItems = [];
+
+    setCategories({
+      ...categories,
+      [categoryId]: {
+        ...category,
+        items: newItems,
+      },
+    });
+  };
+
+  const editTask = (categoryId, edittedTask) => {
+    const category = categories[categoryId];
+    const newItems = edittedTask;
+
+    setCategories({
+      ...categories,
+      [categoryId]: {
+        ...category,
+        items: newItems,
+      },
+    });
+  };
 
   return (
     <div className='app'>
@@ -113,8 +139,9 @@ export default function App() {
         <div className='categories-container'>
           <Users userId={'usersCategory'} users={users} addNewUser={addNewUser} />
           {Object.entries(categories).map(([id, category]) => (
-            <Category key={id} categoryId={id} category={category} addNewTask={addNewTask} />
-          ))}
+            <Category key={id} categoryId={id} category={category} addNewTask={addNewTask} removeTask={removeTask} editTask={editTask}/>
+            ))}
+            <button onClick={addNewCategory} className="add-category-button"> + New Section</button>
         </div>
       </DragDropContext>
     </div>

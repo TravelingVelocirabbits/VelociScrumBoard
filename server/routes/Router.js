@@ -1,10 +1,10 @@
 const express = require('express');
-const path = require('path');
 const router = express.Router();
+const path = require('path');
 
-const categoryController = require('../controllers/categoryController');
 const userController = require('../controllers/userController');
 const taskController = require('../controllers/taskController');
+const categoryController = require('../controllers/categoryController');
 
 //CATEGORY CONTROLLERS
 router.get('/category', categoryController.getCategory, (req, res) => {
@@ -17,13 +17,13 @@ router.post('/category', categoryController.addCategory, (req, res) => {
   res.status(200).json(res.locals.category);
 });
 
-router.delete('/category', categoryController.removeCategory, (req, res) => {
-  console.log('finished removing category', res.locals.category);
+router.put('/category', categoryController.editCategory, (req, res) => {
+  console.log('finished updating category', res.locals.category);
   res.status(200).json(res.locals.category);
 });
 
-router.put('/category', categoryController.editCategory, (req, res) => {
-  console.log('finished updating category', res.locals.category);
+router.delete('/category', categoryController.removeCategory, (req, res) => {
+  console.log('finished removing category', res.locals.category);
   res.status(200).json(res.locals.category);
 });
 
@@ -49,17 +49,12 @@ router.post('/task', taskController.addTask, (req, res) => {
   res.status(200).json(res.locals.task);
 });
 
-router.delete('/task', taskController.removeTask, (req, res) => {
-  console.log('finished removing task', res.locals.task);
-  res.status(200).json(res.locals.task);
-});
-
 router.put('/task', taskController.editTask, (req, res) => {
   console.log('finished updating task', res.locals.task);
   res.status(200).json(res.locals.task);
 });
 
-router.delete('/removetask', taskController.removeTask, (req, res) => {
+router.delete('/task', taskController.removeTask, (req, res) => {
   console.log('finished removing task', res.locals.task);
   res.status(200).json(res.locals.task);
 });

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Droppable } from 'react-beautiful-dnd';
-import UserItem from './userItem';
+import UserItem from './UserItem';
 import { api } from '../utils/api';
 
 export default function User({ users, userId, addNewUser }) {
