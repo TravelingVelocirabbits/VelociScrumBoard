@@ -1,12 +1,16 @@
 import React from 'react';
 //POPUP OF TASK ON CLICK OF TASK
-export default function TaskDetailsModal({ isOpen, onClose, task }) {
+export default function TaskDetailsModal({ isOpen, onClose, task, editTask }) {
   if (!isOpen) return null;
 
   return (
     <div className='modal'>
       <div className='modal-content'>
-        <h2>{task.Task_Name}</h2>
+        <div className='taskPopup'>
+          <h2>{task.Task_Name}</h2>
+          <button className='taskPopupButton'  onClick={() => editTask(task.Task_Name)}>Edit</button>
+        </div>
+        
         <div>
           <strong>Assignee:</strong> {task.Assignee.join(', ')}
         </div>

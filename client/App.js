@@ -86,7 +86,20 @@ export default function App() {
 
   const removeTask = (categoryId, removeTask) => {
     const category = categories[categoryId];
-    const newItems = [category.items.filter(el => el !== removeTask)];
+    const newItems = [];
+
+    setCategories({
+      ...categories,
+      [categoryId]: {
+        ...category,
+        items: newItems,
+      },
+    });
+  };
+
+  const editTask = (categoryId, edittedTask) => {
+    const category = categories[categoryId];
+    const newItems = edittedTask;
 
     setCategories({
       ...categories,
@@ -104,7 +117,7 @@ export default function App() {
       <DragDropContext onDragEnd={(result) => onDragEnd(result, categories, setCategories)}>
         <div className='categories-container'>
           {Object.entries(categories).map(([id, category]) => (
-            <Category key={id} categoryId={id} category={category} addNewTask={addNewTask} removeTask={removeTask}/>
+            <Category key={id} categoryId={id} category={category} addNewTask={addNewTask} removeTask={removeTask} editTask={editTask}/>
           ))}
         </div>
       </DragDropContext>

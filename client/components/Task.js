@@ -24,11 +24,12 @@ export default function Task({ task, index, onTaskClick, onTaskRemove }) {
             onClick={() => onTaskClick(task)}
           >
             {task.Task_Name}
+          </div><div>
+            <button
+              className="taskButton"
+              onClick={() => onTaskRemove(task._id)}
+            >Delete</button>
           </div>
-          <button
-            className="taskButton"
-            onClick={() => onTaskRemove(task._id)}
-          >Delete</button>
         </div>
       )}
     </Draggable>
