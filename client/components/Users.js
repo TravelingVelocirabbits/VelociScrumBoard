@@ -3,7 +3,7 @@ import { Droppable } from 'react-beautiful-dnd';
 import UserItem from './UserItem';
 import { api } from '../utils/api';
 
-export default function User({ users, userId, addNewUser }) {
+export default function User({ users, userId, addNewUser, removeUser }) {
   const handleFormSubmit = async (event) => {
     event.preventDefault();
     const formData = new FormData(event.target);
@@ -41,7 +41,7 @@ export default function User({ users, userId, addNewUser }) {
             className='columnShadow'
           >
             {users.map((user, index) => (
-              <UserItem key={user._id} user={user} index={index} />
+              <UserItem key={user._id} user={user} index={index} removeUser={removeUser} />
             ))}
             {provided.placeholder}
           </div>

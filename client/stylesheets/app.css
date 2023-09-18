@@ -223,3 +223,38 @@ button:hover {
 .add-task-button:hover {
   background-color: #0056b3; 
 }
+
+
+.category-inputTitle {
+  font-size: 18px;
+  padding: 4px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 97%;
+  font-family: 'Bayon', sans-serif;
+  font-family: 'Comfortaa', cursive;
+  border-radius: 10px 10px 0 0; 
+  padding: 4px;
+
+}
+
+.category-title {
+  font-size: 20px;
+  cursor: pointer;
+  border: 1px solid #ccc;
+  background-color: #fef9ef;
+  font-family: 'Bayon', sans-serif;
+  font-family: 'Comfortaa', cursive;
+  border-radius: 10px 10px 0 0; 
+  margin-bottom: 0px; /* bring the title closer */
+  padding: 4px;
+
+}
+
+.center-title-vertically {
+  display: flex;
+  flex-direction: column;
+  justify-content: center; 
+  align-items: center; 
+  text-align: center; 
+}

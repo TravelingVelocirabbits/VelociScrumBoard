@@ -92,17 +92,28 @@ export default function Category({ category, categoryId, addNewTask, removeTask,
 
   };
 
-
-
   return (
     <div>
+        {/* UPDATE TITLE HERE */}
+        {isEditing ? (
+          <input
+            type="text"
+            value={editedTitle}
+            onChange={handleTitleChange}
+            onKeyPress={handleTitleKeyPress}
+            onBlur={() => setIsEditing(false)}
+            className="category-inputTitle center-title-vertically"
+          />
+        ) : (
+          <h2 className="category-title center-title-vertically" onClick={handleTitleClick}>{category.name}</h2>
+        )}
       <Droppable droppableId={String(categoryId)} key={categoryId}>
         {(provided, snapshot) => (
           <div
             {...provided.droppableProps}
             ref={provided.innerRef}
             style={{
-              background: snapshot.isDraggingOver ? '#cdb4db' : '#ffffff',
+              background: snapshot.isDraggingOver ? '#d9d9d9' : '#ffffff',
               padding: 4,
               width: 250,
               minHeight: 500,
@@ -112,18 +123,6 @@ export default function Category({ category, categoryId, addNewTask, removeTask,
             }}
             className='columnShadow'
           >
-            {/* UPDATE TITLE HERE */}
-            {isEditing ? (
-              <input
-                type="text"
-                value={editedTitle}
-                onChange={handleTitleChange}
-                onKeyPress={handleTitleKeyPress}
-                onBlur={() => setIsEditing(false)}
-              />
-            ) : (
-              <h2 onClick={handleTitleClick}>{category.name}</h2>
-            )}
 
             {category.items.map((task, index) => (
               <Task key={task._id} task={{...task, Due_Date: formatDueDate(task.Due_Date),}} index={index} onTaskClick={handleTaskClick} onTaskRemove={handleTaskRemove}/>

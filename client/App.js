@@ -117,6 +117,15 @@ export default function App() {
     });
   };
 
+  const removeUser = (userId) => {
+    setUsers((prevUsers) => {
+      const updatedUsers = prevUsers.filter((user) => user._id !== userId);
+      console.log('Users before:', prevUsers);
+      console.log('Users after:', updatedUsers);
+      return updatedUsers;
+    });
+  };
+
   const editTask = (categoryId, edittedTask) => {
     const category = categories[categoryId];
     const newItems = edittedTask;
@@ -136,7 +145,7 @@ export default function App() {
         onDragEnd={(result) => onDragEnd(result, categories, setCategories, users, setUsers)}
       >
         <div className='categories-container'>
-          <Users userId={'usersCategory'} users={users} addNewUser={addNewUser} />
+          <Users userId={'usersCategory'} users={users} addNewUser={addNewUser} removeUser={removeUser} />
           {Object.entries(categories).map(([id, category]) => (
             <Category key={id} categoryId={id} category={category} addNewTask={addNewTask} removeTask={removeTask} editTask={editTask}/>
           ))}
