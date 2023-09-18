@@ -98,9 +98,10 @@ export default function Category({ category, categoryId, addNewTask, removeTask,
               borderRadius: '10px',
               border: '1px solid #ccc', 
             }}
+            className='columnShadow'
           >
             {/* UPDATE TITLE HERE */}
-          {isEditing ? (
+            {isEditing ? (
               <input
                 type="text"
                 value={editedTitle}

@@ -29,11 +29,16 @@ export default function User({ users, userId, addNewUser }) {
             {...provided.droppableProps}
             ref={provided.innerRef}
             style={{
-              background: snapshot.isDraggingOver ? 'lightblue' : 'lightgrey',
               padding: 4,
               width: 250,
               minHeight: 500,
+              background: snapshot.isDraggingOver ? '#cdb4db' : '#ffffff',
+              backgroundColor: '#FFFFF',
+              borderRadius: '10px',
+              border: '1px solid #ccc',
+               
             }}
+            className='columnShadow'
           >
             {users.map((user, index) => (
               <UserItem key={user._id} user={user} index={index} />
@@ -43,8 +48,9 @@ export default function User({ users, userId, addNewUser }) {
         )}
       </Droppable>
       <form onSubmit={handleFormSubmit}>
-        <input name='name' placeholder='Username' required />
-        <button type='submit'>Create User</button>
+        <label>NewUser: </label>
+        <input className='userInput' name='name' placeholder='Username' required />
+        <button className='add-task-button' type='submit'>+ Add</button>
       </form>
     </div>
   );
