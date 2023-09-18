@@ -76,7 +76,8 @@ export default function Category({ category, categoryId, addNewTask, removeTask,
     const edittedTask = await api.editTask({Task_Name: taskData});
     if (edittedTask){
       editTask(categoryId, edittedTask);
-    } 
+    }
+
   };
 
 
