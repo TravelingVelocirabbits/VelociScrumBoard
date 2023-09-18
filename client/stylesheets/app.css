@@ -1,16 +1,12 @@
+body{
+  background-color:rgba(182, 121, 121, 0.838);
+}
+
 .task {
   width: 100px;
   height: 50px;
   background-color: lightblue;
   border: 1px solid black;
-}
-
-.unassigned-tasks {
-  width: 200px;
-  height: auto;
-  padding: 20px;
-  margin-right: 20px;
-  margin-bottom: 20px;
 }
 
 .category {
@@ -46,6 +42,15 @@
   max-width: 500px;
 }
 
+.unassigned-tasks {
+  width: 200px;
+  height: auto;
+  padding: 20px;
+  margin-right: 20px;
+  margin-bottom: 20px;
+}
+
+
 .taskDisplay{
   display:flex;
   align-items: center;
@@ -73,6 +78,16 @@ button:hover {
   background-color: rgb(122, 214, 179);
 }
 
-body{
-  background-color:rgba(182, 121, 121, 0.838);
+
+.taskPopup{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  /* align-items: center; */
+}
+
+.taskPopupButton{
+  height:30px;
+  width: 50px;
+  text-align: center;
 }
