@@ -11,8 +11,6 @@ const initialCategories = {
   },
 };
 
-const initialUsers = [];
-
 const onDragEnd = (result, categories, setCategories, users, setUsers) => {
   const { source, destination } = result;
 
@@ -20,17 +18,14 @@ const onDragEnd = (result, categories, setCategories, users, setUsers) => {
   if (!destination) return;
 
   if (source.droppableId === 'usersCategory') {
-    console.log(source);
-    console.log(destination);
-
+    console.log('all users: ', users);
     const copiedUsers = [...users];
+    console.log(copiedUsers);
     const [removed] = copiedUsers.splice(source.index, 1);
     copiedUsers.splice(destination.index, 0, removed);
 
-    setUsers(...copiedUsers);
-  }
-
-  if (source.droppableId === destination.droppableId) {
+    setUsers(copiedUsers);
+  } else if (source.droppableId === destination.droppableId) {
     // Reordering tasks within the same category
     const category = categories[source.droppableId];
     console.log(categories);
@@ -74,7 +69,7 @@ const onDragEnd = (result, categories, setCategories, users, setUsers) => {
 
 export default function App() {
   const [categories, setCategories] = useState(initialCategories);
-  const [users, setUsers] = useState(initialUsers);
+  const [users, setUsers] = useState([]);
 
   const addNewCategory = () => {
     const newId = uuidv4();
@@ -100,13 +95,21 @@ export default function App() {
   };
 
   const addNewUser = (user) => {
-    setUsers([...users, user]);
+    // console.log('New user:', user);
+    // console.log('Adding to: ', users);
+    setUsers((users) => {
+      const updatedUsers = [...users, user];
+      // console.log('New user list:', updatedUsers);
+      return updatedUsers;
+    });
   };
 
   return (
     <div className='app'>
       <button onClick={addNewCategory}>Add New Category</button>
-      <DragDropContext onDragEnd={(result) => onDragEnd(result, categories, setCategories)}>
+      <DragDropContext
+        onDragEnd={(result) => onDragEnd(result, categories, setCategories, users, setUsers)}
+      >
         <div className='categories-container'>
           <Users userId={'usersCategory'} users={users} addNewUser={addNewUser} />
           {Object.entries(categories).map(([id, category]) => (

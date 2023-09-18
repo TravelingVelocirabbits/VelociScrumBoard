@@ -1,20 +1,9 @@
 import React, { useState } from 'react';
 import { Droppable } from 'react-beautiful-dnd';
 import UserItem from './userItem';
-import UserModal from './userModal';
 import { api } from '../utils/api';
 
 export default function User({ users, userId, addNewUser }) {
-  const [isModalOpen, setModalOpen] = useState(false);
-
-  const handleOpenModal = () => {
-    setModalOpen(true);
-  };
-
-  const handleCloseModal = () => {
-    setModalOpen(false);
-  };
-
   const handleFormSubmit = async (event) => {
     event.preventDefault();
     const formData = new FormData(event.target);
@@ -27,13 +16,13 @@ export default function User({ users, userId, addNewUser }) {
     const newUser = await api.createUser(userData);
 
     if (newUser) {
-      addNewUser(userId, newUser);
-      handleCloseModal();
+      addNewUser(newUser);
     }
   };
 
   return (
     <div>
+      Users
       <Droppable droppableId={String(userId)} key={userId}>
         {(provided, snapshot) => (
           <div
@@ -53,8 +42,10 @@ export default function User({ users, userId, addNewUser }) {
           </div>
         )}
       </Droppable>
-      <button onClick={handleOpenModal}>Add New User</button>
-      <UserModal isOpen={isModalOpen} onClose={handleCloseModal} onSubmit={handleFormSubmit} />
+      <form onSubmit={handleFormSubmit}>
+        <input name='name' placeholder='Username' required />
+        <button type='submit'>Create User</button>
+      </form>
     </div>
   );
 }
