@@ -11,25 +11,15 @@ export default function TaskDetailsModal({ isOpen, onClose, task, editTask }) {
           <button className='taskPopupButton'  onClick={() => editTask(task.Task_Name)}>Edit</button>
         </div>
         
-        <div>
+        <div className='popContent'>
           <strong>Assignee:</strong> {task.Assignee.join(', ')}
-        </div>
-        <div>
           <strong>Due Date:</strong> {task.Due_Date}
-        </div>
-        <div>
           <strong>Priority:</strong> {task.Priority}
-        </div>
-        <div>
           <strong>Status:</strong> {task.Status}
-        </div>
-        <div>
           <strong>Description:</strong> {task.Description}
-        </div>
-        <div>
           <strong>Category:</strong> {task.Category}
         </div>
-        <button onClick={onClose}>Close</button>
+        <button className='popCloseButton' onClick={onClose}>Close</button>
       </div>
     </div>
   );

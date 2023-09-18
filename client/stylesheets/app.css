@@ -35,7 +35,7 @@ body{
 }
 
 .modal-content {
-  background-color: #fff;
+  background-color: #70a4c7;;
   padding: 20px;
   border-radius: 8px;
   width: 80%;
@@ -104,11 +104,23 @@ button:hover {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  /* align-items: center; */
+  margin: 0 0;
+  height: 55px;
 }
 
 .taskPopupButton{
   height:30px;
   width: 50px;
   text-align: center;
+}
+
+.popContent{
+  display: flex;
+  flex-direction: column;
+  margin: 6px;
+  line-height: 24px;
+}
+
+.popCloseButton{
+  margin-top: 10px;
 }
