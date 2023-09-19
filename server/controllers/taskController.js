@@ -59,7 +59,7 @@ taskController.removeTask = async (req, res, next) => {
 
 taskController.editTask = async (req, res, next) => {
   const { _id } = req.body;
-  
+
   try {
     const update = await Task.findOneAndUpdate({_id: _id}, req.body, {new:true});
     res.locals.task = update;

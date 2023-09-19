@@ -53,7 +53,7 @@ export default function Category({ category, categoryId, addNewTask, removeTask,
     const dueDate = new Date(date);
     const month = dueDate.getMonth() + 1;
     const day = dueDate.getDate();
-    const year = dueDate.getFullYear();
+    const year = dueDate.getFullYear();     
 
     return `${month}-${day}-${year}`;
 
@@ -94,19 +94,19 @@ export default function Category({ category, categoryId, addNewTask, removeTask,
 
   return (
     <div>
-        {/* UPDATE TITLE HERE */}
-        {isEditing ? (
-          <input
-            type="text"
-            value={editedTitle}
-            onChange={handleTitleChange}
-            onKeyPress={handleTitleKeyPress}
-            onBlur={() => setIsEditing(false)}
-            className="category-inputTitle center-title-vertically"
-          />
-        ) : (
-          <h2 className="category-title center-title-vertically" onClick={handleTitleClick}>{category.name}</h2>
-        )}
+      {/* UPDATE TITLE HERE */}
+      {isEditing ? (
+        <input
+          type="text"
+          value={editedTitle}
+          onChange={handleTitleChange}
+          onKeyPress={handleTitleKeyPress}
+          onBlur={() => setIsEditing(false)}
+          className="category-inputTitle center-title-vertically"
+        />
+      ) : (
+        <h2 className="category-title center-title-vertically" onClick={handleTitleClick}>{category.name}</h2>
+      )}
       <Droppable droppableId={String(categoryId)} key={categoryId}>
         {(provided, snapshot) => (
           <div

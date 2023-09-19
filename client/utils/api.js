@@ -11,7 +11,7 @@ export const api = {
     });
     return await response.json();
   },
-
+//Not In Use
   removeCategory: async (categoryData) => {
     const response = await fetch(`${BASE_URL}/route/category`, {
       method: 'POST',

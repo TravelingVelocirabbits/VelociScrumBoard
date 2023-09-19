@@ -108,6 +108,8 @@ export default function App() {
     const category = categories[categoryId];
     const newItems = [];
 
+    console.log(categories.items);
+
     setCategories({
       ...categories,
       [categoryId]: {
@@ -145,9 +147,17 @@ export default function App() {
         onDragEnd={(result) => onDragEnd(result, categories, setCategories, users, setUsers)}
       >
         <div className='categories-container'>
-          <Users userId={'usersCategory'} users={users} addNewUser={addNewUser} removeUser={removeUser} />
+          <Users userId={'usersCategory'} 
+            users={users} 
+            addNewUser={addNewUser} 
+            removeUser={removeUser} />
           {Object.entries(categories).map(([id, category]) => (
-            <Category key={id} categoryId={id} category={category} addNewTask={addNewTask} removeTask={removeTask} editTask={editTask}/>
+            <Category key={id} 
+              categoryId={id} 
+              category={category} 
+              addNewTask={addNewTask} 
+              removeTask={removeTask} 
+              editTask={editTask}/>
           ))}
           <div className='add-category-container'>
             <button onClick={addNewCategory} className="add-category-button"> + New Section</button>
