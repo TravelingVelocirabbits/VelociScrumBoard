@@ -10,7 +10,7 @@ const app = express();
 // connect with mongoose database
 mongoose
   .connect(
-    'mongodb://localhost/armScratcher',
+    'mongodb://localhost/VelociScrumBoard',
     {
       useNewUrlParser: true,
       useUnifiedTopology: true,
