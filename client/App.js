@@ -46,7 +46,6 @@ const onDragEnd = (result, categories, setCategories, users, setUsers) => {
   } else if (source.droppableId === destination.droppableId) {
     // Reordering tasks within the same category
     const category = categories[source.droppableId];
-    console.log(category);
     console.log(categories);
     console.log(categories[source.droppableId]);
     const copiedItems = [...category.items];
@@ -94,14 +93,11 @@ export default function App() {
   useEffect(() => {
     console.log('USE EFFECT IS BEING TRIGGEREDDDDDDD');
     const newCats = Object.assign({}, categories);
-
     async function updateCatTask() {
-    async function updateCatTask () {
       const tasks = await api.getTask();
       const categories = await api.getCategory();
-      for (let i = 0; i < categories.length; i++) {
       const newUsers = await api.getUser();
-      for (let i = 0; i < categories.length; i++){
+      for (let i = 0; i < categories.length; i++) {
         const _id = categories[i]._id;
         const name = categories[i].category;
         const catTasks = tasks.filter((el) => el.Category === name);
@@ -114,9 +110,7 @@ export default function App() {
       setUsers(newUsers);
     }
     updateCatTask();
-
-    setUsers(users);
-  }, [users, effect]);
+  }, [effect]);
 
   const addNewCategory = () => {
     const category = api.createCategory({ category: 'New Category' });
@@ -151,11 +145,7 @@ export default function App() {
   };
 
   const addNewUser = (user) => {
-    setUsers((users) => {
-      const updatedUsers = [...users, user];
-      // console.log('New user list:', updatedUsers);
-      return updatedUsers;
-    });
+    setEffect([]);
   };
 
   const removeTask = (categoryId, removeTask) => {
@@ -170,10 +160,6 @@ export default function App() {
   const editTask = (categoryId, edittedTask) => {
     const category = categories[categoryId];
     const newItems = edittedTask;
-    console.log(
-      'The category id in the editTask definitition is App.js is: ',
-      categoryId
-    );
 
     setCategories({
       ...categories,
@@ -197,6 +183,7 @@ export default function App() {
             users={users}
             addNewUser={addNewUser}
             removeUser={removeUser}
+            addNewTask={addNewTask}
           />
           {Object.entries(categories).map(([id, category]) => (
             <Category
