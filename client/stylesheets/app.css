@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Bayon&family=Comfortaa&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Bayon&family=Comfortaa&display=swap');
 
 body {
   background-color: #f1e3d3;
@@ -8,7 +8,7 @@ textarea {
   width: 97%;
   height: 41%;
 }
-input[type="date"] {
+input[type='date'] {
   width: 110px;
 }
 .categories-container {
@@ -102,8 +102,8 @@ input[type="date"] {
   margin-left: 20px;
   height: 70px;
   width: 200px;
-  font-family: "Bayon", sans-serif;
-  font-family: "Comfortaa", cursive;
+  font-family: 'Bayon', sans-serif;
+  font-family: 'Comfortaa', cursive;
   font-weight: bold;
 }
 .taskButton.dragged {
@@ -192,8 +192,8 @@ button:hover {
   border-radius: 5px;
   cursor: pointer;
   margin-bottom: 15px;
-  font-family: "Bayon", sans-serif;
-  font-family: "Comfortaa", cursive;
+  font-family: 'Bayon', sans-serif;
+  font-family: 'Comfortaa', cursive;
 }
 
 .add-category-button:hover {
@@ -224,8 +224,8 @@ button:hover {
   border-radius: 5px;
   cursor: pointer;
   margin-top: 10px;
-  font-family: "Bayon", sans-serif;
-  font-family: "Comfortaa", cursive;
+  font-family: 'Bayon', sans-serif;
+  font-family: 'Comfortaa', cursive;
   font-weight: bold;
 }
 
@@ -243,8 +243,8 @@ button:hover {
   border: 1px solid #ccc;
   border-radius: 4px;
   width: 97%;
-  font-family: "Bayon", sans-serif;
-  font-family: "Comfortaa", cursive;
+  font-family: 'Bayon', sans-serif;
+  font-family: 'Comfortaa', cursive;
   border-radius: 10px 10px 0 0;
   padding: 4px;
 }
@@ -254,8 +254,8 @@ button:hover {
   cursor: pointer;
   border: 1px solid #ccc;
   background-color: #fef9ef;
-  font-family: "Bayon", sans-serif;
-  font-family: "Comfortaa", cursive;
+  font-family: 'Bayon', sans-serif;
+  font-family: 'Comfortaa', cursive;
   border-radius: 10px 10px 0 0;
   margin-bottom: 0px; /* bring the title closer */
   padding: 4px;
