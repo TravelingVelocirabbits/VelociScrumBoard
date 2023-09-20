@@ -263,8 +263,22 @@ button:hover {
 
 .center-title-vertically {
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
+  flex-direction: row;
+  justify-content: space-between; 
+  text-align: center; 
+}
+.titleButton{
+  padding: 16;
+  border: none;
+  cursor: pointer;
+  Font: 16px;
+  background-color:#ffffff;
+  color:#ffffff;
+  transition: 0.7s;
+  border-radius:10px;
+}
+
+.titleButton:hover{
+  color: white;
+  background-color: rgb(225, 109, 109);
 }
