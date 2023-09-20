@@ -1,12 +1,17 @@
-import React, { useState } from 'react';
-import { Droppable } from 'react-beautiful-dnd';
-import Task from './Task';
-import TaskModal from './taskModal';
-import TaskDetailsModal from './taskDetailsModal';
-import { api } from '../utils/api';
+import React, { useState } from "react";
+import { Droppable } from "react-beautiful-dnd";
+import Task from "./Task";
+import TaskModal from "./taskModal";
+import TaskDetailsModal from "./taskDetailsModal";
+import { api } from "../utils/api";
 
-
-export default function Category({ category, categoryId, addNewTask, removeTask, editTask }) {
+export default function Category({
+  category,
+  categoryId,
+  addNewTask,
+  reRender,
+  editTask,
+}) {
   const [isModalOpen, setModalOpen] = useState(false);
   const [selectedTask, setSelectedTask] = useState(null);
 
@@ -14,7 +19,6 @@ export default function Category({ category, categoryId, addNewTask, removeTask,
   const [isEditing, setIsEditing] = useState(false);
   const [editedTitle, setEditedTitle] = useState(category.title); // Initialize with the existing title
 
- 
   const handleTitleClick = () => {
     setIsEditing(true);
   };
@@ -24,23 +28,21 @@ export default function Category({ category, categoryId, addNewTask, removeTask,
   };
 
   const handleTitleKeyPress = async (e) => {
-    if (e.key === 'Enter') {
+    if (e.key === "Enter") {
       // Update the category title on Enter key press
       // You may want to add logic to save the edited title to the backend here
       // For now, we'll update it locally in the state
       setIsEditing(false);
       await api.editCategory({category:category.name, newCat:editedTitle});
-      removeTask(); // DOES NOT ACTUALLY REMOVE TASK, JUST RE-RENDERS ALL CATEGORIES
+      reRender(); // DOES NOT ACTUALLY REMOVE TASK, JUST RE-RENDERS ALL CATEGORIES
     }
   };
 
   const handleTitleRemove = async () => {
     await api.removeCategory({category:category.name});
-   
-    removeTask(); // DOES NOT ACTUALLY REMOVE TASK, JUST RE-RENDERS ALL CATEGORIES
+    reRender(); // DOES NOT ACTUALLY REMOVE CATEGORY, JUST RE-RENDERS ALL CATEGORIES
   };
   // TITLE EDITS =========================================
-
 
   const handleOpenModal = () => {
     setModalOpen(true);
@@ -55,15 +57,14 @@ export default function Category({ category, categoryId, addNewTask, removeTask,
   };
 
   const formatDueDate = (date) => {
-    if (!date) return '';
+    if (!date) return "";
 
     const dueDate = new Date(date);
     const month = dueDate.getMonth() + 1;
     const day = dueDate.getDate();
-    const year = dueDate.getFullYear();     
+    const year = dueDate.getFullYear();
 
     return `${month}-${day}-${year}`;
-
   };
 
   const handleFormSubmit = async (event) => {
@@ -84,19 +85,18 @@ export default function Category({ category, categoryId, addNewTask, removeTask,
   };
 
   const handleTaskRemove = async (taskData) => {
-    const removedTask = await api.removeTask({_id: taskData});
-    if (removedTask){
-      removeTask(categoryId, removedTask);
+    const removedTask = await api.removeTask({ _id: taskData });
+    if (removedTask) {
       handleCloseModal();
+      reRender();
     }
   };
-  
+
   const handleTaskEdit = async (taskData) => {
-    const edittedTask = await api.editTask({Task_Name: taskData});
-    if (edittedTask){
+    const edittedTask = await api.editTask({ Task_Name: taskData });
+    if (edittedTask) {
       editTask(categoryId, edittedTask);
     }
-
   };
 
   return (
@@ -117,25 +117,33 @@ export default function Category({ category, categoryId, addNewTask, removeTask,
           <button className='titleButton' onClick={handleTitleRemove}>Delete</button>
         </h2>
       )}
-      <Droppable droppableId={String(categoryId)} key={categoryId}>
+      <Droppable
+        droppableId={String(categoryId)}
+        key={categoryId}
+      >
         {(provided, snapshot) => (
           <div
             {...provided.droppableProps}
             ref={provided.innerRef}
             style={{
-              background: snapshot.isDraggingOver ? '#d9d9d9' : '#ffffff',
+              background: snapshot.isDraggingOver ? "#d9d9d9" : "#ffffff",
               padding: 4,
               width: 250,
               minHeight: 500,
-              backgroundColor: '#FFFFF',
-              borderRadius: '10px',
-              border: '1px solid #ccc', 
+              backgroundColor: "#FFFFF",
+              borderRadius: "10px",
+              border: "1px solid #ccc",
             }}
-            className='columnShadow'
+            className="columnShadow"
           >
-
             {category.items.map((task, index) => (
-              <Task key={task._id} task={{...task, Due_Date: formatDueDate(task.Due_Date),}} index={index} onTaskClick={handleTaskClick} onTaskRemove={handleTaskRemove}/>
+              <Task
+                key={task._id}
+                task={{ ...task, Due_Date: formatDueDate(task.Due_Date) }}
+                index={index}
+                onTaskClick={handleTaskClick}
+                onTaskRemove={handleTaskRemove}
+              />
             ))}
             {provided.placeholder}
             <TaskDetailsModal
@@ -147,8 +155,17 @@ export default function Category({ category, categoryId, addNewTask, removeTask,
           </div>
         )}
       </Droppable>
-      <button onClick={handleOpenModal} className="add-task-button">+ Task</button>
-      <TaskModal isOpen={isModalOpen} onClose={handleCloseModal} onSubmit={handleFormSubmit} />
+      <button
+        onClick={handleOpenModal}
+        className="add-task-button"
+      >
+        + Task
+      </button>
+      <TaskModal
+        isOpen={isModalOpen}
+        onClose={handleCloseModal}
+        onSubmit={handleFormSubmit}
+      />
     </div>
   );
 }

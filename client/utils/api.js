@@ -23,7 +23,7 @@ export const api = {
     });
     return await response.json();
   },
-//Not In Use
+  //Not In Use
   removeCategory: async (categoryData) => {
     const response = await fetch(`${BASE_URL}/route/category`, {
       method: 'DELETE',
@@ -68,7 +68,6 @@ export const api = {
   },
 
   removeUser: async (userData) => {
-    console.log(userData,'userdata is here');
     const response = await fetch(`${BASE_URL}/route/user`, {
       method: 'DELETE',
       headers: {
@@ -112,6 +111,10 @@ export const api = {
   },
 
   editTask: async (taskData) => {
+    console.log(
+      'the editTask method in the api.js file is being triggered. this is the value of taskData: ',
+      taskData
+    );
     const response = await fetch(`${BASE_URL}/route/task`, {
       method: 'PUT',
       headers: {
@@ -119,6 +122,7 @@ export const api = {
       },
       body: JSON.stringify(taskData),
     });
+    console.log(response);
     return await response.json();
   },
 };

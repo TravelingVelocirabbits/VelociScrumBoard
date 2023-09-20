@@ -55,7 +55,11 @@ router.post('/task', taskController.addTask, (req, res) => {
 });
 
 router.put('/task', taskController.editTask, (req, res) => {
-  console.log('finished updating task', res.locals.task);
+  console.log('clicked the button', res.locals.task);
+  console.log(
+    'in Router.js, the router.put to /task is console logging: ',
+    res.locals.task
+  );
   res.status(200).json(res.locals.task);
 });
 
