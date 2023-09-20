@@ -129,20 +129,6 @@ export default function App() {
     setEffect([]);
   };
 
-  //NOT WORKED ON YET
-  const editTask = (categoryId, edittedTask) => {
-    const category = categories[categoryId];
-    const newItems = edittedTask;
-
-    setCategories({
-      ...categories,
-      [categoryId]: {
-        ...category,
-        items: newItems,
-      },
-    });
-  };
-
   return (
     <div className="app">
       <DragDropContext
@@ -165,7 +151,6 @@ export default function App() {
               category={category}
               addNewTask={addNewTask}
               reRender={reRender}
-              editTask={editTask}
             />
           ))}
           <div className="add-category-container">

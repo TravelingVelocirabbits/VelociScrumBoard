@@ -9,8 +9,6 @@ export default function Category({
   category,
   categoryId,
   addNewTask,
-
-  editTask,
   reRender,
 }) {
   const [isModalOpen, setModalOpen] = useState(false);

@@ -16,9 +16,6 @@ userController.getUser = async (req, res, next) => {
   
 };
 
-
-
-
 // add a user
 userController.addUser = (req, res, next) => {
   const { name } = req.body;
