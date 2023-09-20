@@ -96,10 +96,10 @@ export default function App() {
   useEffect(() => {
     console.log('USE EFFECT IS BEING TRIGGEREDDDDDDD');
     const newCats = Object.assign({}, categories);
-
     async function updateCatTask () {
       const tasks = await api.getTask();
       const categories = await api.getCategory();
+      const newUsers = await api.getUser();
       for (let i = 0; i < categories.length; i++){
         const _id = categories[i]._id;
         const name = categories[i].category;
@@ -110,11 +110,11 @@ export default function App() {
         };
       }
       setCategories(newCats);
+      setUsers(newUsers);
     }
     updateCatTask();
 
-    setUsers(users);
-  },[users, effect]);
+  },[effect]);
 
   const addNewCategory = () => {
 
@@ -151,12 +151,7 @@ export default function App() {
   };
 
   const addNewUser = (user) => {
-    
-    setUsers((users) => {
-      const updatedUsers = [...users, user];
-      // console.log('New user list:', updatedUsers);
-      return updatedUsers;
-    });
+    setEffect([]);
   };
   
   const removeTask = (categoryId, removeTask) => {
@@ -164,8 +159,7 @@ export default function App() {
   };
 
   const removeUser = async (userId) => {
-    console.log(userId);
-    await api.removeUser(userId);
+    await api.removeUser({_id: userId});
     setEffect([]);
   };
 

@@ -68,6 +68,7 @@ export const api = {
   },
 
   removeUser: async (userData) => {
+    console.log(userData,'userdata is here');
     const response = await fetch(`${BASE_URL}/route/user`, {
       method: 'DELETE',
       headers: {
