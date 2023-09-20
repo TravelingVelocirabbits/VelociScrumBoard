@@ -28,3 +28,5 @@ export default function User({ user, index, removeUser }) {
     </Draggable>
   );
 }
+
+

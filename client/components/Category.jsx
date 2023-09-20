@@ -53,7 +53,7 @@ export default function Category({ category, categoryId, addNewTask, removeTask,
     const dueDate = new Date(date);
     const month = dueDate.getMonth() + 1;
     const day = dueDate.getDate();
-    const year = dueDate.getFullYear();
+    const year = dueDate.getFullYear();     
 
     return `${month}-${day}-${year}`;
 
