@@ -32,10 +32,10 @@ categoryController.addCategory = async (req, res, next) => {
 };
 
 categoryController.removeCategory = async (req, res, next) => {
-  const {removeCat} = req.body;
+  const {category} = req.body;
 
   try {
-    const deleted = await Category.findOneAndDelete({category: removeCat});
+    const deleted = await Category.findOneAndDelete({category: category});
     if (deleted === null) {
       res.locals.category = 'Nothing was Deleted, could not find category to delete';
       return next();

@@ -33,6 +33,12 @@ export default function Category({ category, categoryId, addNewTask, removeTask,
       removeTask(); // DOES NOT ACTUALLY REMOVE TASK, JUST RE-RENDERS ALL CATEGORIES
     }
   };
+
+  const handleTitleRemove = async () => {
+    await api.removeCategory({category:category.name});
+   
+    removeTask(); // DOES NOT ACTUALLY REMOVE TASK, JUST RE-RENDERS ALL CATEGORIES
+  };
   // TITLE EDITS =========================================
 
 
@@ -106,7 +112,10 @@ export default function Category({ category, categoryId, addNewTask, removeTask,
           className="category-inputTitle center-title-vertically"
         />
       ) : (
-        <h2 className="category-title center-title-vertically" onClick={handleTitleClick}>{category.name}</h2>
+        <h2 className="category-title center-title-vertically" onClick={handleTitleClick}>
+          <span className='titleMargin'>{category.name}</span>
+          <button className='titleButton' onClick={handleTitleRemove}>Delete</button>
+        </h2>
       )}
       <Droppable droppableId={String(categoryId)} key={categoryId}>
         {(provided, snapshot) => (

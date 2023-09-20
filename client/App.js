@@ -96,7 +96,8 @@ export default function App() {
   useEffect(() => {
     console.log('USE EFFECT IS BEING TRIGGEREDDDDDDD');
     const newCats = Object.assign({}, categories);
-    async function updateCatTask () {
+
+    async function updateCatTask (updateCat) {
       const tasks = await api.getTask();
       const categories = await api.getCategory();
       const newUsers = await api.getUser();
@@ -104,7 +105,7 @@ export default function App() {
         const _id = categories[i]._id;
         const name = categories[i].category;
         const catTasks = tasks.filter(el => el.Category === name);
-        newCats[_id] = {
+        updateCat[_id] = {
           name: name,
           items: catTasks,
         };
@@ -112,7 +113,7 @@ export default function App() {
       setCategories(newCats);
       setUsers(newUsers);
     }
-    updateCatTask();
+    updateCatTask(newCats);
 
   },[effect]);
 

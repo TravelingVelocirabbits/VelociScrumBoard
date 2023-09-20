@@ -26,7 +26,7 @@ export const api = {
 //Not In Use
   removeCategory: async (categoryData) => {
     const response = await fetch(`${BASE_URL}/route/category`, {
-      method: 'POST',
+      method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
       },

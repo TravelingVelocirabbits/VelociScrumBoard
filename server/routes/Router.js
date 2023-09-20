@@ -23,7 +23,7 @@ router.put('/category', categoryController.editCategory, (req, res) => {
 });
 
 router.delete('/category', categoryController.removeCategory, (req, res) => {
-  // console.log('finished removing category', res.locals.category);
+  console.log('finished removing category', res.locals.category);
   res.status(200).json(res.locals.category);
 });
 
