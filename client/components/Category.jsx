@@ -29,7 +29,8 @@ export default function Category({ category, categoryId, addNewTask, removeTask,
       // You may want to add logic to save the edited title to the backend here
       // For now, we'll update it locally in the state
       setIsEditing(false);
-      category.name = editedTitle;
+      await api.editCategory({category:category.name, newCat:editedTitle});
+      removeTask(); // DOES NOT ACTUALLY REMOVE TASK, JUST RE-RENDERS ALL CATEGORIES
     }
   };
   // TITLE EDITS =========================================

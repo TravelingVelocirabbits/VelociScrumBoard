@@ -54,10 +54,10 @@ categoryController.removeCategory = async (req, res, next) => {
 };
 
 categoryController.editCategory = async (req, res, next) => {
-  const {oldCat, newCat} = req.body;
+  const {category, newCat} = req.body;
 
   try {
-    const update = await Category.findOneAndUpdate({category: oldCat}, {category: newCat}, {new:true});
+    const update = await Category.findOneAndUpdate({category: category}, {category: newCat}, {new:true});
     console.log('updated Category: ', update);
     res.locals.category = update;
     return next();

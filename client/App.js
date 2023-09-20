@@ -116,18 +116,9 @@ export default function App() {
 
   },[effect]);
 
-  const addNewCategory = () => {
-
-    const category = api.createCategory({category:'New Category'});
-    const { _id } = category;
-
-    setCategories({
-      ...categories,
-      [_id]: {
-        name: 'New Category',
-        items: [],
-      },
-    });
+  const addNewCategory = async () => {
+    await api.createCategory({category:'New Category'});
+    setEffect([]);
   };
 
   const addNewTask = async (categoryId, task) => {
@@ -135,8 +126,6 @@ export default function App() {
       const { _id } = categoryId;
       const category = categories[_id];
       await api.createTask({Task_Name:' ', Category: category.name});
-
-
       return;
     }
     const category = categories[categoryId];
@@ -150,11 +139,11 @@ export default function App() {
     });
   };
 
-  const addNewUser = (user) => {
+  const addNewUser = () => {
     setEffect([]);
   };
   
-  const removeTask = (categoryId, removeTask) => {
+  const removeTask = () => {
     setEffect([]);
   };
 
