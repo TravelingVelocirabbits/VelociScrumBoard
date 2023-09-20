@@ -1,15 +1,33 @@
-import React, { useState } from "react";
-import { DragDropContext } from "react-beautiful-dnd";
-import { v4 as uuidv4 } from "uuid";
-import Category from "./components/Category";
-import Users from "./components/Users";
+import React, { useState, useEffect } from 'react';
+import { DragDropContext } from 'react-beautiful-dnd';
+import { v4 as uuidv4 } from 'uuid';
+import Category from './components/Category';
+import Users from './components/Users';
+import { api } from './utils/api';
 
-const initialCategories = {
-  [uuidv4()]: {
-    name: "Todo",
-    items: [],
-  },
-};
+const initialCategories = {};
+let initialUsers = [];
+async function getCategory(catUpdate) {
+  let categories = await api.getCategory();
+  initialUsers = await api.getUser();
+  const tasks = await api.getTask();
+
+  if (categories.length === 0) {
+    api.createCategory({ category: 'ToDo' });
+    categories = await api.getCategory();
+  }
+
+  for (let i = 0; i < categories.length; i++) {
+    const _id = categories[i]._id;
+    const name = categories[i].category;
+    const catTasks = tasks.filter((el) => el.Category === name);
+    catUpdate[_id] = {
+      name: name,
+      items: catTasks,
+    };
+  }
+}
+await getCategory(initialCategories);
 
 const onDragEnd = (result, categories, setCategories, users, setUsers) => {
   const { source, destination } = result;
@@ -17,8 +35,8 @@ const onDragEnd = (result, categories, setCategories, users, setUsers) => {
   // Checks if item was dropped outside of the droppable environment
   if (!destination) return;
 
-  if (source.droppableId === "usersCategory") {
-    console.log("all users: ", users);
+  if (source.droppableId === 'usersCategory') {
+    console.log('all users: ', users);
     const copiedUsers = [...users];
     console.log(copiedUsers);
     const [removed] = copiedUsers.splice(source.index, 1);
@@ -70,20 +88,53 @@ const onDragEnd = (result, categories, setCategories, users, setUsers) => {
 
 export default function App() {
   const [categories, setCategories] = useState(initialCategories);
-  const [users, setUsers] = useState([]);
+  const [users, setUsers] = useState(initialUsers);
+  const [effect, setEffect] = useState([]);
+
+  useEffect(() => {
+    console.log('USE EFFECT IS BEING TRIGGEREDDDDDDD');
+    const newCats = Object.assign({}, categories);
+
+    async function updateCatTask() {
+      const tasks = await api.getTask();
+      const categories = await api.getCategory();
+      for (let i = 0; i < categories.length; i++) {
+        const _id = categories[i]._id;
+        const name = categories[i].category;
+        const catTasks = tasks.filter((el) => el.Category === name);
+        newCats[_id] = {
+          name: name,
+          items: catTasks,
+        };
+      }
+      setCategories(newCats);
+    }
+    updateCatTask();
+
+    setUsers(users);
+  }, [users, effect]);
 
   const addNewCategory = () => {
-    const newId = uuidv4();
+    const category = api.createCategory({ category: 'New Category' });
+    const { _id } = category;
+
     setCategories({
       ...categories,
-      [newId]: {
-        name: "New Category",
+      [_id]: {
+        name: 'New Category',
         items: [],
       },
     });
   };
 
-  const addNewTask = (categoryId, task) => {
+  const addNewTask = async (categoryId, task) => {
+    if (!task) {
+      const { _id } = categoryId;
+      const category = categories[_id];
+      await api.createTask({ Task_Name: ' ', Category: category.name });
+
+      return;
+    }
     const category = categories[categoryId];
     const newItems = [...category.items, task];
     setCategories({
@@ -96,8 +147,6 @@ export default function App() {
   };
 
   const addNewUser = (user) => {
-    // console.log('New user:', user);
-    // console.log('Adding to: ', users);
     setUsers((users) => {
       const updatedUsers = [...users, user];
       // console.log('New user list:', updatedUsers);
@@ -106,34 +155,20 @@ export default function App() {
   };
 
   const removeTask = (categoryId, removeTask) => {
-    const category = categories[categoryId];
-    const newItems = [];
-
-    console.log(categories.items);
-
-    setCategories({
-      ...categories,
-      [categoryId]: {
-        ...category,
-        items: newItems,
-      },
-    });
+    setEffect([]);
   };
 
-  const removeUser = (userId) => {
-    setUsers((prevUsers) => {
-      const updatedUsers = prevUsers.filter((user) => user._id !== userId);
-      console.log("Users before:", prevUsers);
-      console.log("Users after:", updatedUsers);
-      return updatedUsers;
-    });
+  const removeUser = async (userId) => {
+    console.log(userId);
+    await api.removeUser(userId);
+    setEffect([]);
   };
 
   const editTask = (categoryId, edittedTask) => {
     const category = categories[categoryId];
     const newItems = edittedTask;
     console.log(
-      "The category id in the editTask definitition is App.js is: ",
+      'The category id in the editTask definitition is App.js is: ',
       categoryId
     );
 
@@ -155,7 +190,7 @@ export default function App() {
       >
         <div className="categories-container">
           <Users
-            userId={"usersCategory"}
+            userId={'usersCategory'}
             users={users}
             addNewUser={addNewUser}
             removeUser={removeUser}
@@ -175,7 +210,7 @@ export default function App() {
               onClick={addNewCategory}
               className="add-category-button"
             >
-              {" "}
+              {' '}
               + New Section
             </button>
           </div>

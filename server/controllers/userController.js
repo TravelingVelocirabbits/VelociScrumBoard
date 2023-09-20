@@ -2,6 +2,23 @@ const User = require('../models/userModel');
 
 const userController = {};
 
+userController.getUser = async (req, res, next) => {
+  try{
+    const user = await User.find({});
+    res.locals.user = user;
+    return next();
+  } catch (err) {
+    return next({
+      log: 'error occurred in getting task: ' + err,
+      message: { err: 'error occurred in getting task: ' + err },
+    });
+  }
+  
+};
+
+
+
+
 // add a user
 userController.addUser = (req, res, next) => {
   const { name } = req.body;
@@ -59,12 +76,13 @@ userController.updateUser = (req, res, next) => {
 
 // delete a user
 userController.removeUser = (req, res, next) => {
-  const { name } = req.params;
-  User.deleteOne( {name: name} ).exec()
+  const { _id } = req.body;
+  User.findOneAndDelete( {_id: _id} ).exec()
     .then(data => {
+      console.log(data);
       if (!data) {
         return next({
-          log: `userController.removeUser: ${name} was not found in the database`,
+          log: `userController.removeUser: ${_id} was not found in the database`,
           message: {
             err: 'User not found'
           },
