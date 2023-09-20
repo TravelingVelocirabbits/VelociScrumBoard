@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { DragDropContext } from 'react-beautiful-dnd';
 import { v4 as uuidv4 } from 'uuid';
-import Category from './components/Category';
-import Users from './components/Users';
-import { api } from './utils/api';
+import Category from './Category';
+import Users from './Users';
+import { api } from '../utils/api';
 
 const initialCategories = {};
 let initialUsers = [];
@@ -34,6 +34,8 @@ const onDragEnd = (result, categories, setCategories, users, setUsers) => {
 
   // Checks if item was dropped outside of the droppable environment
   if (!destination) return;
+
+  if (source.droppableId !== 'usersCategory' && destination.droppableId === 'usersCategory') return;
 
   if (source.droppableId === 'usersCategory') {
     const copiedUsers = [...users];
@@ -78,7 +80,7 @@ const onDragEnd = (result, categories, setCategories, users, setUsers) => {
   }
 };
 
-export default function App() {
+export default function Board() {
   const [categories, setCategories] = useState(initialCategories);
   const [users, setUsers] = useState(initialUsers);
   const [effect, setEffect] = useState([]);
@@ -87,14 +89,14 @@ export default function App() {
     console.log('USE EFFECT IS BEING TRIGGEREDDDDDDD');
     const newCats = {};
 
-    async function updateCatTask (updateCat) {
+    async function updateCatTask(updateCat) {
       const tasks = await api.getTask();
       const categories = await api.getCategory();
       const newUsers = await api.getUser();
-      for (let i = 0; i < categories.length; i++){
+      for (let i = 0; i < categories.length; i++) {
         const _id = categories[i]._id;
         const name = categories[i].category;
-        const catTasks = tasks.filter(el => el.Category === name);
+        const catTasks = tasks.filter((el) => el.Category === name);
         updateCat[_id] = {
           name: name,
           items: catTasks,
@@ -104,11 +106,14 @@ export default function App() {
       setUsers(newUsers);
     }
     updateCatTask(newCats);
-
-  },[effect]);
+  }, [effect]);
 
   const addNewCategory = async () => {
-    await api.createCategory({category:'New Category'});
+    await api.createCategory({ category: 'New Category' });
+    setEffect([]);
+  };
+
+  const reRender = () => {
     setEffect([]);
   };
 
@@ -120,13 +125,9 @@ export default function App() {
     }
     setEffect([]);
   };
-  
+
   const removeUser = async (userId) => {
-    await api.removeUser({_id: userId});
-    setEffect([]);
-  };
-  
-  const reRender = () => {
+    await api.removeUser({ _id: userId });
     setEffect([]);
   };
 
@@ -134,10 +135,6 @@ export default function App() {
   const editTask = (categoryId, edittedTask) => {
     const category = categories[categoryId];
     const newItems = edittedTask;
-    console.log(
-      'The category id in the editTask definitition is App.js is: ',
-      categoryId
-    );
 
     setCategories({
       ...categories,
@@ -178,7 +175,6 @@ export default function App() {
               onClick={addNewCategory}
               className="add-category-button"
             >
-              {' '}
               + New Section
             </button>
           </div>

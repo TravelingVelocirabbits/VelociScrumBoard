@@ -29,8 +29,8 @@ router.delete('/category', categoryController.removeCategory, (req, res) => {
 
 // USER CONTROLLERS
 router.get('/user', userController.getUser, (req, res) => {
-  // console.log('finished getting users', res.locals.user);
-  res.status(200).json(res.locals.user);
+  console.log(res.locals.users);
+  res.status(200).json(res.locals.users);
 });
 
 router.post('/user', userController.addUser, (req, res) => {
@@ -41,6 +41,17 @@ router.post('/user', userController.addUser, (req, res) => {
 router.delete('/user', userController.removeUser, (req, res) => {
   console.log('removed user', res.locals.user);
   res.status(200).json(res.locals.user);
+});
+
+router.post('/signup', userController.findUsername, userController.createUser, (req, res) => {
+  if (res.locals.success) return res.status(200).json(res.locals.user);
+  else return res.status(200).json({});
+});
+
+
+router.post('/login', userController.login, (req, res) => {
+  if (res.locals.success) return res.status(200).json(res.locals.user);
+  else return res.status(200).json({});
 });
 
 // TASK CONTROLLERS
