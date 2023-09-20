@@ -39,8 +39,8 @@ router.post('/user', userController.addUser, (req, res) => {
 });
 
 router.delete('/user', userController.removeUser, (req, res) => {
-  console.log('removed user', res.locals.deletedUser);
-  res.status(200).json(res.locals.deletedUser);
+  console.log('removed user', res.locals.user);
+  res.status(200).json(res.locals.user);
 });
 
 // TASK CONTROLLERS

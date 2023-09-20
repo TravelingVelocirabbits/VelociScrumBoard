@@ -96,9 +96,12 @@ export default function App() {
     const newCats = Object.assign({}, categories);
 
     async function updateCatTask() {
+    async function updateCatTask () {
       const tasks = await api.getTask();
       const categories = await api.getCategory();
       for (let i = 0; i < categories.length; i++) {
+      const newUsers = await api.getUser();
+      for (let i = 0; i < categories.length; i++){
         const _id = categories[i]._id;
         const name = categories[i].category;
         const catTasks = tasks.filter((el) => el.Category === name);
@@ -108,6 +111,7 @@ export default function App() {
         };
       }
       setCategories(newCats);
+      setUsers(newUsers);
     }
     updateCatTask();
 
@@ -159,8 +163,7 @@ export default function App() {
   };
 
   const removeUser = async (userId) => {
-    console.log(userId);
-    await api.removeUser(userId);
+    await api.removeUser({ _id: userId });
     setEffect([]);
   };
 
