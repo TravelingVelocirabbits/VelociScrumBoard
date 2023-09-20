@@ -23,7 +23,7 @@ router.put('/category', categoryController.editCategory, (req, res) => {
 });
 
 router.delete('/category', categoryController.removeCategory, (req, res) => {
-  // console.log('finished removing category', res.locals.category);
+  console.log('finished removing category', res.locals.category);
   res.status(200).json(res.locals.category);
 });
 
@@ -39,8 +39,8 @@ router.post('/user', userController.addUser, (req, res) => {
 });
 
 router.delete('/user', userController.removeUser, (req, res) => {
-  console.log('removed user', res.locals.deletedUser);
-  res.status(200).json(res.locals.deletedUser);
+  console.log('removed user', res.locals.user);
+  res.status(200).json(res.locals.user);
 });
 
 // TASK CONTROLLERS

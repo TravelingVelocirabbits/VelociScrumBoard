@@ -36,9 +36,7 @@ const onDragEnd = (result, categories, setCategories, users, setUsers) => {
   if (!destination) return;
 
   if (source.droppableId === 'usersCategory') {
-    console.log('all users: ', users);
     const copiedUsers = [...users];
-    console.log(copiedUsers);
     const [removed] = copiedUsers.splice(source.index, 1);
     copiedUsers.splice(destination.index, 0, removed);
 
@@ -46,11 +44,7 @@ const onDragEnd = (result, categories, setCategories, users, setUsers) => {
   } else if (source.droppableId === destination.droppableId) {
     // Reordering tasks within the same category
     const category = categories[source.droppableId];
-    console.log(category);
-    console.log(categories);
-    console.log(categories[source.droppableId]);
     const copiedItems = [...category.items];
-    console.log([...category.items]);
     const [removed] = copiedItems.splice(source.index, 1);
     copiedItems.splice(destination.index, 0, removed);
 
@@ -63,8 +57,6 @@ const onDragEnd = (result, categories, setCategories, users, setUsers) => {
     });
   } else {
     // Moving tasks between different categories
-    console.log(source);
-    console.log(destination);
     const sourceCategory = categories[source.droppableId];
     const destCategory = categories[destination.droppableId];
     const sourceItems = [...sourceCategory.items];
@@ -93,38 +85,31 @@ export default function App() {
 
   useEffect(() => {
     console.log('USE EFFECT IS BEING TRIGGEREDDDDDDD');
-    const newCats = Object.assign({}, categories);
+    const newCats = {};
 
-    async function updateCatTask() {
+    async function updateCatTask (updateCat) {
       const tasks = await api.getTask();
       const categories = await api.getCategory();
-      for (let i = 0; i < categories.length; i++) {
+      const newUsers = await api.getUser();
+      for (let i = 0; i < categories.length; i++){
         const _id = categories[i]._id;
         const name = categories[i].category;
-        const catTasks = tasks.filter((el) => el.Category === name);
-        newCats[_id] = {
+        const catTasks = tasks.filter(el => el.Category === name);
+        updateCat[_id] = {
           name: name,
           items: catTasks,
         };
       }
       setCategories(newCats);
+      setUsers(newUsers);
     }
-    updateCatTask();
+    updateCatTask(newCats);
 
-    setUsers(users);
-  }, [users, effect]);
+  },[effect]);
 
-  const addNewCategory = () => {
-    const category = api.createCategory({ category: 'New Category' });
-    const { _id } = category;
-
-    setCategories({
-      ...categories,
-      [_id]: {
-        name: 'New Category',
-        items: [],
-      },
-    });
+  const addNewCategory = async () => {
+    await api.createCategory({category:'New Category'});
+    setEffect([]);
   };
 
   const addNewTask = async (categoryId, task) => {
@@ -132,38 +117,20 @@ export default function App() {
       const { _id } = categoryId;
       const category = categories[_id];
       await api.createTask({ Task_Name: ' ', Category: category.name });
-
-      return;
     }
-    const category = categories[categoryId];
-    const newItems = [...category.items, task];
-    setCategories({
-      ...categories,
-      [categoryId]: {
-        ...category,
-        items: newItems,
-      },
-    });
-  };
-
-  const addNewUser = (user) => {
-    setUsers((users) => {
-      const updatedUsers = [...users, user];
-      // console.log('New user list:', updatedUsers);
-      return updatedUsers;
-    });
-  };
-
-  const removeTask = (categoryId, removeTask) => {
     setEffect([]);
   };
-
+  
   const removeUser = async (userId) => {
-    console.log(userId);
-    await api.removeUser(userId);
+    await api.removeUser({_id: userId});
+    setEffect([]);
+  };
+  
+  const reRender = () => {
     setEffect([]);
   };
 
+  //NOT WORKED ON YET
   const editTask = (categoryId, edittedTask) => {
     const category = categories[categoryId];
     const newItems = edittedTask;
@@ -192,8 +159,9 @@ export default function App() {
           <Users
             userId={'usersCategory'}
             users={users}
-            addNewUser={addNewUser}
+            reRender={reRender}
             removeUser={removeUser}
+            addNewTask={addNewTask}
           />
           {Object.entries(categories).map(([id, category]) => (
             <Category
@@ -201,7 +169,7 @@ export default function App() {
               categoryId={id}
               category={category}
               addNewTask={addNewTask}
-              removeTask={removeTask}
+              reRender={reRender}
               editTask={editTask}
             />
           ))}

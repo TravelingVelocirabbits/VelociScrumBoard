@@ -32,10 +32,10 @@ categoryController.addCategory = async (req, res, next) => {
 };
 
 categoryController.removeCategory = async (req, res, next) => {
-  const {removeCat} = req.body;
+  const {category} = req.body;
 
   try {
-    const deleted = await Category.findOneAndDelete({category: removeCat});
+    const deleted = await Category.findOneAndDelete({category: category});
     if (deleted === null) {
       res.locals.category = 'Nothing was Deleted, could not find category to delete';
       return next();
@@ -54,10 +54,10 @@ categoryController.removeCategory = async (req, res, next) => {
 };
 
 categoryController.editCategory = async (req, res, next) => {
-  const {oldCat, newCat} = req.body;
+  const {category, newCat} = req.body;
 
   try {
-    const update = await Category.findOneAndUpdate({category: oldCat}, {category: newCat}, {new:true});
+    const update = await Category.findOneAndUpdate({category: category}, {category: newCat}, {new:true});
     console.log('updated Category: ', update);
     res.locals.category = update;
     return next();
