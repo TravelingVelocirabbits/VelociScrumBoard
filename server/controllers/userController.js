@@ -57,6 +57,21 @@ const bcrypt = require('bcryptjs');
 //   }
 // };
 
+userController.getUser = (req, res, next) => {
+  User.find({})
+    .then(data => {
+      res.locals.users = data;
+      return next();
+    })
+    .catch((err)=>{
+      return next({
+        err,
+        log: `could not get users, err: ${err}`,
+        message: `could not get users, err: ${err}`
+      });
+    });
+};
+
 //check if the username exists in the database
 userController.findUsername = (req, res, next) => {
   const { username, password } = req.body;

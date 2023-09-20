@@ -29,8 +29,8 @@ router.delete('/category', categoryController.removeCategory, (req, res) => {
 
 // USER CONTROLLERS
 router.get('/user', userController.getUser, (req, res) => {
-  // console.log('finished getting users', res.locals.user);
-  res.status(200).json(res.locals.user);
+  console.log(res.locals.users);
+  res.status(200).json(res.locals.users);
 });
 
 router.post('/user', userController.addUser, (req, res) => {
