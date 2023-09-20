@@ -56,7 +56,7 @@ const Login = () => {
         if (data.username) {
           navigate('./board');
         } else {
-          alert(`Log in failed. Incorrect username or password.`);
+          alert('Log in failed. Incorrect username or password.');
         }
       })
       .catch((err) => {
