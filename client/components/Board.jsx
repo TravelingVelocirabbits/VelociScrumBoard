@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { DragDropContext } from 'react-beautiful-dnd';
 import { v4 as uuidv4 } from 'uuid';
-import Category from './components/Category';
-import Users from './components/Users';
-import { api } from './utils/api';
+import Category from './Category';
+import Users from './Users';
+import { api } from '../utils/api';
 
 const initialCategories = {};
 let initialUsers = [];
@@ -34,6 +34,8 @@ const onDragEnd = (result, categories, setCategories, users, setUsers) => {
 
   // Checks if item was dropped outside of the droppable environment
   if (!destination) return;
+
+  if (source.droppableId !== 'usersCategory' && destination.droppableId === 'usersCategory') return;
 
   if (source.droppableId === 'usersCategory') {
     const copiedUsers = [...users];
@@ -78,7 +80,7 @@ const onDragEnd = (result, categories, setCategories, users, setUsers) => {
   }
 };
 
-export default function App() {
+export default function Board() {
   const [categories, setCategories] = useState(initialCategories);
   const [users, setUsers] = useState(initialUsers);
   const [effect, setEffect] = useState([]);

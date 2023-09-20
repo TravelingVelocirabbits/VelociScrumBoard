@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const express = require('express');
 const path = require('path');
 const cors = require('cors');
+const bcrypt = require('bcryptjs');
 
 const PORT = 3000;
 const app = express();
@@ -10,7 +11,7 @@ const app = express();
 // connect with mongoose database
 mongoose
   .connect(
-    'mongodb://localhost/VelociScrumBoard',
+    'mongodb+srv://connorelikeyes:D36U8CGSL5maEh9h@cluster0.vxtr5rx.mongodb.net/?retryWrites=true&w=majority',
     {
       useNewUrlParser: true,
       useUnifiedTopology: true,
