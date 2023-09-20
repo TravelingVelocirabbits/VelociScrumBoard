@@ -1,4 +1,4 @@
-const Task = require("../models/taskModel");
+const Task = require('../models/taskModel');
 
 const taskController = {};
 
@@ -9,8 +9,8 @@ taskController.getTask = async (req, res, next) => {
     return next();
   } catch (err) {
     return next({
-      log: "error occurred in getting task: " + err,
-      message: { err: "error occurred in getting task: " + err },
+      log: 'error occurred in getting task: ' + err,
+      message: { err: 'error occurred in getting task: ' + err },
     });
   }
 };
@@ -40,7 +40,7 @@ taskController.addTask = async (req, res, next) => {
     return next();
   } catch (err) {
     return next({
-      log: "failed to create task",
+      log: 'failed to create task',
       message: { err: `failed to create task: ${err}` },
     });
   }
@@ -55,7 +55,7 @@ taskController.removeTask = async (req, res, next) => {
     return next();
   } catch (err) {
     return next({
-      log: "failed to delete task",
+      log: 'failed to delete task',
       message: { err: `failed to delete task: ${err}` },
     });
   }
@@ -63,7 +63,7 @@ taskController.removeTask = async (req, res, next) => {
 
 taskController.editTask = async (req, res, next) => {
   console.log(
-    "The editTask method in the taskController is being triggered and the value of req.body is: ",
+    'The editTask method in the taskController is being triggered and the value of req.body is: ',
     req.body
   );
   const { _id, ...updates } = req.body;
@@ -74,16 +74,17 @@ taskController.editTask = async (req, res, next) => {
     });
     if (!updatedTask) {
       return next({
-        log: "Task not found",
-        message: { err: "Task not found" },
+        log: 'Task not found',
+        message: { err: 'Task not found' },
       });
     }
 
     res.locals.task = updatedTask;
+    console.log('This is res.locals.task: ', res.locals.task);
     return next();
   } catch (err) {
     return next({
-      log: "failed to update task",
+      log: 'failed to update task',
       message: { err: `failed to update task: ${err}` },
     });
   }

@@ -1,11 +1,11 @@
-const BASE_URL = "http://localhost:3000";
+const BASE_URL = 'http://localhost:3000';
 
 export const api = {
   createCategory: async (categoryData) => {
     const response = await fetch(`${BASE_URL}/route/category`, {
-      method: "POST",
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify(categoryData),
     });
@@ -14,9 +14,9 @@ export const api = {
   //Not In Use
   removeCategory: async (categoryData) => {
     const response = await fetch(`${BASE_URL}/route/category`, {
-      method: "POST",
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify(categoryData),
     });
@@ -25,9 +25,9 @@ export const api = {
 
   editCategory: async (categoryData) => {
     const response = await fetch(`${BASE_URL}/route/category`, {
-      method: "PUT",
+      method: 'PUT',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify(categoryData),
     });
@@ -36,9 +36,9 @@ export const api = {
 
   createUser: async (userData) => {
     const response = await fetch(`${BASE_URL}/route/user`, {
-      method: "POST",
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify(userData),
     });
@@ -47,9 +47,9 @@ export const api = {
 
   removeUser: async (userData) => {
     const response = await fetch(`${BASE_URL}/route/user`, {
-      method: "DELETE",
+      method: 'DELETE',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify(userData),
     });
@@ -58,9 +58,9 @@ export const api = {
 
   createTask: async (taskData) => {
     const response = await fetch(`${BASE_URL}/route/task`, {
-      method: "POST",
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify(taskData),
     });
@@ -69,9 +69,9 @@ export const api = {
 
   removeTask: async (taskData) => {
     const response = await fetch(`${BASE_URL}/route/task`, {
-      method: "DELETE",
+      method: 'DELETE',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify(taskData),
     });
@@ -80,16 +80,17 @@ export const api = {
 
   editTask: async (taskData) => {
     console.log(
-      "the editTask method in the api.js file is being triggered. this is the value of taskData: ",
+      'the editTask method in the api.js file is being triggered. this is the value of taskData: ',
       taskData
     );
     const response = await fetch(`${BASE_URL}/route/task`, {
-      method: "PUT",
+      method: 'PUT',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify(taskData),
     });
+    console.log(response);
     return await response.json();
   },
 };

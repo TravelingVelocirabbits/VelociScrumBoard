@@ -130,9 +130,10 @@ button:hover {
 }
 
 .taskPopupButton {
-  height: 30px;
-  width: 50px;
+  height: 3vh;
+  width: 20vw;
   text-align: center;
+  margin: 1vh 2vw 0vh 2vw;
 }
 
 .popContent {
@@ -143,7 +144,10 @@ button:hover {
 }
 
 .popCloseButton {
-  margin-top: 10px;
+  margin: 2vh 2vw 1vh 2vw;
+  height: 3vh;
+  width: 20vw;
+  text-align: center;
 }
 
 .editForm label {

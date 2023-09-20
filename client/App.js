@@ -132,6 +132,10 @@ export default function App() {
   const editTask = (categoryId, edittedTask) => {
     const category = categories[categoryId];
     const newItems = edittedTask;
+    console.log(
+      "The category id in the editTask definitition is App.js is: ",
+      categoryId
+    );
 
     setCategories({
       ...categories,
