@@ -1,76 +1,91 @@
-const Task = require('../models/taskModel');
+const Task = require("../models/taskModel");
 
 const taskController = {};
 
 taskController.getTask = async (req, res, next) => {
-  try{
+  try {
     const tasks = await Task.find({});
     res.locals.task = tasks;
     return next();
   } catch (err) {
     return next({
-      log: 'error occurred in getting task: ' + err,
-      message: { err: 'error occurred in getting task: ' + err },
+      log: "error occurred in getting task: " + err,
+      message: { err: "error occurred in getting task: " + err },
     });
   }
-  
 };
 
 taskController.addTask = async (req, res, next) => {
-  const {  
+  const {
     Task_Name,
     Assignee,
     Due_Date,
     Priority,
     Status,
     Description,
-    Category
+    Category,
   } = req.body;
 
   try {
-    const task = await Task.create({Task_Name, Assignee, Due_Date, Priority, Status, Description, Category});
+    const task = await Task.create({
+      Task_Name,
+      Assignee,
+      Due_Date,
+      Priority,
+      Status,
+      Description,
+      Category,
+    });
     res.locals.task = task;
     return next();
   } catch (err) {
     return next({
-      log: 'failed to create task',
-      message: {err: `failed to create task: ${err}`}
+      log: "failed to create task",
+      message: { err: `failed to create task: ${err}` },
     });
   }
-
 };
-
 
 taskController.removeTask = async (req, res, next) => {
   const { _id } = req.body;
-  
+
   try {
-    const deleted = await Task.findOneAndDelete({_id: _id});
+    const deleted = await Task.findOneAndDelete({ _id: _id });
     res.locals.task = deleted;
     return next();
   } catch (err) {
     return next({
-      log: 'failed to delete task',
-      message: {err: `failed to delete task: ${err}`}
+      log: "failed to delete task",
+      message: { err: `failed to delete task: ${err}` },
     });
   }
-
 };
 
 taskController.editTask = async (req, res, next) => {
-  const { _id } = req.body;
+  console.log(
+    "The editTask method in the taskController is being triggered and the value of req.body is: ",
+    req.body
+  );
+  const { _id, ...updates } = req.body;
 
   try {
-    const update = await Task.findOneAndUpdate({_id: _id}, req.body, {new:true});
-    res.locals.task = update;
+    const updatedTask = await Task.findOneAndUpdate({ _id }, updates, {
+      new: true,
+    });
+    if (!updatedTask) {
+      return next({
+        log: "Task not found",
+        message: { err: "Task not found" },
+      });
+    }
+
+    res.locals.task = updatedTask;
     return next();
   } catch (err) {
     return next({
-      log: 'failed to update task',
-      message: {err: `failed to update task: ${err}`}
+      log: "failed to update task",
+      message: { err: `failed to update task: ${err}` },
     });
   }
-
-
 };
 module.exports = taskController;
