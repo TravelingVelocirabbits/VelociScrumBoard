@@ -7,7 +7,9 @@ import { api } from './utils/api';
 import { onDragEnd } from './components/onDragEndLogic.js';
 
 const initialCategories = {};
+
 let initialUsers = [];
+
 async function getCategory(catUpdate) {
   let categories = await api.getCategory();
   initialUsers = await api.getUser();
@@ -34,6 +36,8 @@ export default function App() {
   const [categories, setCategories] = useState(initialCategories);
   const [users, setUsers] = useState(initialUsers);
   const [effect, setEffect] = useState([]);
+  const [activeIndex, setActiveIndex] = useState(null);
+  const [activeDroppableId, setActiveDroppableId] = useState(null);
 
   useEffect(() => {
     console.log('USE EFFECT IS BEING TRIGGEREDDDDDDD');
