@@ -66,16 +66,12 @@ taskController.editTask = async (req, res, next) => {
     'The editTask method in the taskController is being triggered and the value of req.body is: ',
     req.body
   );
-  const { _id, ...updates } = req.body.Task_Name;
+  const { _id, ...updates } = req.body;
 
   try {
-    const updatedTask = await Task.findOneAndUpdate(
-      { _id },
-      req.body.Task_Name,
-      {
-        new: true,
-      }
-    );
+    const updatedTask = await Task.findOneAndUpdate({ _id }, req.body, {
+      new: true,
+    });
     // if (!updatedTask) {
     //   return next({
     //     log: 'Task not found',

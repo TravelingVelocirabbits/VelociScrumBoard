@@ -226,33 +226,19 @@ userController.updateUser = (req, res, next) => {
 };
 
 // delete a user
-userController.removeUser = (req, res, next) => {
+userController.removeUser = async (req, res, next) => {
   const { _id } = req.body;
-  User.findOneAndDelete( {_id: _id} ).exec()
-    .then(data => {
-      console.log(data);
-      if (!data) {
-        return next({
-          log: `userController.removeUser: ${_id} was not found in the database`,
-          message: {
-            err: 'User not found',
-          },
-          status: 404,
-        });
-      } else {
-        res.locals.deletedUser = data;
-        return next();
-      }
-    })
-    .catch((err) => {
-      return next({
-        log: `userController.removeUser: Error ${err}`,
-        message: {
-          err: 'Error occurred in userController.removeUser. Check server logs',
-        },
-        status: 400,
-      });
+  console.log(_id, 'iD IS THIS');
+  try {
+    const deleted = await User.findOneAndDelete({_id: _id});
+    res.locals.user = deleted;
+    return next();
+  } catch (err) {
+    return next({
+      log: 'failed to delete user',
+      message: {err: `failed to delete user: ${err}`}
     });
+  }
 };
 
 module.exports = userController;

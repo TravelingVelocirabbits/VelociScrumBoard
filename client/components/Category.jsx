@@ -1,16 +1,17 @@
-import React, { useState } from "react";
-import { Droppable } from "react-beautiful-dnd";
-import Task from "./Task";
-import TaskModal from "./taskModal";
-import TaskDetailsModal from "./taskDetailsModal";
-import { api } from "../utils/api";
+import React, { useState } from 'react';
+import { Droppable } from 'react-beautiful-dnd';
+import Task from './Task';
+import TaskModal from './taskModal';
+import TaskDetailsModal from './taskDetailsModal';
+import { api } from '../utils/api';
 
 export default function Category({
   category,
   categoryId,
   addNewTask,
-  removeTask,
+
   editTask,
+  reRender,
 }) {
   const [isModalOpen, setModalOpen] = useState(false);
   const [selectedTask, setSelectedTask] = useState(null);
@@ -18,6 +19,11 @@ export default function Category({
   // TITLE EDITS =========================================
   const [isEditing, setIsEditing] = useState(false);
   const [editedTitle, setEditedTitle] = useState(category.title); // Initialize with the existing title
+
+  console.log('is category.items an Array?');
+  console.log(Array.isArray(category.items));
+  console.log('what is category?', category);
+  console.log('what is category.items?', category.items);
 
   const handleTitleClick = () => {
     setIsEditing(true);
@@ -28,13 +34,19 @@ export default function Category({
   };
 
   const handleTitleKeyPress = async (e) => {
-    if (e.key === "Enter") {
+    if (e.key === 'Enter') {
       // Update the category title on Enter key press
       // You may want to add logic to save the edited title to the backend here
       // For now, we'll update it locally in the state
       setIsEditing(false);
-      category.name = editedTitle;
+      await api.editCategory({ category: category.name, newCat: editedTitle });
+      reRender(); // DOES NOT ACTUALLY REMOVE TASK, JUST RE-RENDERS ALL CATEGORIES
     }
+  };
+
+  const handleTitleRemove = async () => {
+    await api.removeCategory({ category: category.name });
+    reRender(); // DOES NOT ACTUALLY REMOVE CATEGORY, JUST RE-RENDERS ALL CATEGORIES
   };
   // TITLE EDITS =========================================
 
@@ -51,7 +63,7 @@ export default function Category({
   };
 
   const formatDueDate = (date) => {
-    if (!date) return "";
+    if (!date) return '';
 
     const dueDate = new Date(date);
     const month = dueDate.getMonth() + 1;
@@ -81,18 +93,18 @@ export default function Category({
   const handleTaskRemove = async (taskData) => {
     const removedTask = await api.removeTask({ _id: taskData });
     if (removedTask) {
-      removeTask(categoryId, removedTask);
       handleCloseModal();
+      reRender();
     }
   };
 
   const handleTaskEdit = async (taskData) => {
-    const edittedTask = await api.editTask({ Task_Name: taskData });
+    const edittedTask = await api.editTask(taskData);
     if (edittedTask) {
-      editTask(categoryId, edittedTask);
+      reRender();
     }
   };
-  console.log(category);
+
   return (
     <div>
       {/* UPDATE TITLE HERE */}
@@ -110,7 +122,13 @@ export default function Category({
           className="category-title center-title-vertically"
           onClick={handleTitleClick}
         >
-          {category.name}
+          <span className="titleMargin">{category.name}</span>
+          <button
+            className="titleButton"
+            onClick={handleTitleRemove}
+          >
+            Delete
+          </button>
         </h2>
       )}
       <Droppable
@@ -122,16 +140,21 @@ export default function Category({
             {...provided.droppableProps}
             ref={provided.innerRef}
             style={{
-              background: snapshot.isDraggingOver ? "#d9d9d9" : "#ffffff",
+              background: snapshot.isDraggingOver ? '#d9d9d9' : '#ffffff',
               padding: 4,
               width: 250,
               minHeight: 500,
-              backgroundColor: "#FFFFF",
-              borderRadius: "10px",
-              border: "1px solid #ccc",
+              backgroundColor: '#FFFFF',
+              borderRadius: '10px',
+              border: '1px solid #ccc',
             }}
             className="columnShadow"
           >
+            {' '}
+            <div>
+              {console.log('Logging category.items:', category.items) || null}
+              {/* rest of your code */}
+            </div>
             {category.items.map((task, index) => (
               <Task
                 key={task._id}
