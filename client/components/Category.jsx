@@ -105,7 +105,6 @@ export default function Category({
 
   return (
     <div>
-      {/* UPDATE TITLE HERE */}
       {isEditing ? (
         <input
           type="text"
@@ -148,11 +147,6 @@ export default function Category({
             }}
             className="columnShadow"
           >
-            {' '}
-            <div>
-              {console.log('Logging category.items:', category.items) || null}
-              {/* rest of your code */}
-            </div>
             {category.items.map((task, index) => (
               <Task
                 key={task._id}
