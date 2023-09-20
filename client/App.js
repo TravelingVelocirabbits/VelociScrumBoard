@@ -125,6 +125,10 @@ export default function App() {
     });
   };
 
+  const reRender = () => {
+    setEffect([]);
+  };
+
   const addNewTask = async (categoryId, task) => {
     if (!task) {
       const { _id } = categoryId;
@@ -193,6 +197,7 @@ export default function App() {
               addNewTask={addNewTask}
               removeTask={removeTask}
               editTask={editTask}
+              reRender={reRender}
             />
           ))}
           <div className="add-category-container">
@@ -200,7 +205,6 @@ export default function App() {
               onClick={addNewCategory}
               className="add-category-button"
             >
-              {' '}
               + New Section
             </button>
           </div>
