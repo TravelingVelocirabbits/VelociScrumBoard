@@ -93,9 +93,9 @@ export default function Category({
   };
 
   const handleTaskEdit = async (taskData) => {
-    const edittedTask = await api.editTask({ Task_Name: taskData });
+    const edittedTask = await api.editTask(taskData);
     if (edittedTask) {
-      editTask(categoryId, edittedTask);
+      reRender();
     }
   };
 
