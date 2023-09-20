@@ -9,7 +9,6 @@ export default function Category({
   category,
   categoryId,
   addNewTask,
-  editTask,
   reRender,
 }) {
   const [isModalOpen, setModalOpen] = useState(false);
@@ -19,10 +18,10 @@ export default function Category({
   const [isEditing, setIsEditing] = useState(false);
   const [editedTitle, setEditedTitle] = useState(category.title); // Initialize with the existing title
 
-  console.log('is category.items an Array?');
-  console.log(Array.isArray(category.items));
-  console.log('what is category?', category);
-  console.log('what is category.items?', category.items);
+  // console.log('is category.items an Array?');
+  // console.log(Array.isArray(category.items));
+  // console.log('what is category?', category);
+  // console.log('what is category.items?', category.items);
 
   const handleTitleClick = () => {
     setIsEditing(true);

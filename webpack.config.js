@@ -36,8 +36,14 @@ module.exports = {
   },
   devServer: {
     static: './dist',
+    open: true,
     hot: true,
-    compress: true,
+    // compress: true,
+    liveReload: true,
     port: 8080,
+    proxy: {
+      '/': 'http://localhost:3000',
+      '/api': 'http://localhost:3000',
+    },
   },
 };
