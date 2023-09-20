@@ -39,10 +39,5 @@ module.exports = {
     hot: true,
     compress: true,
     port: 8080,
-    liveReload: true,
-    proxy: {
-      '/': 'http://localhost:3000',
-      '/api': 'http://localhost:3000',
-    }
   },
 };
