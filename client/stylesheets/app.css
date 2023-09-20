@@ -1,24 +1,24 @@
-@import url('https://fonts.googleapis.com/css2?family=Bayon&family=Comfortaa&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Bayon&family=Comfortaa&display=swap");
 
-body{
-  background-color:#f1e3d3
-    /* background-color:#463f3a */
+body {
+  background-color: #f1e3d3;
+  /* background-color:#463f3a */
 }
 textarea {
-  width: 97%; 
+  width: 97%;
   height: 41%;
 }
 input[type="date"] {
-  width: 110px; 
+  width: 110px;
 }
 .categories-container {
   display: flex;
   overflow-x: auto;
   gap: 16px;
 }
-.content{
+.content {
   font-weight: 100;
-  color:rgb(255, 234, 73);
+  color: rgb(255, 234, 73);
 }
 .createForm {
   display: flex;
@@ -51,14 +51,15 @@ input[type="date"] {
 }
 
 .modal-content {
-  background-color: #70a4c7;;
+  background-color: #70a4c7;
   padding: 20px;
   border-radius: 8px;
-  width: 80%;
+  width: auto;
   max-width: 500px;
-
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
-
 
 .unassigned-tasks {
   width: 200px;
@@ -67,7 +68,6 @@ input[type="date"] {
   margin-right: 20px;
   margin-bottom: 20px;
 }
-
 
 .taskDisplay {
   display: flex;
@@ -81,38 +81,38 @@ input[type="date"] {
   box-shadow: 8px 8px 15px rgba(0, 0, 0, 0.2);
   margin-left: 5px;
   margin-right: 5px;
-  border-radius:10px;
+  border-radius: 10px;
 }
 
-.taskButton{
+.taskButton {
   padding: 16;
   height: 82px;
   border: none;
   cursor: pointer;
-  Font: 16px;
-  background-color:#456C86;
-  color:#456C86;
+  font: 16px;
+  background-color: #456c86;
+  color: #456c86;
   transition: 0.7s;
-  border-radius:10px;
+  border-radius: 10px;
 }
 
-.taskContent{
+.taskContent {
   display: flex;
   align-items: center;
   margin-left: 20px;
   height: 70px;
   width: 200px;
-  font-family: 'Bayon', sans-serif;
-  font-family: 'Comfortaa', cursive;
+  font-family: "Bayon", sans-serif;
+  font-family: "Comfortaa", cursive;
   font-weight: bold;
 }
 .taskButton.dragged {
-  background-color: #263B4A;
-  color: #263B4A;
+  background-color: #263b4a;
+  color: #263b4a;
   transition: 0s;
 }
 
-.taskButton:hover{
+.taskButton:hover {
   color: white;
   background-color: rgb(225, 109, 109);
 }
@@ -121,7 +121,7 @@ button:hover {
   background-color: rgb(122, 214, 179);
 }
 
-.taskPopup{
+.taskPopup {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -129,23 +129,35 @@ button:hover {
   height: 55px;
 }
 
-.taskPopupButton{
-  height:30px;
+.taskPopupButton {
+  height: 30px;
   width: 50px;
   text-align: center;
 }
 
-.popContent{
+.popContent {
   display: flex;
   flex-direction: column;
   margin: 6px;
   line-height: 24px;
 }
 
-.popCloseButton{
+.popCloseButton {
   margin-top: 10px;
 }
-.userInput{
+
+.editForm label {
+  margin-right: 5vw;
+}
+
+.editForm input {
+  display: block;
+  margin-left: 0vw;
+  margin-right: auto;
+  width: 20vw;
+}
+
+.userInput {
   width: 80px;
   margin-right: 10px;
   margin-top: 6px;
@@ -176,24 +188,21 @@ button:hover {
   border-radius: 5px;
   cursor: pointer;
   margin-bottom: 15px;
-  font-family: 'Bayon', sans-serif;
-  font-family: 'Comfortaa', cursive;
+  font-family: "Bayon", sans-serif;
+  font-family: "Comfortaa", cursive;
 }
 
 .add-category-button:hover {
-  background-color: #0056b3; 
+  background-color: #0056b3;
 }
-
 
 .add-category-button:hover {
-  background-color: #0056b3; 
+  background-color: #0056b3;
 }
-
 
 /*
   ADD NEW TASK STYLING
 */
-
 
 .add-task-input {
   flex: 1;
@@ -211,19 +220,18 @@ button:hover {
   border-radius: 5px;
   cursor: pointer;
   margin-top: 10px;
-  font-family: 'Bayon', sans-serif;
-  font-family: 'Comfortaa', cursive;
+  font-family: "Bayon", sans-serif;
+  font-family: "Comfortaa", cursive;
   font-weight: bold;
 }
 
 .add-task-button:hover {
-  background-color: #0056b3; 
+  background-color: #0056b3;
 }
 
 .add-task-button:hover {
-  background-color: #0056b3; 
+  background-color: #0056b3;
 }
-
 
 .category-inputTitle {
   font-size: 18px;
@@ -231,11 +239,10 @@ button:hover {
   border: 1px solid #ccc;
   border-radius: 4px;
   width: 97%;
-  font-family: 'Bayon', sans-serif;
-  font-family: 'Comfortaa', cursive;
-  border-radius: 10px 10px 0 0; 
+  font-family: "Bayon", sans-serif;
+  font-family: "Comfortaa", cursive;
+  border-radius: 10px 10px 0 0;
   padding: 4px;
-
 }
 
 .category-title {
@@ -243,18 +250,17 @@ button:hover {
   cursor: pointer;
   border: 1px solid #ccc;
   background-color: #fef9ef;
-  font-family: 'Bayon', sans-serif;
-  font-family: 'Comfortaa', cursive;
-  border-radius: 10px 10px 0 0; 
+  font-family: "Bayon", sans-serif;
+  font-family: "Comfortaa", cursive;
+  border-radius: 10px 10px 0 0;
   margin-bottom: 0px; /* bring the title closer */
   padding: 4px;
-
 }
 
 .center-title-vertically {
   display: flex;
   flex-direction: column;
-  justify-content: center; 
-  align-items: center; 
-  text-align: center; 
+  justify-content: center;
+  align-items: center;
+  text-align: center;
 }

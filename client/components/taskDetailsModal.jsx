@@ -27,16 +27,10 @@ export default function TaskDetailsModal({ isOpen, onClose, task, editTask }) {
       <div className="modal-content">
         <div className="taskPopup">
           <h2>{task.Task_Name}</h2>
-          <button
-            className="taskPopupButton"
-            onClick={handleSaveEdit}
-          >
-            Save Edit
-          </button>
         </div>
 
         <div className="popContent">
-          <form>
+          <form className="editForm">
             <label>
               Assignee:
               <input
@@ -47,6 +41,7 @@ export default function TaskDetailsModal({ isOpen, onClose, task, editTask }) {
                 }
               />
             </label>
+            <br />
 
             <label>
               Category:
@@ -56,6 +51,7 @@ export default function TaskDetailsModal({ isOpen, onClose, task, editTask }) {
                 onChange={(e) => handleFieldChange("Category", e.target.value)}
               />
             </label>
+            <br />
             <label>
               Priority:
               <input
@@ -64,6 +60,7 @@ export default function TaskDetailsModal({ isOpen, onClose, task, editTask }) {
                 onChange={(e) => handleFieldChange("Priority", e.target.value)}
               />
             </label>
+            <br />
             <label>
               Due Date:
               <input
@@ -72,7 +69,7 @@ export default function TaskDetailsModal({ isOpen, onClose, task, editTask }) {
                 onChange={(e) => handleFieldChange("Priority", e.target.value)}
               />
             </label>
-
+            <br />
             <label>
               Status:
               <input
@@ -81,6 +78,7 @@ export default function TaskDetailsModal({ isOpen, onClose, task, editTask }) {
                 onChange={(e) => handleFieldChange("Status", e.target.value)}
               />
             </label>
+            <br />
             <label>
               Description:
               <input
@@ -93,6 +91,12 @@ export default function TaskDetailsModal({ isOpen, onClose, task, editTask }) {
             </label>
           </form>
         </div>
+        <button
+          className="taskPopupButton"
+          onClick={handleSaveEdit}
+        >
+          Save Edit
+        </button>
         <button
           className="popCloseButton"
           onClick={onClose}
