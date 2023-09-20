@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { DragDropContext } from 'react-beautiful-dnd';
 import { v4 as uuidv4 } from 'uuid';
 import Category from './components/Category';
@@ -6,8 +6,12 @@ import Users from './components/Users';
 import { api } from './utils/api';
 
 const initialCategories = {};
-async function getCategory () {
+let initialUsers = [];
+async function getCategory (catUpdate) {
   let categories = await api.getCategory();
+  initialUsers = await api.getUser();
+  const tasks = await api.getTask();
+
   if (categories.length === 0) {
     api.createCategory({category: 'ToDo'});
     categories = await api.getCategory();
@@ -16,15 +20,15 @@ async function getCategory () {
   for (let i = 0; i < categories.length; i++){
     const _id = categories[i]._id;
     const name = categories[i].category;
-    initialCategories[_id] = {
+    const catTasks = tasks.filter(el => el.Category === name);
+    catUpdate[_id] = {
       name: name,
-      items: [],
+      items: catTasks,
     };
   }
 
 }
-await getCategory();
-console.log(initialCategories, 'initialcategories');
+await getCategory(initialCategories);
 
 
 const onDragEnd = (result, categories, setCategories, users, setUsers) => {
@@ -85,7 +89,32 @@ const onDragEnd = (result, categories, setCategories, users, setUsers) => {
 
 export default function App() {
   const [categories, setCategories] = useState(initialCategories);
-  const [users, setUsers] = useState([]);
+  const [users, setUsers] = useState(initialUsers);
+  const [effect, setEffect] = useState([]);
+
+
+  useEffect(() => {
+    console.log('USE EFFECT IS BEING TRIGGEREDDDDDDD');
+    const newCats = Object.assign({}, categories);
+
+    async function updateCatTask () {
+      const tasks = await api.getTask();
+      const categories = await api.getCategory();
+      for (let i = 0; i < categories.length; i++){
+        const _id = categories[i]._id;
+        const name = categories[i].category;
+        const catTasks = tasks.filter(el => el.Category === name);
+        newCats[_id] = {
+          name: name,
+          items: catTasks,
+        };
+      }
+      setCategories(newCats);
+    }
+    updateCatTask();
+
+    setUsers(users);
+  },[users, effect]);
 
   const addNewCategory = () => {
 
@@ -101,7 +130,15 @@ export default function App() {
     });
   };
 
-  const addNewTask = (categoryId, task) => {
+  const addNewTask = async (categoryId, task) => {
+    if(!task){
+      const { _id } = categoryId;
+      const category = categories[_id];
+      await api.createTask({Task_Name:' ', Category: category.name});
+
+
+      return;
+    }
     const category = categories[categoryId];
     const newItems = [...category.items, task];
     setCategories({
@@ -114,8 +151,7 @@ export default function App() {
   };
 
   const addNewUser = (user) => {
-    // console.log('New user:', user);
-    // console.log('Adding to: ', users);
+    
     setUsers((users) => {
       const updatedUsers = [...users, user];
       // console.log('New user list:', updatedUsers);
@@ -124,27 +160,13 @@ export default function App() {
   };
   
   const removeTask = (categoryId, removeTask) => {
-    const category = categories[categoryId];
-    const newItems = [];
-
-    console.log(categories.items);
-
-    setCategories({
-      ...categories,
-      [categoryId]: {
-        ...category,
-        items: newItems,
-      },
-    });
+    setEffect([]);
   };
 
-  const removeUser = (userId) => {
-    setUsers((prevUsers) => {
-      const updatedUsers = prevUsers.filter((user) => user._id !== userId);
-      console.log('Users before:', prevUsers);
-      console.log('Users after:', updatedUsers);
-      return updatedUsers;
-    });
+  const removeUser = async (userId) => {
+    console.log(userId);
+    await api.removeUser(userId);
+    setEffect([]);
   };
 
   const editTask = (categoryId, edittedTask) => {
@@ -169,7 +191,8 @@ export default function App() {
           <Users userId={'usersCategory'} 
             users={users} 
             addNewUser={addNewUser} 
-            removeUser={removeUser} />
+            removeUser={removeUser} 
+            addNewTask={addNewTask}/>
           {Object.entries(categories).map(([id, category]) => (
             <Category key={id} 
               categoryId={id} 
