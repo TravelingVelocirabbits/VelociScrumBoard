@@ -3,13 +3,29 @@ import { DragDropContext } from 'react-beautiful-dnd';
 import { v4 as uuidv4 } from 'uuid';
 import Category from './components/Category';
 import Users from './components/Users';
+import { api } from './utils/api';
 
-const initialCategories = {
-  [uuidv4()]: {
-    name: 'Todo',
-    items: [],
-  },
-};
+const initialCategories = {};
+async function getCategory () {
+  let categories = await api.getCategory();
+  if (categories.length === 0) {
+    api.createCategory({category: 'ToDo'});
+    categories = await api.getCategory();
+  }
+
+  for (let i = 0; i < categories.length; i++){
+    const _id = categories[i]._id;
+    const name = categories[i].category;
+    initialCategories[_id] = {
+      name: name,
+      items: [],
+    };
+  }
+
+}
+await getCategory();
+console.log(initialCategories, 'initialcategories');
+
 
 const onDragEnd = (result, categories, setCategories, users, setUsers) => {
   const { source, destination } = result;
@@ -72,10 +88,13 @@ export default function App() {
   const [users, setUsers] = useState([]);
 
   const addNewCategory = () => {
-    const newId = uuidv4();
+
+    const category = api.createCategory({category:'New Category'});
+    const { _id } = category;
+
     setCategories({
       ...categories,
-      [newId]: {
+      [_id]: {
         name: 'New Category',
         items: [],
       },

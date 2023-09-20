@@ -17,10 +17,10 @@ categoryController.getCategory = async (req, res, next) => {
 };
 
 categoryController.addCategory = async (req, res, next) => {
-  const { id, category } = req.body;
+  const { category } = req.body;
 
   try {
-    const newCategory = await Category.create({ id: id, category: category });
+    const newCategory = await Category.create({ category: category });
     res.locals.category = newCategory;
     return next();
   } catch (err) {
