@@ -66,13 +66,14 @@ const Login = () => {
 
   return (
     <div className='loginpage'>
-      <h3>Please log in</h3>
+      <h1>Task Manager</h1> <br />
+      <h4>Please log in</h4>
       <form onSubmit = {handleSubmitLogIn}>
         <input required id='username' name='username' type='text' placeholder='username'></input><br />
         <input required id='password' name='password' type='password' placeholder='password'></input><br />
         <button className='loginButton' type='submit' value='log in'> Log In</button><br />
-      </form>
-      <h3 className='loginHeader'>Sign Up</h3>
+      </form><br/><br/>
+      <h4 className='loginHeader'>Sign Up</h4>
       <form onSubmit = {handleSubmitSignUp}>
         <input required name='username' type='text' placeholder='username'></input><br />
         <input required name='password' type='password' placeholder='password'></input><br />
