@@ -22,7 +22,7 @@ export default function User({ users, userId, addNewUser, removeUser }) {
 
   return (
     <div>
-      Users
+      <h2 className="category-title center-title-vertically" >Users</h2>
       <Droppable droppableId={String(userId)} key={userId}>
         {(provided, snapshot) => (
           <div
