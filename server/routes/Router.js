@@ -38,6 +38,20 @@ router.delete('/user', userController.removeUser, (req, res) => {
   res.status(200).json(res.locals.deletedUser);
 });
 
+router.get('/signup', (req, res) => {
+  return res.status(200).json({});
+})
+
+router.post('/signup', userController.signUp, (req, res) => {
+  if(res.locals.success) return res.status(200).json(res.locals.user);
+  else return res.status(200).json({});
+});
+
+router.post('/login', userController.login, (req, res) => {
+  if (res.locals.success) return res.status(200).json(res.locals.user);
+  else return res.status(200).json({});
+});
+
 // TASK CONTROLLERS
 router.get('/task', taskController.getTask, (req, res) => {
   console.log('finished getting tasks', res.locals.task);
