@@ -1,4 +1,5 @@
 const User = require('../models/userModel');
+
 const userController = {};
 const bcrypt = require('bcryptjs');
 
@@ -211,13 +212,13 @@ userController.updateUser = (req, res, next) => {
 
 // delete a user
 userController.removeUser = (req, res, next) => {
-  const { name } = req.params;
-  User.deleteOne({ name: name })
-    .exec()
-    .then((data) => {
+  const { _id } = req.body;
+  User.findOneAndDelete( {_id: _id} ).exec()
+    .then(data => {
+      console.log(data);
       if (!data) {
         return next({
-          log: `userController.removeUser: ${name} was not found in the database`,
+          log: `userController.removeUser: ${_id} was not found in the database`,
           message: {
             err: 'User not found',
           },
