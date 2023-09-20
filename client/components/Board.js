@@ -67,7 +67,7 @@ const onDragEnd = (result, categories, setCategories, users, setUsers) => {
   }
 };
 
-  const Board = () => {
+const Board = () => {
   const [categories, setCategories] = useState(initialCategories);
   const [users, setUsers] = useState([]);
 
