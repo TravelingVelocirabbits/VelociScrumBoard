@@ -4,6 +4,7 @@ import { v4 as uuidv4 } from 'uuid';
 import Category from './components/Category';
 import Users from './components/Users';
 import { api } from './utils/api';
+import { onDragEnd } from './components/onDragEndLogic.js';
 
 const initialCategories = {};
 let initialUsers = [];
@@ -26,57 +27,8 @@ async function getCategory(catUpdate) {
       items: catTasks,
     };
   }
+  await getCategory(initialCategories);
 }
-await getCategory(initialCategories);
-
-const onDragEnd = (result, categories, setCategories, users, setUsers) => {
-  const { source, destination } = result;
-
-  // Checks if item was dropped outside of the droppable environment
-  if (!destination) return;
-
-  if (source.droppableId === 'usersCategory') {
-    const copiedUsers = [...users];
-    const [removed] = copiedUsers.splice(source.index, 1);
-    copiedUsers.splice(destination.index, 0, removed);
-
-    setUsers(copiedUsers);
-  } else if (source.droppableId === destination.droppableId) {
-    // Reordering tasks within the same category
-    const category = categories[source.droppableId];
-    const copiedItems = [...category.items];
-    const [removed] = copiedItems.splice(source.index, 1);
-    copiedItems.splice(destination.index, 0, removed);
-
-    setCategories({
-      ...categories,
-      [source.droppableId]: {
-        ...category,
-        items: copiedItems,
-      },
-    });
-  } else {
-    // Moving tasks between different categories
-    const sourceCategory = categories[source.droppableId];
-    const destCategory = categories[destination.droppableId];
-    const sourceItems = [...sourceCategory.items];
-    const destItems = [...destCategory.items];
-    const [removed] = sourceItems.splice(source.index, 1);
-    destItems.splice(destination.index, 0, removed);
-
-    setCategories({
-      ...categories,
-      [source.droppableId]: {
-        ...sourceCategory,
-        items: sourceItems,
-      },
-      [destination.droppableId]: {
-        ...destCategory,
-        items: destItems,
-      },
-    });
-  }
-};
 
 export default function App() {
   const [categories, setCategories] = useState(initialCategories);
