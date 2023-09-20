@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const express = require('express');
 const path = require('path');
 const cors = require('cors');
-
+const { userController } = require('./controllers/userController');
 const PORT = 3000;
 const app = express();
 
@@ -31,7 +31,6 @@ app.use(express.urlencoded({ extended: true }));
 //statically serve everything in dist folder on static call
 app.use(express.static(path.join(__dirname, '../dist')));
 app.use('/stylesheets', express.static(path.join(__dirname, '../client/stylesheets'))); 
-
 //Router to serve middleware & response
 app.use('/route', router);
 
