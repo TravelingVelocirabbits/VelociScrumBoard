@@ -3,7 +3,7 @@ import { Droppable } from 'react-beautiful-dnd';
 import UserItem from './UserItem';
 import { api } from '../utils/api';
 
-export default function User({ users, userId, addNewUser, removeUser }) {
+export default function User({ users, userId, addNewUser, removeUser, updateCategories}) {
   const handleFormSubmit = async (event) => {
     event.preventDefault();
     const formData = new FormData(event.target);
@@ -12,11 +12,18 @@ export default function User({ users, userId, addNewUser, removeUser }) {
       userData[key] = value;
     });
 
-    // Send the taskData to the backend:
+    // Send the userData to the backend:
     const newUser = await api.createUser(userData);
-
+    console.log(newUser,'newuser is');
+    //fetch categories from database
+    const categories = await api.getCategory(/*logged in user info*/);  //returns array of categories
     if (newUser) {
       addNewUser(newUser);
+      
+      //for each category in array, it will create a new add task big component
+      categories.forEach(el => {
+        updateCategories(el.id, false);
+      });
     }
   };
 

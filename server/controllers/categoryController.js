@@ -17,15 +17,10 @@ categoryController.getCategory = async (req, res, next) => {
 };
 
 categoryController.addCategory = async (req, res, next) => {
-  const { addCat } = req.body;
+  const { id, category } = req.body;
 
   try {
-    const existingCategory = await Category.findOne({ category: addCat });
-    if (existingCategory) {
-      return res.status(409).json({ message: 'Category already exists' });
-    }
-
-    const newCategory = await Category.create({ category: addCat });
+    const newCategory = await Category.create({ id: id, category: category });
     res.locals.category = newCategory;
     return next();
   } catch (err) {

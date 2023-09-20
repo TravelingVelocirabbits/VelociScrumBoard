@@ -1,6 +1,18 @@
 const BASE_URL = 'http://localhost:3000';
 
 export const api = {
+  getCategory: async (categoryData) => {
+    const response = await fetch(`${BASE_URL}/route/category`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(categoryData),
+    });
+    return await response.json();
+  }, 
+
+
   createCategory: async (categoryData) => {
     const response = await fetch(`${BASE_URL}/route/category`, {
       method: 'POST',

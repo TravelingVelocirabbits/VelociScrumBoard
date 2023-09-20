@@ -3,6 +3,7 @@ import { DragDropContext } from 'react-beautiful-dnd';
 import { v4 as uuidv4 } from 'uuid';
 import Category from './components/Category';
 import Users from './components/Users';
+import { api } from './utils/api';
 
 const initialCategories = {
   [uuidv4()]: {
@@ -72,7 +73,10 @@ export default function App() {
   const [users, setUsers] = useState([]);
 
   const addNewCategory = () => {
+
     const newId = uuidv4();
+    const newCategory = api.createCategory({id: newId, category: 'New Category'});
+
     setCategories({
       ...categories,
       [newId]: {
@@ -84,24 +88,37 @@ export default function App() {
 
   const addNewTask = (categoryId, task) => {
     const category = categories[categoryId];
-    const newItems = [...category.items, task];
-    setCategories({
-      ...categories,
-      [categoryId]: {
-        ...category,
-        items: newItems,
-      },
-    });
+
+    if(!task){
+      const newItems = [...category.items, ' '];
+      setCategories({
+        ...categories,
+        [categoryId]: {
+          ...category,
+          items: newItems,
+        },
+      });
+    } else{
+      const newItems = [...category.items, task];
+      setCategories({
+        ...categories,
+        [categoryId]: {
+          ...category,
+          items: newItems,
+        },
+      });
+    }
+
   };
 
   const addNewUser = (user) => {
-    // console.log('New user:', user);
-    // console.log('Adding to: ', users);
+
     setUsers((users) => {
       const updatedUsers = [...users, user];
       // console.log('New user list:', updatedUsers);
       return updatedUsers;
     });
+
   };
   
   const removeTask = (categoryId, removeTask) => {
@@ -150,7 +167,8 @@ export default function App() {
           <Users userId={'usersCategory'} 
             users={users} 
             addNewUser={addNewUser} 
-            removeUser={removeUser} />
+            removeUser={removeUser} 
+            updateCategories={addNewTask}/>
           {Object.entries(categories).map(([id, category]) => (
             <Category key={id} 
               categoryId={id} 
