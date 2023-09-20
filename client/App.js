@@ -129,10 +129,6 @@ export default function App() {
     setEffect([]);
   };
 
-  const reRender = () => {
-    setEffect([]);
-  };
-
   //NOT WORKED ON YET
   const editTask = (categoryId, edittedTask) => {
     const category = categories[categoryId];
@@ -170,7 +166,6 @@ export default function App() {
               addNewTask={addNewTask}
               reRender={reRender}
               editTask={editTask}
-              reRender={reRender}
             />
           ))}
           <div className="add-category-container">
