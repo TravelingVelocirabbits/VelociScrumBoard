@@ -1,6 +1,7 @@
 import React from 'react';
 
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
+
 
 const Login = () => {
 
@@ -18,6 +19,9 @@ const Login = () => {
         <input name='password' type='password' placeholder='password'></input><br />
         <button className='loginButton' type='submit' value='sign up'> Sign Up </button> <br />
       </form>
+      <Link to='/board'>
+        <button value='board'></button>
+      </Link>
     </div>
   );
 };
