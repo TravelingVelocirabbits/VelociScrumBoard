@@ -9,7 +9,7 @@ export default function Category({
   category,
   categoryId,
   addNewTask,
-  reRender,
+
   editTask,
   reRender,
 }) {
@@ -39,13 +39,13 @@ export default function Category({
       // You may want to add logic to save the edited title to the backend here
       // For now, we'll update it locally in the state
       setIsEditing(false);
-      await api.editCategory({category:category.name, newCat:editedTitle});
+      await api.editCategory({ category: category.name, newCat: editedTitle });
       reRender(); // DOES NOT ACTUALLY REMOVE TASK, JUST RE-RENDERS ALL CATEGORIES
     }
   };
 
   const handleTitleRemove = async () => {
-    await api.removeCategory({category:category.name});
+    await api.removeCategory({ category: category.name });
     reRender(); // DOES NOT ACTUALLY REMOVE CATEGORY, JUST RE-RENDERS ALL CATEGORIES
   };
   // TITLE EDITS =========================================
@@ -118,9 +118,17 @@ export default function Category({
           className="category-inputTitle center-title-vertically"
         />
       ) : (
-        <h2 className="category-title center-title-vertically" onClick={handleTitleClick}>
-          <span className='titleMargin'>{category.name}</span>
-          <button className='titleButton' onClick={handleTitleRemove}>Delete</button>
+        <h2
+          className="category-title center-title-vertically"
+          onClick={handleTitleClick}
+        >
+          <span className="titleMargin">{category.name}</span>
+          <button
+            className="titleButton"
+            onClick={handleTitleRemove}
+          >
+            Delete
+          </button>
         </h2>
       )}
       <Droppable
