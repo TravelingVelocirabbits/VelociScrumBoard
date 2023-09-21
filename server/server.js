@@ -4,6 +4,9 @@ const express = require('express');
 const path = require('path');
 const cors = require('cors');
 const bcrypt = require('bcryptjs');
+require('dotenv').config();
+const session = require('express-session');
+const request = require('request-promise');
 
 const PORT = 3000;
 const app = express();
@@ -28,6 +31,11 @@ mongoose
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(session({
+  secret: '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',
+  resave: false,
+  saveUninitialized: true
+}))
 
 //statically serve everything in dist folder on static call
 app.use(express.static(path.join(__dirname, '../dist')));
@@ -41,8 +49,10 @@ app.get('/board', (req, res) => {
   res.sendFile(path.join(__dirname, '../dist', 'index.html'));
 });
 
+
 //Router to serve middleware & response
 app.use('/route', router);
+
 
 //Global error handler
 app.use((req, res) =>

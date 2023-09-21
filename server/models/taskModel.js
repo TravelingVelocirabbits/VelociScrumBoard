@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 
 const taskSchema = new Schema({
   Task_Name: {type: String, required: true},
-  Assignee: {type: [String]},
+  Assignee: {type: String},
   Due_Date: Date,
   Priority: String,
   Status: String,
