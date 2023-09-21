@@ -53,11 +53,18 @@ export default function TaskModal({ isOpen, onClose, onSubmit }) {
           onSubmit={handleSaveEdit}
         >
           <label>
-            Assignee:
+            {/* Assignee: */}
             <select
               value={editedTask.Assignee || ''}
               onChange={(e) => handleFieldChange('Assignee', e.target.value)}
+              data-placeholder="Assignee"
             >
+              <option
+                value=""
+                disabled
+              >
+                Assignee
+              </option>
               {users.map((user, index) => (
                 <option
                   key={index}
@@ -70,11 +77,18 @@ export default function TaskModal({ isOpen, onClose, onSubmit }) {
           </label>
           <br />
           <label>
-            Category:
+            {/* Category: */}
             <select
               value={editedTask.Category || ''}
               onChange={(e) => handleFieldChange('Category', e.target.value)}
+              data-placeholder="Category"
             >
+              <option
+                value=""
+                disabled
+              >
+                Category
+              </option>
               {categories.map((category, index) => (
                 <option
                   key={index}
@@ -87,38 +101,42 @@ export default function TaskModal({ isOpen, onClose, onSubmit }) {
           </label>
           <br />
           <label>
-            Priority:
+            {/* Priority: */}
             <input
               type="text"
               value={editedTask.Priority || ''}
               onChange={(e) => handleFieldChange('Priority', e.target.value)}
+              placeholder="Priority"
             />
           </label>
           <br />
           <label>
-            Due Date:
+            {/* Due Date: */}
             <input
               type="date"
               value={editedTask.Due_Date || ''}
               onChange={(e) => handleFieldChange('Due_Date', e.target.value)}
+              placeholder="Due Date"
             />
           </label>
           <br />
           <label>
-            Status:
+            {/* Status: */}
             <input
               type="text"
               value={editedTask.Status || ''}
               onChange={(e) => handleFieldChange('Status', e.target.value)}
+              placeholder="Status"
             />
           </label>
           <br />
           <label>
-            Description:
+            {/* Description: */}
             <input
               type="text"
               value={editedTask.Description || ''}
               onChange={(e) => handleFieldChange('Description', e.target.value)}
+              placeholder="Description"
             />
           </label>
           <button
