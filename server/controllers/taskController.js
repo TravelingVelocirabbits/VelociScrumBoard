@@ -47,12 +47,18 @@ taskController.addTask = async (req, res, next) => {
 };
 
 taskController.removeTask = async (req, res, next) => {
-  const { _id } = req.body;
-
+  const { _id, Category } = req.body;
   try {
-    const deleted = await Task.findOneAndDelete({ _id: _id });
-    res.locals.task = deleted;
-    return next();
+    if (Category){
+      const deleted = await Task.findOneAndDelete({ Category: Category });
+      res.locals.task = deleted;
+      return next();
+    } else {
+      const deleted = await Task.findOneAndDelete({ _id: _id });
+      res.locals.task = deleted;
+      return next();
+    }
+
   } catch (err) {
     return next({
       log: 'failed to delete task',

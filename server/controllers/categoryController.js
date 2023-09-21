@@ -58,7 +58,6 @@ categoryController.editCategory = async (req, res, next) => {
 
   try {
     const update = await Category.findOneAndUpdate({category: category}, {category: newCat}, {new:true});
-    console.log('updated Category: ', update);
     res.locals.category = update;
     return next();
   } catch (err) {

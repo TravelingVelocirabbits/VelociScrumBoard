@@ -18,10 +18,6 @@ export default function Category({
   const [isEditing, setIsEditing] = useState(false);
   const [editedTitle, setEditedTitle] = useState(category.title); // Initialize with the existing title
 
-  // console.log('is category.items an Array?');
-  // console.log(Array.isArray(category.items));
-  // console.log('what is category?', category);
-  // console.log('what is category.items?', category.items);
 
   const handleTitleClick = () => {
     setIsEditing(true);
@@ -38,13 +34,19 @@ export default function Category({
       // For now, we'll update it locally in the state
       setIsEditing(false);
       await api.editCategory({ category: category.name, newCat: editedTitle });
-      reRender(); // DOES NOT ACTUALLY REMOVE TASK, JUST RE-RENDERS ALL CATEGORIES
+      //edit tasks to change to new category
+      
+      reRender();
     }
   };
 
   const handleTitleRemove = async () => {
     await api.removeCategory({ category: category.name });
-    reRender(); // DOES NOT ACTUALLY REMOVE CATEGORY, JUST RE-RENDERS ALL CATEGORIES
+  
+    for (let i = 0; i < category.items.length; i++){
+      await api.removeTask({Category: category.name});
+    }
+    reRender(); 
   };
   // TITLE EDITS =========================================
 
