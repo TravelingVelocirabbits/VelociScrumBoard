@@ -36,11 +36,10 @@ input[type='date'] {
   box-shadow: 8px 8px 15px rgba(0, 0, 0, 0.2);
 }
 
-.googleButtons{
-  display:flex;
+.googleButtons {
+  display: flex;
   flex-direction: row;
   margin-top: 50px;
-  
 }
 .modal {
   position: fixed;
@@ -336,8 +335,8 @@ button:hover {
 .createForm {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
+  justify-content: flex-start;
+  align-items: flex-start;
 }
 
 .createForm label {
@@ -349,7 +348,7 @@ button:hover {
 }
 
 .createForm select {
-  width: 200px;
+  width: 208px;
 }
 
 .createForm button {
@@ -357,5 +356,5 @@ button:hover {
 }
 
 .modal-content .add-task-button {
-  width: 200px;
+  width: 210px;
 }

@@ -59,6 +59,16 @@ export default function TaskDetailsModal({ isOpen, onClose, task, editTask }) {
         <div className="popContent">
           <form className="createForm">
             <label>
+              <input
+                type="text"
+                value={editedTask.Task_Name || ''}
+                placeholder={'Enter Task Name'}
+                onChange={(e) => handleFieldChange('Task_Name', e.target.value)}
+              />
+            </label>
+            <br />
+
+            <label>
               <select
                 value={editedTask.Assignee || ''}
                 onChange={(e) => handleFieldChange('Assignee', e.target.value)}
@@ -95,6 +105,7 @@ export default function TaskDetailsModal({ isOpen, onClose, task, editTask }) {
               <input
                 type="text"
                 value={editedTask.Priority || ''}
+                placeholder={editedTask.Priority || 'Priority'}
                 onChange={(e) => handleFieldChange('Priority', e.target.value)}
               />
             </label>
@@ -111,6 +122,7 @@ export default function TaskDetailsModal({ isOpen, onClose, task, editTask }) {
               <input
                 type="text"
                 value={editedTask.Status || ''}
+                placeholder={editedTask.Status || 'Status'}
                 onChange={(e) => handleFieldChange('Status', e.target.value)}
               />
             </label>
@@ -119,6 +131,7 @@ export default function TaskDetailsModal({ isOpen, onClose, task, editTask }) {
               <input
                 type="text"
                 value={editedTask.Description || ''}
+                placeholder={editedTask.Description || 'Description'}
                 onChange={(e) =>
                   handleFieldChange('Description', e.target.value)
                 }

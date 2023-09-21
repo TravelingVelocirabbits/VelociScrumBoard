@@ -39,9 +39,23 @@ export default function TaskModal({ isOpen, onClose, onSubmit }) {
     });
   };
 
-  const handleSaveEdit = (e) => {
+  const handleCreateTask = (e) => {
     e.preventDefault();
-    onSubmit(editedTask);
+    fetch(`${dbURI}/task`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(editedTask),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log('Task Created: ', data);
+        onSubmit(editedTask);
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+      });
   };
 
   return (
@@ -50,8 +64,17 @@ export default function TaskModal({ isOpen, onClose, onSubmit }) {
         <h2>Create New Task</h2>
         <form
           className="createForm"
-          onSubmit={handleSaveEdit}
+          onSubmit={handleCreateTask}
         >
+          <label>
+            <input
+              type="text"
+              value={editedTask.Task_Name || ''}
+              onChange={(e) => handleFieldChange('Task_Name', e.target.value)}
+              placeholder="Task Name"
+            ></input>
+          </label>{' '}
+          <br />
           <label>
             {/* Assignee: */}
             <select
@@ -155,51 +178,4 @@ export default function TaskModal({ isOpen, onClose, onSubmit }) {
       </div>
     </div>
   );
-}
-
-{
-  /* <div className="column">
-<input
-  name="Task_Name"
-  placeholder="Task Name"
-  required
-/>
-<input
-  name="Assignee"
-  placeholder="Assignee (comma-separated)"
-/>
-<input
-  name="Category"
-  placeholder="Category"
-/>
-<input
-  name="Priority"
-  placeholder="Priority"
-/>
-</div>
-<div className="column">
-<label>Due Date: </label>
-<input
-  name="Due_Date"
-  type="date"
-/>
-<input
-  name="Status"
-  placeholder="Status"
-/>
-<textarea
-  name="Description"
-  placeholder="Description"
-></textarea>
-</div>
-<button
-className="add-task-button"
-type="submit"
-style={{
-  margin: '20px 0',
-  height: '60px',
-}}
->
-Create Task
-</button> */
 }

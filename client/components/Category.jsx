@@ -120,7 +120,7 @@ export default function Category({
   };
 
   const handleFormSubmit = async (event, type) => {
-    event.preventDefault();
+    // event.preventDefault();
     const formData = new FormData(event.target);
     const taskData = {};
     formData.forEach((value, key) => {
