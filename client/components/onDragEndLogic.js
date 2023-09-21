@@ -88,17 +88,6 @@ export const onDragEnd = (
     });
   }
 
-  // setCategories({
-  //   ...categories,
-  //   [source.droppableId]: {
-  //     ...sourceCategory,
-  //     items: sourceItems,
-  //   },
-  //   [destination.droppableId]: {
-  //     ...destCategory,
-  //     items: destItems,
-  //   },
-  // });
   setActiveIndex(null);
   setActiveDroppableId(null);
 };
