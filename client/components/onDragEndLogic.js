@@ -12,7 +12,9 @@ export const onDragEnd = (
   categories,
   setCategories,
   users,
-  setUsers
+  setUsers,
+  setActiveIndex,
+  setActiveDroppableId
 ) => {
   const { source, destination } = result;
   console.log('source is: ', source);
@@ -43,7 +45,7 @@ export const onDragEnd = (
     // get the category and its items
     const category = categories[source.droppableId];
 
-    if (category && category.NewItems) {
+    if (category && category.newItems) {
       // invoke the helper function to reorder the items and update the state
       const newItems = reorderArray(
         [...category.newItems],
@@ -65,8 +67,8 @@ export const onDragEnd = (
   // Extract the source and destination categories and their items
   const sourceCategory = categories[source.droppableId];
   const destCategory = categories[destination.droppableId];
-  const sourceItems = [...sourceCategory.items];
-  const destItems = [...destCategory.items];
+  const sourceItems = sourceCategory.items ? [...sourceCategory.items] : [];
+  const destItems = destCategory.items ? [...destCategory.items] : [];
 
   // Remove the item from its source and add it to the destination category
   const [removed] = sourceItems.splice(source.index, 1);
