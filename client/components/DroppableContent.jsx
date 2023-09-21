@@ -25,7 +25,7 @@ const DroppableContent = ({
           {...provided.droppableProps}
           ref={provided.innerRef}
           style={{
-            background: snapshot.isDraggingOver ? '#d9d9d9' : '#ffffff',
+            background: snapshot.isDraggingOver ? '#ffffff' : '#ffffff',
             padding: 4,
             width: 250,
             minHeight: 500,

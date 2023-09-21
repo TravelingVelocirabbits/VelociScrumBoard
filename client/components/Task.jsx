@@ -18,7 +18,6 @@ export default function Task({ task, index, onTaskClick, onTaskRemove }) {
 
           style={task.Task_Name === ' ' ? {
             userSelect: 'none',
-            backgroundColor: snapshot.isDragging ? '#ffffff' : '#ffffff',
             ...provided.draggableProps.style,
             border: 'none',
             boxShadow: task.Task_Name === ' ' ? 'none' : '6px 6px 12px #333',
@@ -31,27 +30,34 @@ export default function Task({ task, index, onTaskClick, onTaskRemove }) {
 
         >
           <div
-            className="taskContent"
+            className={task.Task_Name === ' ' ? 'emptyTaskContent' : 'taskContent'}
             onClick={() => onTaskClick(task)}
+            style={task.Task_Name === ' ' ? {
+              height: '70px',
+              width: '180px',
+              backgroundColor: '#ffffff'
+            } : {
+            }}
+            id="emptyTask"
           >
             {task.Task_Name}
-          </div>
-          <button
-            style={
-              task.Task_Name === ' '
-                ? {
-                    backgroundColor: snapshot.isDragging
-                      ? '#ffffff'
-                      : '#ffffff',
+          </div >
+          {task.Task_Name === ' ' ? '' : 
+            <button
+              style={
+                task.Task_Name === ' '
+                  ? {
+                    backgroundColor: snapshot.isDragging ? '#ffffff' : '#ffffff',
                     color: snapshot.isDragging ? '#ffffff' : '#ffffff',
                   }
-                : {}
-            }
-            className={`taskButton ${snapshot.isDragging ? 'dragged' : ''}`}
-            onClick={() => onTaskRemove(task._id)}
-          >
-            Delete
-          </button>
+                  : {}
+              }
+              className={`taskButton ${snapshot.isDragging ? 'dragged' : ''}`}
+              onClick={() => onTaskClick(task)}
+            >
+              Delete
+            </button>
+          }
         </div>
       )}
     </Draggable>
