@@ -21,6 +21,9 @@ export const onDragEnd = (
   // If dropped out of bounds, end the function (and return item to starting point)
   if (!destination) return;
 
+  // setActiveIndex(destination.index);
+  // setActiveDroppableId(destination.droppableId);
+
   // Declare a boolean variable set to the output of checking if droppable id is userCategory
   const isUserCategory = source.droppableId === 'userCategory';
 
@@ -81,4 +84,6 @@ export const onDragEnd = (
       items: destItems,
     },
   });
+  setActiveIndex(null);
+  setActiveDroppableId(null);
 };
