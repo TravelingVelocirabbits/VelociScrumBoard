@@ -1,34 +1,17 @@
 const Account = require('../models/accountModel');
 const Board = require('../models/boardModel');
 
-const User = require('../models/userModel');
-
-const userController = {};
+const accountController = {};
 const bcrypt = require('bcryptjs');
 
-userController.getUser = (req, res, next) => {
-  User.find({})
-    .then(data => {
-      res.locals.users = data;
-      return next();
-    })
-    .catch((err)=>{
-      return next({
-        err,
-        log: `could not get users, err: ${err}`,
-        message: `could not get users, err: ${err}`
-      });
-    });
-};
-
 //check if the username exists in the database
-userController.findUsername = (req, res, next) => {
+accountController.findUsername = (req, res, next) => {
   const { username, password } = req.body;
   console.log(req.body);
-  if (!username) {
+  if (!username || !password) {
     return next({
-      log: 'username is empty, userController.findUsername failed',
-      message: 'username is empty, userController.findUsername failed',
+      log: 'username is empty, accountController.findUsername failed',
+      message: 'username is empty, accountController.findUsername failed',
     });
   }
 
@@ -49,7 +32,7 @@ userController.findUsername = (req, res, next) => {
 };
 
 //create the user if the username does NOT already exist in the database
-userController.createUser = (req, res, next) => {
+accountController.createUser = (req, res, next) => {
   const { username, password } = req.body;
   console.log(username);
   if (!username || !password) {
@@ -84,7 +67,7 @@ userController.createUser = (req, res, next) => {
 };
 
 //login
-userController.login = (req, res, next) => {
+accountController.login = (req, res, next) => {
   const { username, password } = req.body;
   if (!username || !password) {
     return next({
@@ -120,71 +103,3 @@ userController.login = (req, res, next) => {
       });
     });
 };
-
-// add a user
-userController.addUser = (req, res, next) => {
-  const { username } = req.body;
-  User.create({ username, password:'a' })
-    .then((data) => {
-      res.locals.newUser = data;
-      return next();
-    })
-    .catch((err) => {
-      return next({
-        log: `userController.addUser: Error ${err}`,
-        message: {
-          err: 'Error occurred in userController.addUser. Check server logs',
-        },
-        status: 400,
-      });
-    });
-};
-
-// update a user
-userController.updateUser = (req, res, next) => {
-  const { name } = req.params;
-  const updateUser = req.body;
-
-  User.findOneAndUpdate({ name: name }, { name: updateUser })
-    .exec()
-    .then((data) => {
-      if (!data) {
-        return next({
-          log: `userController.updateUser: ${name} was not found in the database`,
-          message: {
-            err: 'Student not found',
-          },
-          status: 404,
-        });
-      }
-      res.locals.user = data;
-      return next();
-    })
-    .catch((err) => {
-      return next({
-        log: `userController.updateUser: ERROR: ${err}`,
-        messages: {
-          err: 'Error occurred in userController.updateUser. Check server logs',
-        },
-        status: 400,
-      });
-    });
-};
-
-// delete a user
-userController.removeUser = async (req, res, next) => {
-  const { _id } = req.body;
-  console.log(_id, 'iD IS THIS');
-  try {
-    const deleted = await User.findOneAndDelete({_id: _id});
-    res.locals.user = deleted;
-    return next();
-  } catch (err) {
-    return next({
-      log: 'failed to delete user',
-      message: {err: `failed to delete user: ${err}`}
-    });
-  }
-};
-
-module.exports = userController;
