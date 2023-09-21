@@ -17,14 +17,9 @@ export const onDragEnd = (
   setActiveDroppableId
 ) => {
   const { source, destination } = result;
-  console.log('source is: ', source);
-  console.log('destination is: ', destination);
 
   // If dropped out of bounds, end the function (and return item to starting point)
   if (!destination) return;
-
-  // setActiveIndex(destination.index);
-  // setActiveDroppableId(destination.droppableId);
 
   // Declare a boolean variable set to the output of checking if droppable id is userCategory
   const isUserCategory = source.droppableId === 'userCategory';
@@ -40,46 +35,40 @@ export const onDragEnd = (
     return;
   }
 
-  // Drag and drop in the other categories
+  // get the category and its items
+  const category = categories[source.droppableId];
+  const items = category?.items ? [...category.items] : [];
+
+  // Re-order within the same category
   if (isSameCategory) {
-    // get the category and its items
-    const category = categories[source.droppableId];
-
-    if (category && category.newItems) {
-      // invoke the helper function to reorder the items and update the state
-      const newItems = reorderArray(
-        [...category.newItems],
-        source.index,
-        destination.index
-      );
-      setCategories({
-        ...categories,
-        [source.droppableId]: {
-          ...category,
-          items: newItems,
-        },
-      });
-    }
+    const reorderedItems = reorderArray(items, source.index, destination.index);
+    setCategories({
+      ...categories,
+      [source.droppableId]: { ...category, items: reorderedItems },
+    });
     return;
-  }
-  // Handle moving bewteen different categories
-  else {
-    // Extract the source and destination categories and their items
-    const sourceCategory = categories[source.droppableId];
+  } else {
+    // handle moving between different categories
     const destCategory = categories[destination.droppableId];
-    const sourceItems = sourceCategory.items ? [...sourceCategory.items] : [];
-    const destItems = destCategory.items ? [...destCategory.items] : [];
+    const destItems = destCategory ? [...destCategory.items] : [];
 
-    // Remove the item from its source and add it to the destination category
-    const [removed] = sourceItems.splice(source.index, 1);
-    destItems[destination.index] = removed;
+    // Remove the dragged item from its source
+    const [removed] = items.splice(source.index, 1);
+
+    // Remove the item at the destination index, if it exists
+    if (destItems.length > destination.index) {
+      destItems.splice(destination.index, 1);
+    }
+
+    // Insert removed item into destination category
+    destItems.splice(destination.index, 0, removed);
 
     // update the state to reflect teh changes in source and destination categories
     setCategories({
       ...categories,
       [source.droppableId]: {
-        ...sourceCategory,
-        items: sourceItems,
+        ...category,
+        items,
       },
       [destination.droppableId]: {
         ...destCategory,

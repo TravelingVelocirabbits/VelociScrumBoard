@@ -143,14 +143,6 @@ export default function Category({
     }, reRender);
   };
 
-  // const handleTaskRemove = async (taskData) => {
-  //   const removedTask = await api.removeTask({ _id: taskData });
-  //   if (removedTask) {
-  //     handleCloseModal();
-  //     reRender();
-  //   }
-  // };
-
   const handleTaskEdit = async (taskData) => {
     const editedTask = await api.editTask(taskData);
     if (editedTask) {
