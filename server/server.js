@@ -14,7 +14,7 @@ const app = express();
 // connect with mongoose database
 mongoose
   .connect(
-    'mongodb://localhost/VelociScrumBoard',
+    'mongodb+srv://connorelikeyes:D36U8CGSL5maEh9h@cluster0.vxtr5rx.mongodb.net/?retryWrites=true&w=majority',
     {
       useNewUrlParser: true,
       useUnifiedTopology: true,
