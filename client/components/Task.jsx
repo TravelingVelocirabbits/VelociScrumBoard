@@ -5,28 +5,54 @@ import '../stylesheets/app.css';
 
 export default function Task({ task, index, onTaskClick, onTaskRemove }) {
   return (
-    <Draggable draggableId={String(task._id)} index={index}>
+    <Draggable
+      draggableId={String(task._id)}
+      index={index}
+    >
       {(provided, snapshot) => (
-        <box className='taskDisplay'
+        <div
+          className="taskDisplay"
           ref={provided.innerRef}
           {...provided.draggableProps}
           {...provided.dragHandleProps}
-          style={{
-            userSelect: 'none',
-            backgroundColor: snapshot.isDragging ? '#263B4A' : '#456C86',
-            ...provided.draggableProps.style,
-          }}
+          style={
+            task.Task_Name === ' '
+              ? {
+                  userSelect: 'none',
+                  backgroundColor: snapshot.isDragging ? '#ffffff' : '#ffffff',
+                  ...provided.draggableProps.style,
+                  border: 'none',
+                }
+              : {
+                  userSelect: 'none',
+                  backgroundColor: snapshot.isDragging ? '#263B4A' : '#456C86',
+                  ...provided.draggableProps.style,
+                }
+          }
         >
-          <div className='taskContent' onClick={() => onTaskClick(task)}>
+          <div
+            className="taskContent"
+            onClick={() => onTaskClick(task)}
+          >
             {task.Task_Name}
           </div>
           <button
+            style={
+              task.Task_Name === ' '
+                ? {
+                    backgroundColor: snapshot.isDragging
+                      ? '#ffffff'
+                      : '#ffffff',
+                    color: snapshot.isDragging ? '#ffffff' : '#ffffff',
+                  }
+                : {}
+            }
             className={`taskButton ${snapshot.isDragging ? 'dragged' : ''}`}
             onClick={() => onTaskRemove(task._id)}
-          >Delete
+          >
+            Delete
           </button>
-
-        </box>
+        </div>
       )}
     </Draggable>
   );

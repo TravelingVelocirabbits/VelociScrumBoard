@@ -33,7 +33,7 @@ export default function TaskDetailsModal({ isOpen, onClose, task, editTask }) {
       .then((res) => res.json())
       .then((data) => {
         setUsers((prevUsers) => {
-          return data.map((el) => el.name).concat(prevUsers);
+          return data.map((el) => el.username).concat(prevUsers);
         });
       });
   }, []);
@@ -57,9 +57,8 @@ export default function TaskDetailsModal({ isOpen, onClose, task, editTask }) {
         </div>
 
         <div className="popContent">
-          <form className="editForm">
+          <form className="createForm">
             <label>
-              Assignee:
               <select
                 value={editedTask.Assignee || ''}
                 onChange={(e) => handleFieldChange('Assignee', e.target.value)}
@@ -77,7 +76,6 @@ export default function TaskDetailsModal({ isOpen, onClose, task, editTask }) {
             <br />
 
             <label>
-              Category:
               <select
                 value={editedTask.Category || ''}
                 onChange={(e) => handleFieldChange('Category', e.target.value)}
@@ -94,7 +92,6 @@ export default function TaskDetailsModal({ isOpen, onClose, task, editTask }) {
             </label>
             <br />
             <label>
-              Priority:
               <input
                 type="text"
                 value={editedTask.Priority || ''}
@@ -103,7 +100,6 @@ export default function TaskDetailsModal({ isOpen, onClose, task, editTask }) {
             </label>
             <br />
             <label>
-              Due Date:
               <input
                 type="date"
                 value={editedTask.Due_Date || ''}
@@ -112,7 +108,6 @@ export default function TaskDetailsModal({ isOpen, onClose, task, editTask }) {
             </label>
             <br />
             <label>
-              Status:
               <input
                 type="text"
                 value={editedTask.Status || ''}
@@ -121,7 +116,6 @@ export default function TaskDetailsModal({ isOpen, onClose, task, editTask }) {
             </label>
             <br />
             <label>
-              Description:
               <input
                 type="text"
                 value={editedTask.Description || ''}
@@ -133,13 +127,13 @@ export default function TaskDetailsModal({ isOpen, onClose, task, editTask }) {
           </form>
         </div>
         <button
-          className="taskPopupButton"
+          className="add-task-button"
           onClick={handleSaveEdit}
         >
           Save Edit
         </button>
         <button
-          className="popCloseButton"
+          className="add-task-button"
           onClick={onClose}
         >
           Close
