@@ -67,6 +67,10 @@ export default function Category({
       await api.editCategory({ category: category.name, newCat: editedTitle });
       //edit tasks to change to new category
 
+      for (let i = 0; i < category.items.length; i++) {
+        category.items[i].Category = editedTitle;
+        await api.editTask(category.items[i]);
+      }
       reRender();
     }
   };

@@ -15,23 +15,47 @@ export default function Task({ task, index, onTaskClick, onTaskRemove }) {
           ref={provided.innerRef}
           {...provided.draggableProps}
           {...provided.dragHandleProps}
-          style={{
-            userSelect: 'none',
-            backgroundColor: snapshot.isDragging ? '#263B4A' : '#456C86',
-            ...provided.draggableProps.style,
-          }}
+          style={
+            task.Task_Name === ' '
+              ? {
+                  userSelect: 'none',
+                  backgroundColor: snapshot.isDragging ? '#ffffff' : '#ffffff',
+                  ...provided.draggableProps.style,
+                  border: 'none',
+                }
+              : {
+                  userSelect: 'none',
+                  backgroundColor: snapshot.isDragging ? '#263B4A' : '#456C86',
+                  ...provided.draggableProps.style,
+                }
+          }
         >
           <div
             className="taskContent"
             onClick={() => onTaskClick(task)}
           >
+          <div 
+            className={task.Task_Name === ' ' ? 'emptyTaskContent' : 'taskContent'}
+            onClick={task.Task_Name === ' ' ? () => onTaskClick(task) : () => onTaskClick(task)}>
             {task.Task_Name}
           </div>
           <button
+            style={
+              task.Task_Name === ' '
+                ? {
+                    backgroundColor: snapshot.isDragging
+                      ? '#ffffff'
+                      : '#ffffff',
+                    color: snapshot.isDragging ? '#ffffff' : '#ffffff',
+                  }
+                : {}
+            }
             className={`taskButton ${snapshot.isDragging ? 'dragged' : ''}`}
             onClick={() => onTaskRemove(task._id)}
           >
             Delete
+            onClick={task.Task_Name === ' ' ? () => onTaskRemove(task._id) : () => onTaskRemove(task._id)}
+          >Delete
           </button>
         </box>
       )}
