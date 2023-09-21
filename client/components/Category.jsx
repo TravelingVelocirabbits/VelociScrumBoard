@@ -167,7 +167,7 @@ export default function Category({
       />
       <DroppableContent
         categoryId={categoryId}
-        type={type}
+        // type={type}
         categoryItems={category.items}
         formatDueDate={formatDueDate}
         onTaskClick={handleTaskClick}
@@ -181,7 +181,7 @@ export default function Category({
         setModalOpen={setModalOpen}
         selectedTask={selectedTask}
         setSelectedTask={setSelectedTask}
-        type={type}
+        // type={type}
         handleCloseModal={handleCloseModal}
         handleFormSubmit={handleFormSubmit}
         handleTaskEdit={handleTaskEdit}

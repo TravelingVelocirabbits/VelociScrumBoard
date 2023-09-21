@@ -135,7 +135,7 @@ export default function Board() {
               key={id}
               categoryId={id}
               category={category}
-              type={id}
+              // type={category}
               addNewTask={addNewTask}
               reRender={reRender}
             />
