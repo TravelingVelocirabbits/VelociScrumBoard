@@ -93,7 +93,6 @@ export default function Board() {
   const [effect, setEffect] = useState([]);
 
   useEffect(() => {
-    console.log('USE EFFECT IS BEING TRIGGEREDDDDDDD');
     const newCats = {};
 
     async function updateCatTask(updateCat) {
@@ -104,9 +103,20 @@ export default function Board() {
         const _id = categories[i]._id;
         const name = categories[i].category;
         const catTasks = tasks.filter((el) => el.Category === name);
+        let taskLength = catTasks.length;
+        while(taskLength > newUsers.length){
+          await api.removeTask({Category:name, Task_Name: ' '});
+          taskLength--;
+        }
+        const newTasks = await api.getTask();
+        const catTasks2 = newTasks.filter((el) => el.Category === name);
+        const userTask = [];
+        for (let i = 0; i < newUsers.length; i++){
+          // userTask.push()
+        }
         updateCat[_id] = {
           name: name,
-          items: catTasks,
+          items: catTasks2,
         };
       }
       setCategories(newCats);
@@ -186,6 +196,7 @@ export default function Board() {
               + New Section
             </button>
           </div>
+
         </div>
       </DragDropContext>
     </div>

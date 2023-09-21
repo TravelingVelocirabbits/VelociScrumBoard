@@ -38,7 +38,12 @@ input[type='date'] {
   border: 1px solid #333;
   box-shadow: 8px 8px 15px rgba(0, 0, 0, 0.2);
 }
-
+.googleButtons{
+  display:flex;
+  flex-direction: row;
+  margin-top: 50px;
+  
+}
 .modal {
   position: fixed;
   top: 0;
@@ -75,13 +80,14 @@ input[type='date'] {
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  margin: 0 0 8px 0;
+  margin: 0 0 16px 0;
   height: 82px;
   color: white;
   border: 1px solid #333;
   margin-left: 5px;
   margin-right: 5px;
   border-radius: 10px;
+  box-shadow: 6px 6px 12px #333;
 }
 
 .taskButton {

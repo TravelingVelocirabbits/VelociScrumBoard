@@ -10,7 +10,7 @@ export default function TaskModal({ isOpen, onClose, onSubmit }) {
         <form className='createForm' onSubmit={onSubmit}>
           <div className='column'>
             <input name='Task_Name' placeholder='Task Name' required />
-            <input name='Assignee' placeholder='Assignee (comma-separated)' />
+            <input name='Assignee' placeholder='User' />
             <input name='Category' placeholder='Category' />
             <input name='Priority' placeholder='Priority' />
           </div>

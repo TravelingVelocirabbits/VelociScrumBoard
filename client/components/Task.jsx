@@ -16,6 +16,7 @@ export default function Task({ task, index, onTaskClick, onTaskRemove }) {
             backgroundColor: snapshot.isDragging ? '#ffffff' : '#ffffff',
             ...provided.draggableProps.style,
             border: 'none',
+            boxShadow: task.Task_Name === ' ' ? 'none' : '6px 6px 12px #333',
             
           } : {
             userSelect: 'none',

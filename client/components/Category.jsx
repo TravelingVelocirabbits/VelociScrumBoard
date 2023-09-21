@@ -86,11 +86,12 @@ export default function Category({
 
     // Send the taskData to the backend:
     const newTask = await api.createTask(taskData);
-
     if (newTask) {
       addNewTask(categoryId, newTask);
       handleCloseModal();
     }
+
+    reRender();
   };
 
   const handleTaskRemove = async (taskData) => {
