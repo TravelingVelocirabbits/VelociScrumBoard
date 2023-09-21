@@ -18,6 +18,7 @@ export default function Category({
   const [isEditing, setIsEditing] = useState(false);
   const [editedTitle, setEditedTitle] = useState(category.title); // Initialize with the existing title
 
+
   const handleTitleClick = () => {
     setIsEditing(true);
   };
@@ -109,7 +110,6 @@ export default function Category({
 
   return (
     <div>
-      {/* UPDATE TITLE HERE */}
       {isEditing ? (
         <input
           type="text"
