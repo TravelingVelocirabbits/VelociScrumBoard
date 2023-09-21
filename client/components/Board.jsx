@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { DragDropContext } from 'react-beautiful-dnd';
+import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import { v4 as uuidv4 } from 'uuid';
 import Category from './Category';
 import Users from './Users';
 import { api } from '../utils/api';
+import { onDragEnd } from './onDragEndLogic';
 
 const initialCategories = {};
 let initialUsers = [];
@@ -15,8 +16,8 @@ async function getCategory(catUpdate) {
   if (categories.length === 0) {
     api.createCategory({ category: 'ToDo' });
     categories = await api.getCategory();
-    for (let i = 0; i < initialUsers.length; i++){
-      await api.createTask({Task_Name: ' ', Category: 'ToDo'});
+    for (let i = 0; i < initialUsers.length; i++) {
+      await api.createTask({ Task_Name: ' ', Category: 'ToDo' });
     }
   }
 
@@ -29,71 +30,18 @@ async function getCategory(catUpdate) {
       items: catTasks,
     };
   }
+  await getCategory(initialCategories);
 }
-await getCategory(initialCategories);
-
-const onDragEnd = (result, categories, setCategories, users, setUsers) => {
-  const { source, destination } = result;
-
-  // Checks if item was dropped outside of the droppable environment
-  if (!destination) return;
-
-  if (
-    source.droppableId !== 'usersCategory' &&
-    destination.droppableId === 'usersCategory'
-  )
-    return;
-
-  if (source.droppableId === 'usersCategory') {
-    const copiedUsers = [...users];
-    const [removed] = copiedUsers.splice(source.index, 1);
-    copiedUsers.splice(destination.index, 0, removed);
-
-    setUsers(copiedUsers);
-  } else if (source.droppableId === destination.droppableId) {
-    // Reordering tasks within the same category
-    const category = categories[source.droppableId];
-    const copiedItems = [...category.items];
-    const [removed] = copiedItems.splice(source.index, 1);
-    copiedItems.splice(destination.index, 0, removed);
-
-    setCategories({
-      ...categories,
-      [source.droppableId]: {
-        ...category,
-        items: copiedItems,
-      },
-    });
-  } else {
-    // Moving tasks between different categories
-    const sourceCategory = categories[source.droppableId];
-    const destCategory = categories[destination.droppableId];
-    const sourceItems = [...sourceCategory.items];
-    const destItems = [...destCategory.items];
-    const [removed] = sourceItems.splice(source.index, 1);
-    destItems.splice(destination.index, 0, removed);
-
-    setCategories({
-      ...categories,
-      [source.droppableId]: {
-        ...sourceCategory,
-        items: sourceItems,
-      },
-      [destination.droppableId]: {
-        ...destCategory,
-        items: destItems,
-      },
-    });
-  }
-};
 
 export default function Board() {
   const [categories, setCategories] = useState(initialCategories);
   const [users, setUsers] = useState(initialUsers);
   const [effect, setEffect] = useState([]);
+  const [activeIndex, setActiveIndex] = useState(null);
+
+  const [activeDroppableId, setActiveDroppableId] = useState(null);
 
   useEffect(() => {
-    console.log('USE EFFECT IS BEING TRIGGEREDDDDDDD');
     const newCats = {};
 
     async function updateCatTask(updateCat) {
@@ -104,9 +52,20 @@ export default function Board() {
         const _id = categories[i]._id;
         const name = categories[i].category;
         const catTasks = tasks.filter((el) => el.Category === name);
+        let taskLength = catTasks.length;
+        while(taskLength > newUsers.length){
+          await api.removeTask({Category:name, Task_Name: ' '});
+          taskLength--;
+        }
+        const newTasks = await api.getTask();
+        const catTasks2 = newTasks.filter((el) => el.Category === name);
+        const userTask = [];
+        for (let i = 0; i < newUsers.length; i++){
+          // userTask.push()
+        }
         updateCat[_id] = {
           name: name,
-          items: catTasks,
+          items: catTasks2,
         };
       }
       setCategories(newCats);
@@ -119,19 +78,23 @@ export default function Board() {
     //checks to see if New Category exists, if true then adds a number to the end;
     const currentCatagories = await api.getCategory();
     let count = 0;
-    for (let i = 0; i < currentCatagories.length; i++){
+    for (let i = 0; i < currentCatagories.length; i++) {
       const categoryCheck = currentCatagories[i].category;
-      if(categoryCheck.includes('New Category')) count++;
+      if (categoryCheck.includes('New Category')) count++;
     }
-    if(count > 0) await api.createCategory({ category: `New Category ${count}` });
+    if (count > 0)
+      await api.createCategory({ category: `New Category ${count}` });
     else await api.createCategory({ category: 'New Category' });
 
     //create tasks with number of users in user list && set to category
     const userList = await api.getUser();
-    for (let i = 0; i < userList.length; i++){
-      if(count > 0) await api.createTask({Task_Name: ' ', Category: `New Category ${count}`});
-      else await api.createTask({Task_Name: ' ', Category: 'New Category'});
-      
+    for (let i = 0; i < userList.length; i++) {
+      if (count > 0)
+        await api.createTask({
+          Task_Name: ' ',
+          Category: `New Category ${count}`,
+        });
+      else await api.createTask({ Task_Name: ' ', Category: 'New Category' });
     }
     setEffect([]);
   };
@@ -158,7 +121,15 @@ export default function Board() {
     <div className="app">
       <DragDropContext
         onDragEnd={(result) =>
-          onDragEnd(result, categories, setCategories, users, setUsers)
+          onDragEnd(
+            result,
+            categories,
+            setCategories,
+            users,
+            setUsers,
+            setActiveIndex,
+            setActiveDroppableId
+          )
         }
       >
         <div className="categories-container">
@@ -174,6 +145,7 @@ export default function Board() {
               key={id}
               categoryId={id}
               category={category}
+              // type={category}
               addNewTask={addNewTask}
               reRender={reRender}
             />
@@ -186,6 +158,7 @@ export default function Board() {
               + New Section
             </button>
           </div>
+
         </div>
       </DragDropContext>
     </div>

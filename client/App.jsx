@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Login from './components/login';
 import Board from './components/Board';
+import { gapi } from 'gapi-script';
+
 
 const App = () => {
   return (

@@ -33,7 +33,7 @@ export default function TaskDetailsModal({ isOpen, onClose, task, editTask }) {
       .then((res) => res.json())
       .then((data) => {
         setUsers((prevUsers) => {
-          return data.map((el) => el.name).concat(prevUsers);
+          return data.map((el) => el.username).concat(prevUsers);
         });
       });
   }, []);
@@ -57,9 +57,18 @@ export default function TaskDetailsModal({ isOpen, onClose, task, editTask }) {
         </div>
 
         <div className="popContent">
-          <form className="editForm">
+          <form className="createForm">
             <label>
-              Assignee:
+              <input
+                type="text"
+                value={editedTask.Task_Name || ''}
+                placeholder={'Enter Task Name'}
+                onChange={(e) => handleFieldChange('Task_Name', e.target.value)}
+              />
+            </label>
+            <br />
+
+            <label>
               <select
                 value={editedTask.Assignee || ''}
                 onChange={(e) => handleFieldChange('Assignee', e.target.value)}
@@ -77,7 +86,6 @@ export default function TaskDetailsModal({ isOpen, onClose, task, editTask }) {
             <br />
 
             <label>
-              Category:
               <select
                 value={editedTask.Category || ''}
                 onChange={(e) => handleFieldChange('Category', e.target.value)}
@@ -94,16 +102,15 @@ export default function TaskDetailsModal({ isOpen, onClose, task, editTask }) {
             </label>
             <br />
             <label>
-              Priority:
               <input
                 type="text"
                 value={editedTask.Priority || ''}
+                placeholder={editedTask.Priority || 'Priority'}
                 onChange={(e) => handleFieldChange('Priority', e.target.value)}
               />
             </label>
             <br />
             <label>
-              Due Date:
               <input
                 type="date"
                 value={editedTask.Due_Date || ''}
@@ -112,19 +119,19 @@ export default function TaskDetailsModal({ isOpen, onClose, task, editTask }) {
             </label>
             <br />
             <label>
-              Status:
               <input
                 type="text"
                 value={editedTask.Status || ''}
+                placeholder={editedTask.Status || 'Status'}
                 onChange={(e) => handleFieldChange('Status', e.target.value)}
               />
             </label>
             <br />
             <label>
-              Description:
               <input
                 type="text"
                 value={editedTask.Description || ''}
+                placeholder={editedTask.Description || 'Description'}
                 onChange={(e) =>
                   handleFieldChange('Description', e.target.value)
                 }
@@ -133,13 +140,13 @@ export default function TaskDetailsModal({ isOpen, onClose, task, editTask }) {
           </form>
         </div>
         <button
-          className="taskPopupButton"
+          className="add-task-button"
           onClick={handleSaveEdit}
         >
           Save Edit
         </button>
         <button
-          className="popCloseButton"
+          className="add-task-button"
           onClick={onClose}
         >
           Close
