@@ -23,7 +23,13 @@ input[type='date'] {
 }
 .createForm {
   display: flex;
+  flex-direction: column;
   justify-content: space-between;
+  text-align: justify;
+}
+
+.createForm label {
+  text-align: justify;
 }
 .column {
   flex: 1;
@@ -47,6 +53,7 @@ input[type='date'] {
   height: 100%;
   background-color: rgba(0, 0, 0, 0.7);
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
 }
@@ -60,6 +67,13 @@ input[type='date'] {
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+.modal-content label {
+  display: inline-block;
+  min-width: 100px;
+  text-align: right;
+  margin-right: 10px;
 }
 
 .unassigned-tasks {
@@ -106,7 +120,7 @@ input[type='date'] {
   font-family: 'Comfortaa', cursive;
   font-weight: bold;
 }
-.emptyTaskContent{
+.emptyTaskContent {
   color: white;
   border: none;
   box-shadow: none;
@@ -269,21 +283,21 @@ button:hover {
 .center-title-vertically {
   display: flex;
   flex-direction: row;
-  justify-content: space-between; 
-  text-align: center; 
+  justify-content: space-between;
+  text-align: center;
 }
-.titleButton{
+.titleButton {
   padding: 16;
   border: none;
   cursor: pointer;
-  Font: 16px;
-  background-color:#fef9ef;
-  color:#ffffff;
+  font: 16px;
+  background-color: #fef9ef;
+  color: #ffffff;
   transition: 0.7s;
-  border-radius:10px;
+  border-radius: 10px;
 }
 
-.titleButton:hover{
+.titleButton:hover {
   color: white;
   background-color: rgb(225, 109, 109);
 }
