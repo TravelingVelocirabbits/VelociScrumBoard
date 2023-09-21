@@ -78,7 +78,6 @@ input[type='date'] {
   height: 82px;
   color: white;
   border: 1px solid #333;
-  box-shadow: 8px 8px 15px rgba(0, 0, 0, 0.2);
   margin-left: 5px;
   margin-right: 5px;
   border-radius: 10px;
@@ -105,6 +104,11 @@ input[type='date'] {
   font-family: 'Bayon', sans-serif;
   font-family: 'Comfortaa', cursive;
   font-weight: bold;
+}
+.emptyTaskContent{
+  color: white;
+  border: none;
+  box-shadow: none;
 }
 .taskButton.dragged {
   background-color: #263b4a;

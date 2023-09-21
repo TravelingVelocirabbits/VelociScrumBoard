@@ -34,7 +34,10 @@ export default function Category({
       setIsEditing(false);
       await api.editCategory({ category: category.name, newCat: editedTitle });
       //edit tasks to change to new category
-      
+      for (let i = 0; i < category.items.length; i++){
+        category.items[i].Category = editedTitle;
+        await api.editTask(category.items[i]);
+      }
       reRender();
     }
   };
@@ -139,7 +142,7 @@ export default function Category({
             {...provided.droppableProps}
             ref={provided.innerRef}
             style={{
-              background: snapshot.isDraggingOver ? '#d9d9d9' : '#ffffff',
+              background: snapshot.isDraggingOver ? '#ffffff' : '#ffffff',
               padding: 4,
               width: 250,
               minHeight: 500,

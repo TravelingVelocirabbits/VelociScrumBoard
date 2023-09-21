@@ -50,7 +50,6 @@ categoryController.removeCategory = async (req, res, next) => {
     });
   }
 
-
 };
 
 categoryController.editCategory = async (req, res, next) => {
