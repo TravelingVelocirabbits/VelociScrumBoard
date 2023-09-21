@@ -102,14 +102,14 @@ userController.findUsername = (req, res, next) => {
 //create the user if the username does NOT already exist in the database
 userController.createUser = (req, res, next) => {
   const { username, password } = req.body;
-
+  console.log(username);
   if (!username || !password) {
     return next({
       log: 'error in userController.createUser: username or password is null, signup failed',
       message: 'error in userController.createUser: user name or password is null, sign up failed',
     });
   }
-  
+
   if (!res.locals.userExists) {
     User.create({ username, password })
       .then((data) => {
@@ -174,11 +174,8 @@ userController.login = (req, res, next) => {
 
 // add a user
 userController.addUser = (req, res, next) => {
-  const { name } = req.body;
-
-  User.create({
-    name,
-  })
+  const { username } = req.body;
+  User.create({ username, password:'a' })
     .then((data) => {
       res.locals.newUser = data;
       return next();

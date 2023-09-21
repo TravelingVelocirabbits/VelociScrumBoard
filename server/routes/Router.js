@@ -23,13 +23,13 @@ router.put('/category', categoryController.editCategory, (req, res) => {
 });
 
 router.delete('/category', categoryController.removeCategory, (req, res) => {
-  console.log('finished removing category', res.locals.category);
+  // console.log('finished removing category', res.locals.category);
   res.status(200).json(res.locals.category);
 });
 
 // USER CONTROLLERS
 router.get('/user', userController.getUser, (req, res) => {
-  console.log(res.locals.users);
+  // console.log(res.locals.users);
   res.status(200).json(res.locals.users);
 });
 
@@ -39,7 +39,7 @@ router.post('/user', userController.addUser, (req, res) => {
 });
 
 router.delete('/user', userController.removeUser, (req, res) => {
-  console.log('removed user', res.locals.user);
+  // console.log('removed user', res.locals.user);
   res.status(200).json(res.locals.user);
 });
 
@@ -61,21 +61,21 @@ router.get('/task', taskController.getTask, (req, res) => {
 });
 
 router.post('/task', taskController.addTask, (req, res) => {
-  console.log('finished creating task', res.locals.task);
+  // console.log('finished creating task', res.locals.task);
   res.status(200).json(res.locals.task);
 });
 
 router.put('/task', taskController.editTask, (req, res) => {
-  console.log('clicked the button', res.locals.task);
-  console.log(
-    'in Router.js, the router.put to /task is console logging: ',
-    res.locals.task
-  );
+  // console.log('clicked the button', res.locals.task);
+  // console.log(
+  //   'in Router.js, the router.put to /task is console logging: ',
+  //   res.locals.task
+  // );
   res.status(200).json(res.locals.task);
 });
 
 router.delete('/task', taskController.removeTask, (req, res) => {
-  console.log('finished removing task', res.locals.task);
+  // console.log('finished removing task', res.locals.task);
   res.status(200).json(res.locals.task);
 });
 
