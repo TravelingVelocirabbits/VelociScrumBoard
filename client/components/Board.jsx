@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { DragDropContext } from 'react-beautiful-dnd';
+import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import { v4 as uuidv4 } from 'uuid';
 import Category from './Category';
 import Users from './Users';
@@ -16,8 +16,8 @@ async function getCategory(catUpdate) {
   if (categories.length === 0) {
     api.createCategory({ category: 'ToDo' });
     categories = await api.getCategory();
-    for (let i = 0; i < initialUsers.length; i++){
-      await api.createTask({Task_Name: ' ', Category: 'ToDo'});
+    for (let i = 0; i < initialUsers.length; i++) {
+      await api.createTask({ Task_Name: ' ', Category: 'ToDo' });
     }
   }
 
@@ -68,19 +68,23 @@ export default function Board() {
     //checks to see if New Category exists, if true then adds a number to the end;
     const currentCatagories = await api.getCategory();
     let count = 0;
-    for (let i = 0; i < currentCatagories.length; i++){
+    for (let i = 0; i < currentCatagories.length; i++) {
       const categoryCheck = currentCatagories[i].category;
-      if(categoryCheck.includes('New Category')) count++;
+      if (categoryCheck.includes('New Category')) count++;
     }
-    if(count > 0) await api.createCategory({ category: `New Category ${count}` });
+    if (count > 0)
+      await api.createCategory({ category: `New Category ${count}` });
     else await api.createCategory({ category: 'New Category' });
 
     //create tasks with number of users in user list && set to category
     const userList = await api.getUser();
-    for (let i = 0; i < userList.length; i++){
-      if(count > 0) await api.createTask({Task_Name: ' ', Category: `New Category ${count}`});
-      else await api.createTask({Task_Name: ' ', Category: 'New Category'});
-      
+    for (let i = 0; i < userList.length; i++) {
+      if (count > 0)
+        await api.createTask({
+          Task_Name: ' ',
+          Category: `New Category ${count}`,
+        });
+      else await api.createTask({ Task_Name: ' ', Category: 'New Category' });
     }
     setEffect([]);
   };
@@ -131,6 +135,7 @@ export default function Board() {
               key={id}
               categoryId={id}
               category={category}
+              type={id}
               addNewTask={addNewTask}
               reRender={reRender}
             />

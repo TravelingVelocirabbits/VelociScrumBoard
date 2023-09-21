@@ -5,9 +5,13 @@ import '../stylesheets/app.css';
 
 export default function Task({ task, index, onTaskClick, onTaskRemove }) {
   return (
-    <Draggable draggableId={String(task._id)} index={index}>
+    <Draggable
+      draggableId={String(task._id)}
+      index={index}
+    >
       {(provided, snapshot) => (
-        <box className='taskDisplay'
+        <box
+          className="taskDisplay"
           ref={provided.innerRef}
           {...provided.draggableProps}
           {...provided.dragHandleProps}
@@ -17,15 +21,18 @@ export default function Task({ task, index, onTaskClick, onTaskRemove }) {
             ...provided.draggableProps.style,
           }}
         >
-          <div className='taskContent' onClick={() => onTaskClick(task)}>
+          <div
+            className="taskContent"
+            onClick={() => onTaskClick(task)}
+          >
             {task.Task_Name}
           </div>
           <button
             className={`taskButton ${snapshot.isDragging ? 'dragged' : ''}`}
             onClick={() => onTaskRemove(task._id)}
-          >Delete
+          >
+            Delete
           </button>
-
         </box>
       )}
     </Draggable>

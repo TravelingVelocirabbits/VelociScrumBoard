@@ -62,30 +62,43 @@ export const onDragEnd = (
     }
     return;
   }
-
   // Handle moving bewteen different categories
-  // Extract the source and destination categories and their items
-  const sourceCategory = categories[source.droppableId];
-  const destCategory = categories[destination.droppableId];
-  const sourceItems = sourceCategory.items ? [...sourceCategory.items] : [];
-  const destItems = destCategory.items ? [...destCategory.items] : [];
+  else {
+    // Extract the source and destination categories and their items
+    const sourceCategory = categories[source.droppableId];
+    const destCategory = categories[destination.droppableId];
+    const sourceItems = sourceCategory.items ? [...sourceCategory.items] : [];
+    const destItems = destCategory.items ? [...destCategory.items] : [];
 
-  // Remove the item from its source and add it to the destination category
-  const [removed] = sourceItems.splice(source.index, 1);
-  destItems.splice(destination.index, 0, removed);
+    // Remove the item from its source and add it to the destination category
+    const [removed] = sourceItems.splice(source.index, 1);
+    destItems[destination.index] = removed;
 
-  // update the state to reflect teh changes in source and destination categories
-  setCategories({
-    ...categories,
-    [source.droppableId]: {
-      ...sourceCategory,
-      items: sourceItems,
-    },
-    [destination.droppableId]: {
-      ...destCategory,
-      items: destItems,
-    },
-  });
+    // update the state to reflect teh changes in source and destination categories
+    setCategories({
+      ...categories,
+      [source.droppableId]: {
+        ...sourceCategory,
+        items: sourceItems,
+      },
+      [destination.droppableId]: {
+        ...destCategory,
+        items: destItems,
+      },
+    });
+  }
+
+  // setCategories({
+  //   ...categories,
+  //   [source.droppableId]: {
+  //     ...sourceCategory,
+  //     items: sourceItems,
+  //   },
+  //   [destination.droppableId]: {
+  //     ...destCategory,
+  //     items: destItems,
+  //   },
+  // });
   setActiveIndex(null);
   setActiveDroppableId(null);
 };
