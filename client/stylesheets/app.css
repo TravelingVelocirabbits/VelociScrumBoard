@@ -3,6 +3,7 @@
 body {
   background-color: #f1e3d3;
   /* background-color:#463f3a */
+  font-family: 'Comfortaa', cursive;
 }
 textarea {
   width: 97%;
@@ -272,7 +273,7 @@ button:hover {
   border: none;
   cursor: pointer;
   Font: 16px;
-  background-color:#ffffff;
+  background-color:#fef9ef;
   color:#ffffff;
   transition: 0.7s;
   border-radius:10px;
@@ -281,4 +282,28 @@ button:hover {
 .titleButton:hover{
   color: white;
   background-color: rgb(225, 109, 109);
+}
+
+.loginButton {
+  background-color: #4c956c;
+  color: whitesmoke;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 10px;
+  font-family: 'Bayon', sans-serif;
+  font-family: 'Comfortaa', cursive;
+  font-weight: bold;
+}
+
+.loginButton:hover {
+  background-color: #0056b3;
+}
+
+.loginpage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* justify-content: center; */
 }

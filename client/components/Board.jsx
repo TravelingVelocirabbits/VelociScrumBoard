@@ -38,7 +38,11 @@ const onDragEnd = (result, categories, setCategories, users, setUsers) => {
   // Checks if item was dropped outside of the droppable environment
   if (!destination) return;
 
-  if (source.droppableId !== 'usersCategory' && destination.droppableId === 'usersCategory') return;
+  if (
+    source.droppableId !== 'usersCategory' &&
+    destination.droppableId === 'usersCategory'
+  )
+    return;
 
   if (source.droppableId === 'usersCategory') {
     const copiedUsers = [...users];
