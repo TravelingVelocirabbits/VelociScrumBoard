@@ -11,12 +11,15 @@ const reorderArray = (array, startIndex, endIndex) => {
 
 // Helper function to update the category of the task item in the backend
 const updateTaskInDatabase = (updatedTask) => {
-  fetch(`${dbURI}/task/${updatedTask._id}`, {
+  fetch(`${dbURI}/task/`, {
     method: 'PUT',
     headers: {
       'Content-type': 'application/json',
     },
-    body: JSON.stringify(updatedTask),
+    body: JSON.stringify({
+      _id: updatedTask._id,
+      Category: updatedTask.Category,
+    }),
   })
     .then((res) => res.json())
     .then((data) => {
@@ -30,9 +33,17 @@ const updateTaskInDatabase = (updatedTask) => {
     });
 };
 
-const deleteTaskFromDatabase = (taskId) => {
-  fetch(`${dbURI}/task/${taskId}`, {
+const deleteTaskFromDatabase = (updatedTask) => {
+  console.log(`the task being deleted is: ${updatedTask}`);
+  fetch(`${dbURI}/task/`, {
     method: 'DELETE',
+    header: {
+      'Content-type': 'application/json',
+    },
+    body: JSON.stringify({
+      _id: updatedTask._id,
+      Category: updatedTask.Category,
+    }),
   })
     .then((res) => res.json())
     .then(() => {
@@ -54,7 +65,7 @@ const deleteAndReplaceTask = (destItems, destination, removed) => {
   );
   if (isConfirmed) {
     destItems.splice(destination.index, 1);
-    deleteTaskFromDatabase(itemToDelete._id);
+    deleteTaskFromDatabase(itemToDelete);
     destItems.splice(destination.index, 0, removed);
   }
 };
@@ -93,6 +104,14 @@ export const onDragEnd = (
     });
   } else {
     if (destItems.length > destination.index) {
+      console.log(
+        'destItems is ',
+        destItems,
+        ' destination is ',
+        destination,
+        ' and removed is ',
+        removed
+      );
       deleteAndReplaceTask(destItems, destination, removed);
     } else {
       destItems.splice(destination.index, 0, removed);
