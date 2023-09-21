@@ -9,17 +9,16 @@ export default function User({ users, userId, reRender, removeUser, addNewTask})
     event.preventDefault();
     const formData = new FormData(event.target);
     const userData = {};
-    formData.forEach((value, key) => {
-      userData[key] = value;
+    formData.forEach((value) => {
+      userData.username = value;
     });
-    
-    
+    console.log('userdata is', userData);
     //fetch categories from database
     const categories = await api.getCategory();  //returns array of categories
     
     // creates a user and re-renders
     const newUser = await api.createUser(userData);
-    if (newUser) {
+    if (newUser.username) {
       categories.forEach(el => {
         addNewTask(el, false);
       });

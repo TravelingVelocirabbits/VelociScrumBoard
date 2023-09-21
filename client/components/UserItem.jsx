@@ -16,7 +16,7 @@ export default function User({ user, index, removeUser }) {
             color: 'white',
           }}
         >
-          <div {...provided.dragHandleProps}>{user.name}</div>
+          <div {...provided.dragHandleProps}>{user.username}</div>
           <button
             className={`taskButton ${snapshot.isDragging ? 'dragged' : ''}`}
             onClick={() => removeUser(user._id)}

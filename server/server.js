@@ -11,7 +11,7 @@ const app = express();
 // connect with mongoose database
 mongoose
   .connect(
-    'mongodb+srv://connorelikeyes:D36U8CGSL5maEh9h@cluster0.vxtr5rx.mongodb.net/?retryWrites=true&w=majority',
+    'mongodb://localhost/VelociScrumBoard',
     {
       useNewUrlParser: true,
       useUnifiedTopology: true,
@@ -32,6 +32,11 @@ app.use(express.urlencoded({ extended: true }));
 //statically serve everything in dist folder on static call
 app.use(express.static(path.join(__dirname, '../dist')));
 app.use('/stylesheets', express.static(path.join(__dirname, '../client/stylesheets')));
+
+//serves dynamic clientside rendered page for /board
+app.get('/board', (req, res) => {
+  res.sendFile(path.join(__dirname, '../dist', 'index.html'));
+});
 
 //Router to serve middleware & response
 app.use('/route', router);
