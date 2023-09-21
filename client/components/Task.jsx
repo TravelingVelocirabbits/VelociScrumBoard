@@ -3,7 +3,6 @@ import { Draggable } from 'react-beautiful-dnd';
 import Category from './Category';
 import '../stylesheets/app.css';
 
-
 export default function Task({ task, index, onTaskClick, onTaskRemove }) {
   return (
     <Draggable draggableId={String(task._id)} index={index}>
