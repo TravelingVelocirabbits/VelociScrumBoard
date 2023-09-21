@@ -34,9 +34,6 @@ export default function Task({ task, index, onTaskClick, onTaskRemove }) {
             className="taskContent"
             onClick={() => onTaskClick(task)}
           >
-          <div 
-            className={task.Task_Name === ' ' ? 'emptyTaskContent' : 'taskContent'}
-            onClick={task.Task_Name === ' ' ? () => onTaskClick(task) : () => onTaskClick(task)}>
             {task.Task_Name}
           </div>
           <button
@@ -54,8 +51,6 @@ export default function Task({ task, index, onTaskClick, onTaskRemove }) {
             onClick={() => onTaskRemove(task._id)}
           >
             Delete
-            onClick={task.Task_Name === ' ' ? () => onTaskRemove(task._id) : () => onTaskRemove(task._id)}
-          >Delete
           </button>
         </box>
       )}
