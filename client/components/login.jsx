@@ -1,6 +1,8 @@
-import React from 'react';
-
+import React, { useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
+import LoginButton from './googleLogin';
+import { gapi } from 'gapi-script';
+import Logout from './googleLogout';
 
 
 const Login = () => {
@@ -64,6 +66,17 @@ const Login = () => {
       });
   };
 
+  const clientId = '948098633686-g77e2in5neddfjmek6ahemvovndr45a2.apps.googleusercontent.com';
+  useEffect(() => {
+    function start() {
+      gapi.client.init({
+        clientId: clientId,
+        scope: ''
+      });
+    }
+    gapi.load('client:auth2', start);
+  });
+
   return (
     <div className='loginpage'>
       <h1>Task Manager</h1> <br />
@@ -79,6 +92,9 @@ const Login = () => {
         <input required name='password' type='password' placeholder='password'></input><br />
         <button className='loginButton' type='submit' value='sign up'> Sign Up </button> <br />
       </form>
+      <div className='googleButtons'> 
+        <LoginButton/>
+      </div>
     </div>
   );
 };

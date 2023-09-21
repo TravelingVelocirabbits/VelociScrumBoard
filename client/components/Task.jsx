@@ -15,20 +15,20 @@ export default function Task({ task, index, onTaskClick, onTaskRemove }) {
           ref={provided.innerRef}
           {...provided.draggableProps}
           {...provided.dragHandleProps}
-          style={
-            task.Task_Name === ' '
-              ? {
-                  userSelect: 'none',
-                  backgroundColor: snapshot.isDragging ? '#ffffff' : '#ffffff',
-                  ...provided.draggableProps.style,
-                  border: 'none',
-                }
-              : {
-                  userSelect: 'none',
-                  backgroundColor: snapshot.isDragging ? '#263B4A' : '#456C86',
-                  ...provided.draggableProps.style,
-                }
-          }
+
+          style={task.Task_Name === ' ' ? {
+            userSelect: 'none',
+            backgroundColor: snapshot.isDragging ? '#ffffff' : '#ffffff',
+            ...provided.draggableProps.style,
+            border: 'none',
+            boxShadow: task.Task_Name === ' ' ? 'none' : '6px 6px 12px #333',
+            
+          } : {
+            userSelect: 'none',
+            backgroundColor: snapshot.isDragging ? '#263B4A' : '#456C86',
+            ...provided.draggableProps.style,
+          }}
+
         >
           <div
             className="taskContent"

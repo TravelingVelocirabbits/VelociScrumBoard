@@ -14,7 +14,7 @@ export default function User({ user, index, removeUser }) {
             userSelect: 'none',
             backgroundColor: snapshot.isDragging ? '#263B4A' : '#456C86',
             color: 'white',
-            boxShadow: snapshot.isDragging ? '2px 2px 4px rgba(0, 0, 0, 0.3)' : 'none',
+            boxShadow: snapshot.isDragging ? '6px 6px 12px #333' : '6px 6px 12px #333',
           }}
         >
           <div className='taskContent' {...provided.dragHandleProps}>{user.username}</div>

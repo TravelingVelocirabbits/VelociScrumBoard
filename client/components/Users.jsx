@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Droppable } from 'react-beautiful-dnd';
+import LogoutButton from './googleLogout';
 import UserItem from './UserItem';
 import { api } from '../utils/api';
 
@@ -59,6 +60,7 @@ export default function User({ users, userId, reRender, removeUser, addNewTask})
         <input className='userInput' name='name' placeholder='Username' required />
         <button className='add-task-button' type='submit'>+ Add</button>
       </form>
+      <LogoutButton/>
     </div>
   );
 }
