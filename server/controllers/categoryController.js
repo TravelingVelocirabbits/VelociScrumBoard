@@ -13,7 +13,6 @@ categoryController.getCategory = async (req, res, next) => {
       message: { err: 'error occurred in creating category: ' + err },
     });
   }
-  
 };
 
 categoryController.addCategory = async (req, res, next) => {
