@@ -111,10 +111,23 @@ input[type='date'] {
   font-weight: bold;
 }
 .emptyTaskContent {
-  color: white;
-  border: none;
-  box-shadow: none;
+  display: none;
+  margin: auto auto;
+  height: 70px;
+  width: 200px;
+  font-family: 'Bayon', sans-serif;
+  font-family: 'Comfortaa', cursive;
+  font-weight: bold;
+  border: 1px solid #ccc;
+  box-shadow: 6px 4px 14px #333;
+  color:#f1e3d3;
+  content: 'hiaaaaa';
+  border-radius: 10px;
 }
+.taskDisplay:hover .emptyTaskContent {
+  display: block;
+}
+
 .taskButton.dragged {
   background-color: #263b4a;
   color: #263b4a;
