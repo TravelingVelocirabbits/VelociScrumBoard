@@ -22,9 +22,7 @@ const updateTaskInDatabase = (updatedTask) => {
     }),
   })
     .then((res) => res.json())
-    .then((data) => {
-      alert('task successfully updated');
-    })
+    .then((data) => {})
     .catch((error) => {
       console.error(
         'Error from updateTaskInDatabase function in OnDragEndLogic: ',
@@ -46,9 +44,7 @@ const deleteTaskFromDatabase = (updatedTask) => {
     }),
   })
     .then((res) => res.json())
-    .then(() => {
-      alert('Task successfully deleted');
-    })
+    .then(() => {})
     .catch((error) => {
       console.error(
         'deleteTaskFromDatabase in onDragEndLogic suffered and error trying to delete task: ',
@@ -60,14 +56,10 @@ const deleteTaskFromDatabase = (updatedTask) => {
 // Helper function to delete and replace a task
 const deleteAndReplaceTask = (destItems, destination, removed) => {
   const itemToDelete = destItems[destination.index];
-  const isConfirmed = window.confirm(
-    'Are you sure you want to replace this task? The existing task will be deleted!'
-  );
-  if (isConfirmed) {
-    destItems.splice(destination.index, 1);
-    deleteTaskFromDatabase(itemToDelete);
-    destItems.splice(destination.index, 0, removed);
-  }
+
+  destItems.splice(destination.index, 1);
+  deleteTaskFromDatabase(itemToDelete);
+  destItems.splice(destination.index, 0, removed);
 };
 
 export const onDragEnd = (
