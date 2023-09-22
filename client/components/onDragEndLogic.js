@@ -11,46 +11,46 @@ const reorderArray = (array, startIndex, endIndex) => {
 
 // Helper function to update the category of the task item in the backend
 const updateTaskInDatabase = (updatedTask) => {
-  fetch(`${dbURI}/task/`, {
-    method: 'PUT',
-    headers: {
-      'Content-type': 'application/json',
-    },
-    body: JSON.stringify({
-      _id: updatedTask._id,
-      Category: updatedTask.Category,
-    }),
-  })
-    .then((res) => res.json())
-    .then((data) => {})
-    .catch((error) => {
-      console.error(
-        'Error from updateTaskInDatabase function in OnDragEndLogic: ',
-        error
-      );
-    });
+  // fetch(`${dbURI}/task/`, {
+  //   method: 'PUT',
+  //   headers: {
+  //     'Content-type': 'application/json',
+  //   },
+  //   body: JSON.stringify({
+  //     _id: updatedTask._id,
+  //     Category: updatedTask.Category,
+  //   }),
+  // })
+  //   .then((res) => res.json())
+  //   .then((data) => {})
+  //   .catch((error) => {
+  //     console.error(
+  //       'Error from updateTaskInDatabase function in OnDragEndLogic: ',
+  //       error
+  //     );
+  //   });
 };
 
 const deleteTaskFromDatabase = (updatedTask) => {
-  console.log(`the task being deleted is: ${updatedTask}`);
-  fetch(`${dbURI}/task/`, {
-    method: 'DELETE',
-    header: {
-      'Content-type': 'application/json',
-    },
-    body: JSON.stringify({
-      _id: updatedTask._id,
-      Category: updatedTask.Category,
-    }),
-  })
-    .then((res) => res.json())
-    .then(() => {})
-    .catch((error) => {
-      console.error(
-        'deleteTaskFromDatabase in onDragEndLogic suffered and error trying to delete task: ',
-        error
-      );
-    });
+  // console.log(`the task being deleted is: ${updatedTask}`);
+  // fetch(`${dbURI}/task/`, {
+  //   method: 'DELETE',
+  //   header: {
+  //     'Content-type': 'application/json',
+  //   },
+  //   body: JSON.stringify({
+  //     _id: updatedTask._id,
+  //     Category: updatedTask.Category,
+  //   }),
+  // })
+  //   .then((res) => res.json())
+  //   .then(() => {})
+  //   .catch((error) => {
+  //     console.error(
+  //       'deleteTaskFromDatabase in onDragEndLogic suffered and error trying to delete task: ',
+  //       error
+  //     );
+  //   });
 };
 
 // Helper function to delete and replace a task
