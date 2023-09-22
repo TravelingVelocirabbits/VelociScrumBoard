@@ -5,6 +5,8 @@ const path = require('path');
 const userController = require('../controllers/userController');
 const taskController = require('../controllers/taskController');
 const categoryController = require('../controllers/categoryController');
+const accountController = require('../controllers/accountController');
+const boardController = require('../controllers/boardController');
 
 //CATEGORY CONTROLLERS
 router.get('/category', categoryController.getCategory, (req, res) => {
@@ -43,16 +45,16 @@ router.delete('/user', userController.removeUser, (req, res) => {
   res.status(200).json(res.locals.user);
 });
 
-router.post('/signup', userController.findUsername, userController.createUser, (req, res) => {
-  if (res.locals.success) return res.status(200).json(res.locals.user);
-  else return res.status(200).json({});
-});
+// router.post('/signup', userController.findUsername, userController.createUser, (req, res) => {
+//   if (res.locals.success) return res.status(200).json(res.locals.user);
+//   else return res.status(200).json({});
+// });
 
 
-router.post('/login', userController.login, (req, res) => {
-  if (res.locals.success) return res.status(200).json(res.locals.user);
-  else return res.status(200).json({});
-});
+// router.post('/login', userController.login, (req, res) => {
+//   if (res.locals.success) return res.status(200).json(res.locals.user);
+//   else return res.status(200).json({});
+// });
 
 // TASK CONTROLLERS
 router.get('/task', taskController.getTask, (req, res) => {
@@ -77,6 +79,17 @@ router.put('/task', taskController.editTask, (req, res) => {
 router.delete('/task', taskController.removeTask, (req, res) => {
   // console.log('finished removing task', res.locals.task);
   res.status(200).json(res.locals.task);
+});
+
+// ACCOUNT CONTROLLERS
+router.post('/signup', accountController.findUsername, accountController.createUser, accountController.writeData, (req, res) => {
+  if (res.locals.success) return res.status(200).json(res.locals.user);
+  else return res.status(200).json({});
+});
+
+router.post('/login', accountController.login, accountController.writeData, (req, res) => {
+  if (res.locals.success) return res.status(200).json(res.locals.user);
+  else return res.status(200).json({});
 });
 
 module.exports = router;

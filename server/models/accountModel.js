@@ -6,7 +6,7 @@ const Board = require('./boardModel');
 const accountSchema = new Schema({
   username: { type: String, required: true, unique: true },
   password: { type: String, required: true },
-  boards: { type: [Board.schema], default: [] }
+  boards: { type: [Board.schema] }
 });
 
 const SALT_WORK_FACTOR = 10;

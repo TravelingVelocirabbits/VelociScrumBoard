@@ -1,5 +1,8 @@
 const Account = require('../models/accountModel');
 const Board = require('../models/boardModel');
+const User = require('../models/userModel');
+const path = require('path');
+const fs = require('fs');
 
 const accountController = {};
 const bcrypt = require('bcryptjs');
@@ -8,25 +11,26 @@ const bcrypt = require('bcryptjs');
 accountController.findUsername = (req, res, next) => {
   const { username, password } = req.body;
   console.log(req.body);
-  if (!username || !password) {
+  if (!username) {
     return next({
       log: 'username is empty, accountController.findUsername failed',
       message: 'username is empty, accountController.findUsername failed',
     });
   }
 
-  User.findOne({ username })
+  Account.findOne({ username })
     .then((data) => {
       if (data) {
         res.locals.userExists = data;
+        res.locals.accountUsername = data.username;
         return next();
       } else return next();
     })
     .catch((err) => {
       return next({
         err,
-        message: 'error in userController.findUsername: User.findOne query failed',
-        log: 'error in userController.findUsername: User.findOne query failed',
+        message: 'error in accountController.findUsername: User.findOne query failed',
+        log: 'error in accountController.findUsername: User.findOne query failed',
       });
     });
 };
@@ -37,13 +41,28 @@ accountController.createUser = (req, res, next) => {
   console.log(username);
   if (!username || !password) {
     return next({
-      log: 'error in userController.createUser: username or password is null, signup failed',
-      message: 'error in userController.createUser: user name or password is null, sign up failed',
+      log: 'error in accountController.createUser: username or password is null, signup failed',
+      message: 'error in accountController.createUser: user name or password is null, sign up failed',
     });
   }
 
   if (!res.locals.userExists) {
-    User.create({ username, password })
+
+    const user = { username, password: 'a' };
+    const board = { 
+      name: 'new board',
+      users: [user],
+      tasks: [],
+      categories: []
+    };
+
+    const account = {
+      username,
+      password,
+      boards: [board]
+    };
+
+    Account.create(account)
       .then((data) => {
         console.log(data);
         res.locals.user = data;
@@ -54,14 +73,14 @@ accountController.createUser = (req, res, next) => {
       .catch((err) => {
         return next({
           err,
-          message: 'error creating account in userController.createUser',
-          log: 'error creating account in userController.createUser',
+          message: `error creating account in accountController.createUser: ${err}`,
+          log: `error creating account in accountController.createUser: ${err}`,
         });
       });
   } else {
     return next({
-      message: 'username already exists, userController.createUser failed',
-      log: 'username already exists, userController.createUser failed'
+      message: 'username already exists, accountController.createUser failed',
+      log: 'username already exists, accountController.createUser failed'
     });
   }
 };
@@ -76,7 +95,7 @@ accountController.login = (req, res, next) => {
     });
   }
 
-  User.findOne({ username })
+  Account.findOne({ username })
     .then((data) => {
       if (data) {
         res.locals.user = data;
@@ -89,8 +108,8 @@ accountController.login = (req, res, next) => {
           })
           .catch((err) => {
             return next({
-              log: 'userController.login error, bcrypt',
-              message: 'userController.login error, bcrypt',
+              log: 'accountController.login error, bcrypt',
+              message: 'accountController.login error, bcrypt',
             });
           });
       } else return next();
@@ -98,8 +117,19 @@ accountController.login = (req, res, next) => {
     .catch((err) => {
       return next({
         err,
-        message: 'login failed: error in userController.login',
-        log: 'login failed: error in userController.login',
+        message: 'login failed: error in accountController.login',
+        log: 'login failed: error in accountController.login',
       });
     });
 };
+
+accountController.writeData = (req, res, next) => {
+  if (res.locals.success) {
+    const writePath = path.join(__dirname, '../data/data.json');
+    fs.writeFileSync(writePath, JSON.stringify({ username: res.locals.user.username }));
+  }
+
+  return next();
+};
+
+module.exports = accountController;
