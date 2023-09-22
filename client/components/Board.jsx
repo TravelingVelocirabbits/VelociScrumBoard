@@ -59,10 +59,7 @@ export default function Board() {
         }
         const newTasks = await api.getTask();
         const catTasks2 = newTasks.filter((el) => el.Category === name);
-        const userTask = [];
-        for (let i = 0; i < newUsers.length; i++){
-          // userTask.push()
-        }
+        
         updateCat[_id] = {
           name: name,
           items: catTasks2,

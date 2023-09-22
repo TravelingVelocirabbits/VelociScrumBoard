@@ -42,38 +42,22 @@ export default function Category({
     setEditedTitle(category.title);
   }, [category.title]);
 
-  const saveEditedTitle = () => {
+  const saveEditedTitle = async () => {
     apiAction(
       () => api.editCategory({ category: category.name, newCat: editedTitle }),
       reRender
     );
     setIsEditing(false);
-  };
+    await api.editCategory({ category: category.name, newCat: editedTitle });
+    //edit tasks to change to new category
 
-  // const removeCategoryAndTasks = async () => {
-  //   await api.removeCategory({ category: category.name });
-  //   await Promise.all(
-  //     category.items.map(() => api.removeTask({ Category: category.name }))
-  //   );
-  //   reRender();
-  // };
-
-  const handleTitleKeyPress = async (e) => {
-    if (e.key === 'Enter') {
-      // Update the category title on Enter key press
-      // You may want to add logic to save the edited title to the backend here
-      // For now, we'll update it locally in the state
-      setIsEditing(false);
-      await api.editCategory({ category: category.name, newCat: editedTitle });
-      //edit tasks to change to new category
-
-      for (let i = 0; i < category.items.length; i++) {
-        category.items[i].Category = editedTitle;
-        await api.editTask(category.items[i]);
-      }
-      reRender();
+    for (let i = 0; i < category.items.length; i++) {
+      category.items[i].Category = editedTitle;
+      await api.editTask(category.items[i]);
     }
+    reRender();
   };
+
 
   const handleTitleRemove = async () => {
     try {
