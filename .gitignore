@@ -1,3 +1,4 @@
 node_modules
 testing-do-not-track
 .prettierrc
+package-lock.json
